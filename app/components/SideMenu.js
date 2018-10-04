@@ -7,7 +7,7 @@ export default class SideMenu extends React.Component {
     render() {
         return (
             <View>
-
+               <Text>This is the SideMenu Screen</Text>
             </View>
         );
     }
