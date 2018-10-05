@@ -94,9 +94,6 @@ export const Drawer = createDrawerNavigator({
    contentComponent: CustomDrawerComponent
 })
 
-
-
-
 const styles = StyleSheet.create({
    container: {
       flex: 1,
