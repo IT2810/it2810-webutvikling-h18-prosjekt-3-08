@@ -1,37 +1,44 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 
+import TodoItem from './TodoItem';
 
 
 export default class Todos extends React.Component {
 
 
-   constructor(){
-      super()
+   constructor(props){
+      super(props)
       this.state = ({
-         openTodos: [],
-         closedTodos: []
+         todoArray: [],
+
       })
    }
 
+
+
    render() {
+
       return (
 
          <View style={styles.container}>
-            <Text>This is the Todos Screen </Text>
+
             <ScrollView style={styles.scrollContainer}>
 
             </ScrollView>
 
             <View style={styles.footer}>
-               <TextInput
-                  style={styles.TextInput}
-                  placeholder='Todo name'
-                  placeholderTextColor='white'
-               >
+               <TextInput>
 
                </TextInput>
             </View>
+
+            <TouchableOpacity
+               style={styles.addButton}
+               >
+               <Text style={styles.addButtonText}>+</Text>
+            </TouchableOpacity>
+
          </View>
       );
    }
@@ -58,11 +65,28 @@ const styles = StyleSheet.create({
    },
    TextInput: {
       alignSelf: 'stretch',
-      color: '#fff',
+      color: '#f2f2f2',
       padding: 20,
-      backgroundColor: '#252525',
+      backgroundColor: '#fff',
       borderTopWidth: 2,
       borderTopColor: '#ededed'
+   },
+   addButton: {
+      position: 'absolute',
+      zIndex: 11,
+      right: 20,
+      bottom: 90,
+      backgroundColor: '#e91e63',
+      width: 90,
+      height: 90,
+      borderRadius: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation: 8
+   },
+   addButtonText: {
+      color: '#fff',
+      fontSize: 24
    }
 
 })
