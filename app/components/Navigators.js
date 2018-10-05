@@ -24,7 +24,6 @@ import Appointments from './Appointments';
 import Contacts from './Contacts'
 
 
-
 export const Tabs = createMaterialTopTabNavigator({
    Appointments: {
       screen: Appointments,
@@ -58,7 +57,6 @@ export const Tabs = createMaterialTopTabNavigator({
    }
 )
 
-
 export const Stack = createStackNavigator({
    TabNavigator: {
       screen: Tabs,
@@ -74,7 +72,6 @@ export const Stack = createStackNavigator({
       })
    }
 })
-
 
 const CustomDrawerComponent = (props) => (
    <SafeAreaView style={{ flex: 1}}>
