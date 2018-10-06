@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, FlatList,
-    TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
+    TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Button } from 'react-native';
 
 //import TodoItem from './TodoItem';
 
@@ -10,6 +10,9 @@ export default class Todos extends React.Component {
 
    constructor(){
       super()
+      this.deleteTodo = this.deleteTodo.bind(this)
+      this.updateStatus = this.updateStatus.bind(this)
+
       this.state = {
          todos: [
             {
@@ -28,10 +31,6 @@ export default class Todos extends React.Component {
                task: "Se tv",
                status: "Pending"
             },
-            {
-               task: "Lese litt",
-               status: "Done"
-            },
          ],
 
          textValue: ""
@@ -46,58 +45,107 @@ export default class Todos extends React.Component {
    }
 
    addTodo() {
-      this.state.todos.push({
-         task: this.state.textValue,
-         status: "Pending"
+      if (this.state.textValue != "") {
+         let todosCopy = this.state.todos
+         let t = this.state.textValue
+         let newTodo = {
+            task: t,
+            status: "Pending"
+         }
+         todosCopy.push(newTodo)
+         this.setState({
+            todos: todosCopy,
+            textValue: ""
+         })
+      }
+
+   }
+
+   onPress(index) {
+
+   }
+
+   deleteTodo(index){
+      let todosCopy = []
+      if (this.state.todos.length > 1){
+         todosCopy = this.state.todos
+         todosCopy.splice(index, 1)
+      }
+      else {
+         todosCopy = []
+      }
+
+      this.setState({
+         todos: todosCopy
       })
    }
 
+   updateStatus(index) {
+      let todoCopy = this.state.todos[index]
+      if (todoCopy.status == 'Done'){
+         todoCopy.status = 'Pending'
+      }
+      else {
+         todoCopy.status = 'Done'
+      }
+      let todosCopy = this.state.todos
+      todosCopy[index] = todoCopy
 
+      this.setState({
+         todos: todosCopy
+      })
+   }
 
    render() {
-      //console.log(this.state.todos);
+      console.log(this.state.todos);
       return (
-         <DismissKeyboard>
-               <View style={styles.container}>
+
+            <View style={styles.container}>
+
                   <View style={{flex: 1, marginTop: 22}}>
                      <FlatList
                         data={this.state.todos}
                         keyExtractor={item => item.task}
                         renderItem={({item, index}) => {
-                           console.log(JSON.stringify(item));
-                           console.log(index);
-                           let statusStyle = item.status == 'Done' ? styles.done : styles.pending
+                           //console.log(JSON.stringify(item));
+                           //console.log(index);
+                           let i = index
+                           let statusStyle = item.status === 'Done' ? styles.done : styles.pending
+                           
                            return (
-                              <View style={styles.todoItem}>
-                                 <Text style={styles.textStyle}>{item.task}</Text>
-                                 <Text style={[styles.statusText, statusStyle]}>
-                                    {item.status == 'Done' ? 'Done' : 'Pending'}
-                                 </Text>
-                              </View>
+                              <TouchableOpacity>
+                                 <View style={styles.todoItem}>
+                                       <Text style={styles.textStyle}>{item.task}</Text>
+                                       <TouchableOpacity
+                                          style={styles.status}
+                                          onPress = { () => this.updateStatus(i)}
+                                          >
+                                          <Text style={statusStyle}>{item.status}</Text>
+                                       </TouchableOpacity>
+                                 </View>
+
+                                 <TouchableOpacity onPress={ () => this.deleteTodo(i)} style={styles.todoDelete}>
+                                    <Text>D</Text>
+                                 </TouchableOpacity>
+                              </TouchableOpacity>
                               )
                         }}
                         >
                      </FlatList>
                   </View>
 
-                  <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
-                     <View style={styles.footer}>
-                        <TouchableOpacity>
+                  <Button title="Legg til Todo" onPress={this.addTodo.bind(this)} />
 
-                              <TextInput
-                                 style={styles.textInput}
-                                 value={this.state.textValue}
-                                 placeholder="Add a todo"
-                                 onChangeText={(value) => this.onChangeText(value)}
-                              >
-                              </TextInput>
-
-                        </TouchableOpacity>
-                     </View>
-                  </KeyboardAvoidingView>
-
-               </View>
-         </DismissKeyboard>
+                  <View>
+                     <TextInput
+                        style={styles.textInput}
+                        value={this.state.textValue}
+                        placeholder="Add a todo"
+                        onChangeText={(value) => this.onChangeText(value)}
+                     >
+                     </TextInput>
+                  </View>
+            </View>
       );
    }
 }
@@ -130,9 +178,10 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-start',
       fontSize: 16
    },
-   statusText: {
-      alignSelf: 'flex-end',
-      fontSize: 15
+   status: {
+      position: 'absolute',
+      alignItems: 'flex-start',
+      padding: 10
    },
    done: {
       color: 'green'
@@ -140,14 +189,26 @@ const styles = StyleSheet.create({
    pending: {
       color: 'red'
    },
-   footer: {
+   todoDelete: {
       position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'blue',
+      padding: 10,
+      top: 10,
+      bottom: 10,
+      right: 10
+   },
+
+   footer: {
       bottom: 0,
       left: 0,
       right: 0,
       zIndex: 10,
    },
    textInput: {
+      height: 40,
+      flexDirection: 'row',
       alignSelf: 'stretch',
       color: '#f2f2f2',
       padding: 20,
