@@ -5,12 +5,21 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class AppointmentItem extends React.Component {
 
+    constructor() {
+        super();
+
+
+    }
+
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Hi There!</Text>
+            <View>
+                <View>
+
+                </View>
             </View>
-        );
+
+    );
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, Button, FlatList, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, Button, FlatList, TextInput, TouchableOpacity, Alert} from 'react-native';
 import AppointmentItem from './AppointmentItem';
 
 
@@ -12,37 +12,40 @@ export default class Appointments extends React.Component {
         this.state = {
             appointments: [
                 {
-                    name: "Meeting",
+                    name: "Meeting with Elon Musk",
                     date: "2018-10-09",
-                    time: "",
-                    desc: "Brain NTNU"
+                    start: "14:30",
+                    end: "15:30",
+                    desc: ""
                 },
                 {
-                    name: "Meeting",
+                    name: "Meeting with Mark Z",
                     date: "2018-10-10",
-                    time: "",
-                    desc: "HS"
+                    start: "07:00",
+                    end: "10:00",
+                    desc: ""
+
                 },
                 {
-                    name: "Fylla",
+                    name: "$nek Generalforsamling",
                     date: "2018-10-11",
-                    time: "",
-                    desc: "Med $nek"
+                    start: "15:00",
+                    end: "23:59",
+                    desc: ""
                 },
                 {
-                    name: "Sove",
+                    name: "Tokyo",
                     date: "2018-10-12",
-                    time: "",
-                    desc: ";)"
+                    start: "10:00",
+                    end: "",
+                    desc: ""
                 },
             ],
 
             textValue: ""
         }
     }
-
     addAppointment() {
-
     }
 
     onChangeText(value) {
@@ -67,33 +70,47 @@ export default class Appointments extends React.Component {
         })
     }
 
-    updateAppointment(index) {
+    updateAppointment(){
     }
+
+    getDate(item){
+        const list = ['jan', 'feb', 'mar', 'apr', 'mai', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'des']
+        const day = item.date.substring(8)
+        const month = item.date.substring(5, 7)
+        return day + '.' + list[month]
+    }
+
+    getTime(item){
+        return this.getDate(item) + " " + item.start + ' - ' + item.end;
+    }
+    
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style = {styles.container}>
                 <View style={{flex: 1, marginTop: 22, borderBottomWidth: 0}}>
                     <FlatList
                         data={this.state.appointments}
                         keyExtractor={item => item.date}
                         renderItem={({item, index}) => {
-                            let i = index;
+                            //let i = index;
                             return (
-                                <TouchableOpacity>
-                                    <View style={styles.appointmentItem} onPress= { () => AppointmentItem}>
+                                <TouchableOpacity onPress={(item) => {
+                                    <AppointmentItem/>
+                                }}>
+                                    <View style={styles.time}>
+                                        <Text>{this.getTime(item)}</Text>
+                                    </View>
+                                    <View style={styles.appointmentItem} >
                                         <Text style={styles.textStyle}>{item.name}</Text>
                                     </View>
-                                    <TouchableOpacity onPress={ () => this.deleteAppointment(i)} style = {styles.appointmentDelete}>
-                                        <Text style={styles.textStyle2}>X</Text>
-                                    </TouchableOpacity>
                                 </TouchableOpacity>
                             )
                         }}
                     >
                     </FlatList>
                 </View>
-                <View>
+                <View style = {styles.appendButtonContainer}>
                     <TextInput
                         value={this.state.textValue}
                         placeholder="Add an appointment"
@@ -101,7 +118,9 @@ export default class Appointments extends React.Component {
                     >
                     </TextInput>
                 </View>
-                <Button title="Add appointment" onPress={this.addAppointment()} />
+                <Button
+                    title="Add appointment"
+                    onPress = {console.log('')}/>
             </View>
         );
     }
@@ -120,22 +139,26 @@ const DismissKeyboard = ({children}) => (
 const styles = StyleSheet.create({
 
    container: {
-      flex: 1,
-      backgroundColor: '#fff',
+       flex: 1,
+       backgroundColor: '#fff',
        position: 'absolute',
-      alignItems: 'center',
-      justifyContent: 'center',
+       justifyContent: 'center',
        width: '100%',
        height: '100%'
 
 
    },
+    time: {
+
+    },
     textStyle: {
         alignSelf: 'flex-start',
-        fontSize: 16
+        fontFamily: 'Cochin',
+        fontSize: 20
     },
-    textStyle2: {
-       alignSelf: 'flex-end',
+    textStyleButton: {
+       padding: 10,
+       alignSelf: 'center',
        color: "white"
     },
     status: {
@@ -144,6 +167,8 @@ const styles = StyleSheet.create({
         padding: 10
     },
     appointmentItem: {
+       marginLeft: '15%',
+        marginRight: '10%',
         flex: 1,
         width: '100%',
         alignItems: 'flex-start',
@@ -151,7 +176,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         padding: 20,
         backgroundColor: "#fff",
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         flexDirection: 'column'
     },
     appointmentDelete: {
@@ -171,5 +196,8 @@ const styles = StyleSheet.create({
         right: 0,
         zIndex: 10,
     },
+    appendButtonContainer:{
+       alignItems: 'center'
+    }
 
 })
