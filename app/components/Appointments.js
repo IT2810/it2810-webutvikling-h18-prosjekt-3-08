@@ -83,7 +83,7 @@ export default class Appointments extends React.Component {
     getTime(item){
         return this.getDate(item) + " " + item.start + ' - ' + item.end;
     }
-    
+
 
     render() {
         return (
