@@ -61,6 +61,9 @@ showData = async() => {
 
        if (array !== null) {
          let todos = JSON.parse(array)
+         this.setState({
+            todos: todos
+         })
          console.log(todos);
        }
    } catch (error) {
