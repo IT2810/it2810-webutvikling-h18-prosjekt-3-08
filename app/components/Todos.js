@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, FlatList,
-    TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Button } from 'react-native';
-import Swipeout from 'react-native-swipeout';
+    TouchableOpacity, TouchableWithoutFeedback,
+     Keyboard, KeyboardAvoidingView, Button } from 'react-native';
+
 
 import TodoItem from './TodoItem';
 
@@ -47,13 +48,14 @@ export default class Todos extends React.Component {
 
    addTodo() {
       if (this.state.textValue != "") {
+         Keyboard.dismiss()
          let todosCopy = this.state.todos
          let t = this.state.textValue
          let newTodo = {
             task: t,
             status: "Pending"
          }
-         todosCopy.push(newTodo)
+         todosCopy.splice(0, 0, newTodo)
          this.setState({
             todos: todosCopy,
             textValue: ""
@@ -101,70 +103,39 @@ export default class Todos extends React.Component {
       return (
 
             <View style={styles.container}>
-                  <Swipeout right={swipeoutButton}>
-                     <View>
-                        <Text>Swipe me left</Text>
-                     </View>
-                  </Swipeout>
-                  <View style={{flex: 1, marginTop: 22}}>
-                     <FlatList
-                        data={this.state.todos}
-                        extraData={this.state}
-                        keyExtractor={item => item.task}
-                        renderItem={({item, index}) => {
-                           //console.log(JSON.stringify(item));
-                           //console.log(index);
-                           let i = index
-                           let statusStyle = item.status === 'Done' ? styles.done : styles.pending
-                           let todoTextStyle = item.status === 'Done' ? styles.finishedTodo_textStyle : styles.textStyle
-
-
-                           return (
-                              <Swipeout right={swipeoutButton}>
-                                 <View>
-                                    <View style={styles.todoItem}>
-                                          <Text style={todoTextStyle}>{item.task}</Text>
-                                          <TouchableOpacity
-                                             style={styles.status}
-                                             onPress = { () => this.changeStatus(i)}
-                                             >
-                                             <Text style={statusStyle}>{item.status}</Text>
-                                          </TouchableOpacity>
-                                    </View>
-
-                                    <TouchableOpacity onPress={ () => this.deleteTodo(i)} style={styles.todoDelete}>
-                                       <Text>D</Text>
-                                    </TouchableOpacity>
-                                 </View>
-                              </Swipeout>
-                              )
-                        }}
-                        >
-                     </FlatList>
-                  </View>
-
-                  <Button title="Legg til Todo" onPress={this.addTodo.bind(this)} />
-
-                  <View>
+               <View style={{flex: 1, marginTop: 22}}>
+                  <FlatList
+                     data={this.state.todos}
+                     extraData={this.state}
+                     keyExtractor={item => item.task}
+                     renderItem={({item, index}) => {
+                        let i = index
+                        return (
+                           <TodoItem
+                              item = {item}
+                              index = {i}
+                              handleStatusChange = {this.changeStatus}
+                              handleTodoDelete = {this.deleteTodo}/>
+                           )}}
+                  />
+               // TODO: Keyboard overlapper fortsatt textinput
+                  <KeyboardAvoidingView behavior="padding" styles= {{flex: 1}} >
                      <TextInput
                         style={styles.textInput}
                         value={this.state.textValue}
                         placeholder="Add a todo"
                         onChangeText={(value) => this.onChangeText(value)}
-                     >
-                     </TextInput>
-                  </View>
+                        returnKeyType="done"
+                        onSubmitEditing={this.addTodo.bind(this)}
+                     />
+                  </KeyboardAvoidingView>
+               </View>
+
+
             </View>
       );
    }
 }
-
-const swipeoutButton = [
-   {
-      text: 'Delete',
-      type: 'delete',
-   }
-]
 
 
 const DismissKeyboard = ({children}) => (
@@ -222,22 +193,18 @@ const styles = StyleSheet.create({
       bottom: 10,
       right: 10
    },
-
-   footer: {
-      bottom: 0,
-      left: 0,
-      right: 0,
-      zIndex: 10,
-   },
    textInput: {
+      margin: 20,
+      marginBottom: 0,
       height: 40,
-      flexDirection: 'row',
-      alignSelf: 'stretch',
-      color: '#f2f2f2',
-      padding: 20,
+      color: 'red',
+      padding: 5,
       backgroundColor: '#fff',
       borderTopWidth: 2,
-      borderTopColor: '#ededed'
+      borderTopColor: '#ededed',
    },
+   keyboard: {
+      flex: 1,
+   }
 
 })

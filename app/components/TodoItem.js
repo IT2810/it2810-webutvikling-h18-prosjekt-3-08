@@ -1,14 +1,45 @@
 import React from 'react';
-import { StyleSheet, Text, View,  } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Switch } from 'react-native';
+import Swipeout from 'react-native-swipeout';
 
 
 
 export default class TodoItem extends React.Component {
 
-   render() {
-      //console.log(this.props.item);
-      return (
 
+   render() {
+
+      const swipeSettings = {
+         autoClose: true,
+         right: [
+            {
+               onPress: () => {this.props.handleTodoDelete(this.props.index)},
+               text: 'Delete',
+               type: 'delete'
+            }
+         ],
+
+      }
+
+
+
+
+      let statusStyle = this.props.item.status === 'Done' ? styles.done : styles.pending
+      let todoTextStyle = this.props.item.status === 'Done' ? styles.finishedTodo_textStyle : styles.textStyle
+
+      return (
+         <Swipeout {...swipeSettings}>
+               <View style={styles.todoItem}>
+                  <TouchableOpacity
+                     onPress= { () => this.props.handleStatusChange(this.props.index)}
+                     >
+                     <Text style={statusStyle}>{this.props.item.status}</Text>
+                  </TouchableOpacity>
+
+                  <Text style={todoTextStyle}>{this.props.item.task}</Text>
+
+               </View>
+         </Swipeout>
       );
    }
 }
@@ -18,30 +49,33 @@ const styles = StyleSheet.create({
    container: {
       flex: 1,
    },
-   todo: {
-      position: 'relative',
+
+   todoItem: {
+      flex: 1,
+      alignItems: 'flex-start',
+      borderColor: '#ddd',
+      borderBottomWidth: 1,
       padding: 20,
-      paddingRight: 100,
-      borderBottomWidth: 2,
-      borderBottomColor: '#ededed'
+      backgroundColor: "#fff",
+      flexDirection: 'row'
    },
-   todoText: {
-      paddingLeft: 20,
-      borderLeftWidth: 10,
-      borderLeftColor: '#e91e63'
+   textStyle: {
+      fontSize: 16
    },
-   todoDelete: {
-      position: 'absolute',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#2980b9',
-      padding: 10,
-      top: 10,
-      bottom: 10,
-      right: 10
+   finishedTodo_textStyle: {
+      fontSize: 16,
+      textDecorationLine: 'line-through'
    },
-   todoDeleteText: {
-      color: 'white'
+   status: {
+      padding: 10
+   },
+   done: {
+      paddingRight: 10,
+      color: 'green'
+   },
+   pending: {
+      paddingRight: 10,
+      color: 'red'
    }
 
 })
