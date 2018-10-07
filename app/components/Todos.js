@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, FlatList,
     TouchableOpacity, TouchableWithoutFeedback,
-     Keyboard, KeyboardAvoidingView, Button } from 'react-native';
+     Keyboard, KeyboardAvoidingView, Button, AsyncStorage } from 'react-native';
 
 
 import TodoItem from './TodoItem';
@@ -34,7 +34,7 @@ export default class Todos extends React.Component {
                status: "Pending"
             },
          ],
-
+         date: "2018-10-07",
          textValue: "",
       }
    }
@@ -44,6 +44,28 @@ export default class Todos extends React.Component {
       this.setState({
          textValue: value
       })
+   }
+
+  storeData = async () => {
+     try {
+       await AsyncStorage.setItem(this.state.date, JSON.stringify(this.state.todos));
+       alert("Data stored")
+     } catch (error) {
+        alert("Error")
+     }
+}
+
+showData = async() => {
+   try {
+       let array = await AsyncStorage.getItem(this.state.date);
+
+       if (array !== null) {
+         let todos = JSON.parse(array)
+         console.log(todos);
+       }
+   } catch (error) {
+      alert("Error")
+   }
    }
 
    addTodo() {
@@ -104,6 +126,8 @@ export default class Todos extends React.Component {
 
             <View style={styles.container}>
                <View style={{flex: 1, marginTop: 22}}>
+                  <Button title= "Save data" onPress={this.storeData.bind(this)}/>
+                  <Button title= "Show data" onPress={this.showData.bind(this)}/>
                   <FlatList
                      data={this.state.todos}
                      extraData={this.state}
@@ -119,7 +143,7 @@ export default class Todos extends React.Component {
                            )}}
                   />
                // TODO: Keyboard overlapper fortsatt textinput
-                  <KeyboardAvoidingView behavior="padding" styles= {{flex: 1}} >
+                  <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                      <TextInput
                         style={styles.textInput}
                         value={this.state.textValue}
