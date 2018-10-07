@@ -57,7 +57,6 @@ export default class Todos extends React.Component {
             this.setState({
                todos: todos
             })
-            console.log(todos);
           }
           else{
              this.setState({
@@ -107,12 +106,7 @@ export default class Todos extends React.Component {
 
    changeStatus(index) {
       let todoCopy = this.state.todos[index]
-      if (todoCopy.status == 'Done'){
-         todoCopy.status = 'Pending'
-      }
-      else {
-         todoCopy.status = 'Done'
-      }
+      todoCopy.status = todoCopy.status == 'Done' ? 'Pending' : 'Done'
       let todosCopy = this.state.todos
       todosCopy[index] = todoCopy
 
