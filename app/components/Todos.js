@@ -125,7 +125,7 @@ export default class Todos extends React.Component {
                         value={this.state.textValue}
                         placeholder="Add a todo"
                         onChangeText={(value) => this.onChangeText(value)}
-                        returnKeyType="done"
+                        returnKeyType="go"
                         onSubmitEditing={this.addTodo.bind(this)}
                      />
                   </KeyboardAvoidingView>
