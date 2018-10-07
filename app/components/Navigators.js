@@ -69,6 +69,14 @@ export const Stack = createStackNavigator({
                   <Ionicons name="md-menu" size={24} />
                </View>
             </TouchableOpacity>
+         ),
+         headerRight: (
+            <TouchableOpacity onPress={() => alert("test")} >
+               <View style={{paddingHorizontal: 10}}>
+                  <Ionicons name="md-calendar" size={24} />
+               </View>
+            </TouchableOpacity>
+
          )
       })
    }

@@ -2,43 +2,37 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, FlatList,
     TouchableOpacity, TouchableWithoutFeedback,
      Keyboard, KeyboardAvoidingView, Button, AsyncStorage } from 'react-native';
-
+import moment from 'moment'; // To å håndtere/formatere valgt dato
 
 import TodoItem from './TodoItem';
+import Calendar from './Calendar';
 
 
 export default class Todos extends React.Component {
-
 
    constructor(){
       super()
       this.deleteTodo = this.deleteTodo.bind(this)
       this.changeStatus = this.changeStatus.bind(this)
 
+      date = this.getCurrentDate()
+
       this.state = {
-         todos: [
-            {
-               task: "Matte4",
-               status: "Pending"
-            },
-            {
-               task: "Sove",
-               status: "Done"
-            },
-            {
-               task: "Pule",
-               status: "Pending"
-            },
-            {
-               task: "Se tv",
-               status: "Pending"
-            },
-         ],
-         date: "2018-10-07",
+         todos: [],
+         activeDate: date,
          textValue: "",
       }
    }
 
+   getCurrentDate() {
+      date = new Date()
+      formatedDate = moment(date).format('YYYY-MM-DD')
+      return formatedDate
+   }
+
+   testCalendar() {
+      alert("test")
+   }
 
    onChangeText(value) {
       this.setState({
@@ -48,27 +42,32 @@ export default class Todos extends React.Component {
 
   storeData = async () => {
      try {
-       await AsyncStorage.setItem(this.state.date, JSON.stringify(this.state.todos));
-       alert("Data stored")
+       await AsyncStorage.setItem(this.state.activeDate, JSON.stringify(this.state.todos));
      } catch (error) {
         alert("Error")
      }
-}
+  }
 
-showData = async() => {
-   try {
-       let array = await AsyncStorage.getItem(this.state.date);
+   showData = async() => {
+      try {
+          let array = await AsyncStorage.getItem(this.state.activeDate);
 
-       if (array !== null) {
-         let todos = JSON.parse(array)
-         this.setState({
-            todos: todos
-         })
-         console.log(todos);
-       }
-   } catch (error) {
-      alert("Error")
-   }
+          if (array !== null) {
+            let todos = JSON.parse(array)
+            this.setState({
+               todos: todos
+            })
+            console.log(todos);
+          }
+          else{
+             this.setState({
+                todos: []
+             })
+          }
+      } catch (error) {
+         alert("Error")
+      }
+
    }
 
    addTodo() {
@@ -84,7 +83,8 @@ showData = async() => {
          this.setState({
             todos: todosCopy,
             textValue: ""
-         })
+         }, this.storeData)
+
       }
 
    }
@@ -102,7 +102,7 @@ showData = async() => {
 
       this.setState({
          todos: todosCopy
-      })
+      }, this.storeData)
    }
 
    changeStatus(index) {
@@ -118,19 +118,24 @@ showData = async() => {
 
       this.setState({
          todos: todosCopy
-      })
+      }, this.storeData)
    }
 
 
+   changeDate = (date) => {
+      this.setState({
+         activeDate: date
+      }, this.showData)
+   }
+
 
    render() {
-      console.log(this.state.todos);
+
       return (
 
             <View style={styles.container}>
                <View style={{flex: 1, marginTop: 22}}>
-                  <Button title= "Save data" onPress={this.storeData.bind(this)}/>
-                  <Button title= "Show data" onPress={this.showData.bind(this)}/>
+                  <Calendar onSelectDate={this.changeDate}/>
                   <FlatList
                      data={this.state.todos}
                      extraData={this.state}
