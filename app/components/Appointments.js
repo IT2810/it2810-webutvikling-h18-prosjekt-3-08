@@ -19,19 +19,22 @@ export default class Appointments extends React.Component {
                 },
                 {
                     name: "Meeting",
-                    date: "2018-10-09",
+                    date: "2018-10-10",
                     time: "",
-                    desc: "HS"                },
+                    desc: "HS"
+                },
                 {
                     name: "Fylla",
-                    date: "2018-10-09",
+                    date: "2018-10-11",
                     time: "",
-                    desc: "Med $nek"                },
+                    desc: "Med $nek"
+                },
                 {
                     name: "Sove",
-                    date: "2018-10-09",
+                    date: "2018-10-12",
                     time: "",
-                    desc: ";)"                },
+                    desc: ";)"
+                },
             ],
 
             textValue: ""
@@ -39,19 +42,6 @@ export default class Appointments extends React.Component {
     }
 
     addAppointment() {
-        if (this.state.textValue !== "") {
-            let appointmentsCopy = this.state.appointments;
-            let t = this.state.textValue;
-            let newTodo = {
-                date: t,
-                desc: "??"
-            }
-            appointmentsCopy.push(newTodo)
-            this.setState({
-                appointments: appointmentsCopy,
-                textValue: ""
-            })
-        }
 
     }
 
@@ -63,8 +53,8 @@ export default class Appointments extends React.Component {
 
 
     deleteAppointment(index){
-        let appointmentCopy = []
-        if (this.state.todos.length > 1){
+        let appointmentCopy = [];
+        if (this.state.appointments.length > 1){
             appointmentCopy = this.state.appointments;
             appointmentCopy.splice(index, 1)
         }
@@ -78,25 +68,12 @@ export default class Appointments extends React.Component {
     }
 
     updateAppointment(index) {
-        let appointmentCopy = this.state.appointments[index];
-        if (appointmentCopy.status == 'Done'){
-            appointmentCopy.status = 'Pending'
-        }
-        else {
-            todoCopy.status = 'Done'
-        }
-        let todosCopy = this.state.todos;
-        todosCopy[index] = todoCopy;
-
-        this.setState({
-            todos: todosCopy
-        })
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <View style={{flex: 1, marginTop: 22}}>
+                <View style={{flex: 1, marginTop: 22, borderBottomWidth: 0}}>
                     <FlatList
                         data={this.state.appointments}
                         keyExtractor={item => item.date}
@@ -104,18 +81,11 @@ export default class Appointments extends React.Component {
                             let i = index;
                             return (
                                 <TouchableOpacity>
-                                    <View style={styles.appointmentItem}>
+                                    <View style={styles.appointmentItem} onPress= { () => AppointmentItem}>
                                         <Text style={styles.textStyle}>{item.name}</Text>
-                                        <TouchableOpacity
-                                            style={styles.status}
-                                            onPress = { () => this.updateAppointment(i)}
-                                        >
-                                            <Text style={styles.textStyle} >{item.date}</Text>
-                                        </TouchableOpacity>
                                     </View>
-
                                     <TouchableOpacity onPress={ () => this.deleteAppointment(i)} style = {styles.appointmentDelete}>
-                                        <Text>D</Text>
+                                        <Text style={styles.textStyle2}>X</Text>
                                     </TouchableOpacity>
                                 </TouchableOpacity>
                             )
@@ -148,15 +118,25 @@ const DismissKeyboard = ({children}) => (
 
 
 const styles = StyleSheet.create({
+
    container: {
       flex: 1,
       backgroundColor: '#fff',
+       position: 'absolute',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+       width: '100%',
+       height: '100%'
+
+
    },
     textStyle: {
         alignSelf: 'flex-start',
         fontSize: 16
+    },
+    textStyle2: {
+       alignSelf: 'flex-end',
+       color: "white"
     },
     status: {
         position: 'absolute',
@@ -165,7 +145,8 @@ const styles = StyleSheet.create({
     },
     appointmentItem: {
         flex: 1,
-        alignItems: 'center',
+        width: '100%',
+        alignItems: 'flex-start',
         borderColor: '#ddd',
         borderBottomWidth: 1,
         padding: 20,
@@ -174,14 +155,15 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
     appointmentDelete: {
+        flex: 10,
         position: 'absolute',
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'blue',
+        alignItems: 'flex-end',
+        backgroundColor: 'black',
         padding: 10,
         top: 10,
         bottom: 10,
-        right: 10
+        right: 0,
     },
     footer: {
         bottom: 0,
@@ -189,5 +171,5 @@ const styles = StyleSheet.create({
         right: 0,
         zIndex: 10,
     },
-    
+
 })
