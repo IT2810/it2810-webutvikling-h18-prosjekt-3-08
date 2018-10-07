@@ -45,13 +45,14 @@ export const Tabs = createMaterialTopTabNavigator({
    }},
    {
       initialRouteName: 'Appointments',
+      swipeEnabled: false,
       //tabBarPosition: 'bottom',
       tabBarOptions: {
          activeTintColor: 'orange',
          inactiveTintColor: 'grey',
          showIcon: true,
          style: {
-            backgroundColor: '#fff'
+            backgroundColor: '#fff',
          }
       }
    }
