@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment'; // For å håndtere/formatere valgt dato
+import { Ionicons } from '@expo/vector-icons';
 
 export default class Calendar extends React.Component {
 
@@ -37,8 +38,17 @@ export default class Calendar extends React.Component {
    render() {
       return (
          <View style={styles.container}>
-            <Button title="Show calendar " onPress={this.showPicker}/>
-            <DateTimePicker date={this.state.chosenDate} isVisible={this.state.isVisible} onConfirm={this.handlePicker} onCancel={this.hidePicker}/>
+            <TouchableOpacity onPress={this.showPicker} >
+               <View style={{paddingHorizontal: 10}}>
+                  <Ionicons name="md-calendar" size={24} />
+               </View>
+            </TouchableOpacity>
+            <DateTimePicker
+               date={this.state.chosenDate}
+               isVisible={this.state.isVisible}
+               onConfirm={this.handlePicker}
+               onCancel={this.hidePicker}
+            />
          </View>);
    }
 }

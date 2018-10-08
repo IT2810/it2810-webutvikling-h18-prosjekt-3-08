@@ -8,7 +8,6 @@ import TodoItem from './TodoItem';
 import Calendar from './Calendar';
 
 
-// TODO: Unik key for hver todo
 // TODO: Koble knappen fra TabNavigator til kalenderen
 // TODO: Keyboard overlapper fortsatt tekstinput-feltet
 
@@ -20,6 +19,7 @@ export default class Todos extends React.Component {
       super()
       this.deleteTodo = this.deleteTodo.bind(this)
       this.changeStatus = this.changeStatus.bind(this)
+      this.addTodo = this.addTodo.bind(this)
 
       date = this.getCurrentDate()
 
@@ -52,7 +52,7 @@ export default class Todos extends React.Component {
 
   storeData = async () => {
      try {
-       await AsyncStorage.setItem(this.state.activeDate, JSON.stringify(this.state.todos));
+       await AsyncStorage.setItem(this.state.activeDate+'t', JSON.stringify(this.state.todos));
      } catch (error) {
         alert("Error")
      }
@@ -60,7 +60,7 @@ export default class Todos extends React.Component {
 
    retrieveData = async() => {
       try {
-          let array = await AsyncStorage.getItem(this.state.activeDate);
+          let array = await AsyncStorage.getItem(this.state.activeDate+'t');
 
           if (array !== null) {
             let todos = JSON.parse(array)
@@ -79,19 +79,23 @@ export default class Todos extends React.Component {
 
    }
 
+
    addTodo() {
+
       if (this.state.textValue != "") {
          Keyboard.dismiss()
          let todosCopy = this.state.todos
          let t = this.state.textValue
          let newTodo = {
+            key: new Date().toString(),
             task: t,
             status: "Pending"
          }
          todosCopy.splice(0, 0, newTodo)
          this.setState({
             todos: todosCopy,
-            textValue: ""
+            textValue: "",
+
          }, this.storeData)
 
       }
@@ -135,16 +139,23 @@ export default class Todos extends React.Component {
 
 
    render() {
-      //console.log(this.state.todos);
+      console.log(this.state.todos);
       return (
 
             <View style={styles.container}>
                <View style={{flex: 1, marginTop: 22}}>
-                  <Calendar onSelectDate={this.changeDate}/>
+                  <View style={styles.header}>
+                     <Text>
+                        {this.state.activeDate}
+                     </Text>
+                     <Calendar style= {styles.calendar} onSelectDate={this.changeDate}/>
+                     <Button title= "Get timestamp" onPress= {() => console.log(new Date())}/>
+                  </View>
+
                   <FlatList
                      data={this.state.todos}
                      extraData={this.state}
-                     keyExtractor={item => item.task}
+
                      renderItem={({item, index}) => {
                         let i = index
                         return (
@@ -163,7 +174,7 @@ export default class Todos extends React.Component {
                         placeholder="Add a todo"
                         onChangeText={(value) => this.onChangeText(value)}
                         returnKeyType="go"
-                        onSubmitEditing={this.addTodo.bind(this)}
+                        onSubmitEditing={this.addTodo}
                      />
                   </KeyboardAvoidingView>
                </View>
@@ -188,6 +199,13 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
 
+   },
+   header: {
+      flexDirection: 'row',
+
+   },
+   calendar: {
+      alignSelf: 'flex-end'
    },
    todoItem: {
       flex: 1,
