@@ -2,10 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View, TextInput, FlatList,
     TouchableOpacity, TouchableWithoutFeedback,
      Keyboard, KeyboardAvoidingView, Button, AsyncStorage } from 'react-native';
-import moment from 'moment'; // To å håndtere/formatere valgt dato
+import moment from 'moment'; // For å håndtere/formatere valgt dato
 
 import TodoItem from './TodoItem';
 import Calendar from './Calendar';
+
+
+// TODO: Unik key for hver todo
+// TODO: Koble knappen fra TabNavigator til kalenderen
+// TODO: Keyboard overlapper fortsatt tekstinput-feltet
+
 
 
 export default class Todos extends React.Component {
@@ -22,6 +28,10 @@ export default class Todos extends React.Component {
          activeDate: date,
          textValue: "",
       }
+   }
+
+   componentDidMount(){
+      this.retrieveData()
    }
 
    getCurrentDate() {
@@ -48,7 +58,7 @@ export default class Todos extends React.Component {
      }
   }
 
-   showData = async() => {
+   retrieveData = async() => {
       try {
           let array = await AsyncStorage.getItem(this.state.activeDate);
 
@@ -119,12 +129,13 @@ export default class Todos extends React.Component {
    changeDate = (date) => {
       this.setState({
          activeDate: date
-      }, this.showData)
+      }, this.retrieveData)
    }
 
 
-   render() {
 
+   render() {
+      //console.log(this.state.todos);
       return (
 
             <View style={styles.container}>
@@ -144,7 +155,7 @@ export default class Todos extends React.Component {
                               handleTodoDelete = {this.deleteTodo}/>
                            )}}
                   />
-               // TODO: Keyboard overlapper fortsatt textinput
+
                   <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                      <TextInput
                         style={styles.textInput}

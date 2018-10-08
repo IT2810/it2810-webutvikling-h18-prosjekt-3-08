@@ -82,6 +82,22 @@ export const Stack = createStackNavigator({
    }
 })
 
+export const ContactsStack = createStackNavigator({
+   TabNavigator: {
+      screen: Contacts,
+      navigationOptions: ({navigation}) => ({
+         title: 'CONTACTS',
+         headerLeft: (
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+               <View style={{paddingHorizontal: 10}}>
+                  <Ionicons name="md-menu" size={24} />
+               </View>
+            </TouchableOpacity>
+         ),
+      })
+   }
+})
+
 const CustomDrawerComponent = (props) => (
    <SafeAreaView style={{ flex: 1}}>
       <View style={styles.sideMenuTop}>
@@ -98,7 +114,7 @@ const CustomDrawerComponent = (props) => (
 
 export const Drawer = createDrawerNavigator({
    MyDay: Stack,
-   Contacts: Contacts
+   Contacts: ContactsStack
 }, {
    contentComponent: CustomDrawerComponent
 })

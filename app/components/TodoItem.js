@@ -5,10 +5,7 @@ import Swipeout from 'react-native-swipeout';
 
 
 export default class TodoItem extends React.Component {
-
-
    render() {
-
       const swipeSettings = {
          autoClose: true,
          right: [
@@ -20,9 +17,6 @@ export default class TodoItem extends React.Component {
          ],
 
       }
-
-
-
 
       let statusStyle = this.props.item.status === 'Done' ? styles.done : styles.pending
       let todoTextStyle = this.props.item.status === 'Done' ? styles.finishedTodo_textStyle : styles.textStyle

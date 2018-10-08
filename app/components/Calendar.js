@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import moment from 'moment'; // To å håndtere/formatere valgt dato
+import moment from 'moment'; // For å håndtere/formatere valgt dato
 
 export default class Calendar extends React.Component {
 
@@ -9,7 +9,7 @@ export default class Calendar extends React.Component {
       super()
       this.state = {
          isVisible: false,
-         chosenDate: ''
+         chosenDate: new Date()
       }
    }
 
@@ -17,7 +17,7 @@ export default class Calendar extends React.Component {
       formatedDate = moment(date).format('YYYY-MM-DD')
       this.setState({
          isVisible: false,
-         chosenDate: formatedDate
+         chosenDate: date
       })
       this.props.onSelectDate(formatedDate)
    }
@@ -38,7 +38,7 @@ export default class Calendar extends React.Component {
       return (
          <View style={styles.container}>
             <Button title="Show calendar " onPress={this.showPicker}/>
-            <DateTimePicker isVisible={this.state.isVisible} onConfirm={this.handlePicker} onCancel={this.hidePicker}/>
+            <DateTimePicker date={this.state.chosenDate} isVisible={this.state.isVisible} onConfirm={this.handlePicker} onCancel={this.hidePicker}/>
          </View>);
    }
 }
