@@ -20,19 +20,24 @@ export default class Todos extends React.Component {
       this.deleteTodo = this.deleteTodo.bind(this)
       this.changeStatus = this.changeStatus.bind(this)
       this.addTodo = this.addTodo.bind(this)
+      this.setTextDate = this.setTextDate.bind(this)
 
       date = this.getCurrentDate()
+
 
       this.state = {
          todos: [],
          activeDate: date,
          textValue: "",
+         textDate: "",
       }
    }
 
    componentDidMount(){
       this.retrieveData()
+      this.setTextDate()
    }
+
 
    getCurrentDate() {
       date = new Date()
@@ -59,6 +64,10 @@ export default class Todos extends React.Component {
   }
 
    retrieveData = async() => {
+      // retrieveData er callback-funksjon i changeDate()-metoden
+      // Kaller derfor setTextDate her for å sikre at den kjøres etter daten i state er endret
+      this.setTextDate()
+
       try {
           let array = await AsyncStorage.getItem(this.state.activeDate+'t');
 
@@ -134,22 +143,81 @@ export default class Todos extends React.Component {
       this.setState({
          activeDate: date
       }, this.retrieveData)
+
+   }
+
+   setTextDate(){
+      let d = this.state.activeDate
+      let date = ""
+      let month = ""
+      switch (d.substring(5, 7)) {
+         case '01':
+            month = "January"
+            break;
+         case '02':
+            month = "February"
+            break;
+         case '03':
+            month = "March"
+            break;
+         case '04':
+            month = "April"
+            break;
+         case '05':
+            month = "May"
+            break;
+         case '06':
+            month = "June"
+            break;
+         case '07':
+            month = "July"
+            break;
+         case '08':
+            month = "August"
+            break;
+         case '09':
+            month = "September"
+            break;
+         case '10':
+            month = "October"
+            break;
+         case '11':
+            month = "November"
+            break;
+         case '12':
+            month = "Desember"
+            break;
+         default:
+            month = "Month"
+      }
+
+      let day = ""
+      if (d.charAt(8) == '0'){
+         day = d.charAt(9)
+      }
+      else {
+         day = d.substring(8,10)
+      }
+      date += day + " of " + month + " " + d.substring(0, 4)
+
+      this.setState({
+         textDate: date
+      })
    }
 
 
 
    render() {
-      console.log(this.state.todos);
-      return (
 
+      //console.log(this.state.todos);
+      return (
             <View style={styles.container}>
                <View style={{flex: 1, marginTop: 22}}>
                   <View style={styles.header}>
-                     <Text>
-                        {this.state.activeDate}
+                     <Text style={styles.date}>
+                        {this.state.textDate}
                      </Text>
                      <Calendar style= {styles.calendar} onSelectDate={this.changeDate}/>
-                     <Button title= "Get timestamp" onPress= {() => console.log(new Date())}/>
                   </View>
 
                   <FlatList
@@ -202,10 +270,19 @@ const styles = StyleSheet.create({
    },
    header: {
       flexDirection: 'row',
-
+      borderBottomWidth: 3,
+      alignItems: 'center',
+      justifyContent: 'center'
+   },
+   date: {
+      fontSize: 15,
+      alignSelf: 'center',
+      marginBottom: 3,
+      paddingLeft: 30
    },
    calendar: {
-      alignSelf: 'flex-end'
+      alignSelf: 'flex-end',
+      marginBottom: 3,
    },
    todoItem: {
       flex: 1,
@@ -250,7 +327,17 @@ const styles = StyleSheet.create({
    },
    textInput: {
       margin: 20,
-      marginBottom: 0,
+      marginBottom: 160,
+      height: 40,
+      color: 'red',
+      padding: 5,
+      backgroundColor: '#fff',
+      borderTopWidth: 2,
+      borderTopColor: '#ededed',
+   },
+   textInput_keyboard_open: {
+      margin: 20,
+      marginBottom: 160,
       height: 40,
       color: 'red',
       padding: 5,
