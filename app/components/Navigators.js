@@ -9,42 +9,59 @@ import { StyleSheet, Text, View,
 import { Ionicons } from '@expo/vector-icons';
 
 // Navigators
-import {createDrawerNavigator,
-   createStackNavigator,
-   createTabNavigator,
-   createMaterialTopTabNavigator,
-   DrawerItems
-   } from 'react-navigation';
+import {
+    createDrawerNavigator,
+    createStackNavigator,
+    createTabNavigator,
+    createMaterialTopTabNavigator,
+    DrawerItems, StackNavigator,
+} from 'react-navigation';
 
 // TabNavigator screens
 import Todos from './Todos';
 import Appointments from './Appointments';
 
 // Contacts
-import Contacts from './Contacts'
+import Contacts from './Contacts';
+import AddAppointment from "./AddAppointment";
+
+
+// Finn en måte å legge AddAppointmentScreen-navigator inne i appointmenten.
+// Usikkert om det går. Eventuelt prøv på nytt å finne en løsning inne i appointment.js.
+// Skal bruke en stack-navigator inne i Appointments, som trigges av en knapp. Når denne knappen trykkes skal
+// man sendes til appAppointment. For å komme tilbake må man trykke på enten: knapp i meny, en tilbake-knapp,
+// eller legge til en valid appointment.
+
+
+export const AppointmentStackNavigator = createStackNavigator({
+    Appointments: {screen: Appointments},
+    AddAppointment: {screen : AddAppointment}
+})
+
 
 
 export const Tabs = createMaterialTopTabNavigator({
-   Appointments: {
-      screen: Appointments,
-      navigationOptions: {
-         tabBarLabel: 'Appointments',
-         tabBarIcon: ({tintColor}) => (
-            <Ionicons name='md-clipboard' color={tintColor} size={24} />
-         )
-      }
-   },
-   Todos: {
-      screen: Todos,
-      navigationOptions: {
-         tabBarLabel: 'Todos',
-         tabBarIcon: ({tintColor}) => (
-            <Ionicons name='ios-list' color={tintColor} size={24} />
-         )
-      }
-   }},
+    AppointmentStack : {
+        screen: AppointmentStackNavigator,
+        navigationOptions: {
+            tabBarLabel: 'Appointments',
+            tabBarIcon: ({tintColor}) => (
+                <Ionicons name='md-clipboard' color={tintColor} size={24} />
+            )
+        }
+    },
+    Todos: {
+        screen: Todos,
+        navigationOptions: {
+            tabBarLabel: 'Todos',
+            tabBarIcon: ({tintColor}) => (
+                <Ionicons name='ios-list' color={tintColor} size={24} />
+            )
+        }
+    }
+},
    {
-      initialRouteName: 'Appointments',
+      initialRouteName: 'AppointmentStack',
       //tabBarPosition: 'bottom',
       tabBarOptions: {
          activeTintColor: 'orange',
@@ -55,7 +72,10 @@ export const Tabs = createMaterialTopTabNavigator({
          }
       }
    }
-)
+);
+
+
+
 
 export const Stack = createStackNavigator({
    TabNavigator: {
@@ -71,7 +91,8 @@ export const Stack = createStackNavigator({
          )
       })
    }
-})
+});
+
 
 const CustomDrawerComponent = (props) => (
    <SafeAreaView style={{ flex: 1}}>
@@ -85,14 +106,15 @@ const CustomDrawerComponent = (props) => (
          <DrawerItems {...props} />
       </ScrollView>
    </SafeAreaView>
-)
+);
 
 export const Drawer = createDrawerNavigator({
    MyDay: Stack,
    Contacts: Contacts
 }, {
    contentComponent: CustomDrawerComponent
-})
+});
+
 
 const styles = StyleSheet.create({
    container: {
@@ -112,4 +134,4 @@ const styles = StyleSheet.create({
       width: 120,
       borderRadius: 60,
    }
-})
+});

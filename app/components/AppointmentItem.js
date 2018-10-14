@@ -1,25 +1,77 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native';
 
 
 
 export default class AppointmentItem extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.icons = {
+            'up'    : '.app/assets/up-arrow.png',
+            'down'  : '.app/assets/down-arrow.png'
+        };
+        this.state = {
+            title       : props.name,
+            expanded    : true,
+            animation   : new Animated.Value()
+
+        };
 
 
     }
 
+    toggle(){
+        let initialValue = this.state.expanded ? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
+            finalValue = this.state.expanded ? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
+        this.setState({
+            expanded: !this.state.expanded
+        })
+        this.state.animation.setValue(initialValue);
+        Animated.spring(
+            this.state.animation,
+            {toValue: finalValue}
+        ).start();
+    }
+
+    setMaxHeight(event){
+        this.setState({
+            maxHeight : event.nativeEvent.layout.height
+        })
+    }
+    setMinHeight(event){
+        this.setState({
+            minHeight : event.nativeEvent.layout.height
+        })
+    }
+
+
     render() {
+        let icon = this.icons['down'];
+        if(this.state.expanded){
+            icon = this.icons['up'];
+        }
         return (
-            <View>
-                <View>
-
+            <Animated.View style={[styles.container, {height: this.state.animation}]}>
+                <View style={styles.container} onLayout ={this.setMinHeight.bind(this)}>
+                    <TouchableOpacity onPress={this.toggle.bind(this)}>
+                        <View style={styles.time}>
+                            <Text>{this.getTime(item)}</Text>
+                        </View>
+                        <View style={styles.appointmentItem} >
+                            <Text style={styles.textStyle}>{item.name}</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
-            </View>
-
-    );
+                <View style={styles.container} onLayout ={this.setMaxHeight.bind(this)}>
+                    <TouchableOpacity onPress={this.toggle.bind(this)}>
+                        <View style={styles.appointmentItem} >
+                            <Text style={styles.textStyle}>{item.description}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </Animated.View>
+            );
     }
 }
 
@@ -28,13 +80,20 @@ export default class AppointmentItem extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        margin: 10,
     },
-    appointments: {
-        position: 'relative',
+    appointmentItem: {
+        marginLeft: '15%',
+        marginRight: '10%',
+        flex: 1,
+        width: '100%',
+        alignItems: 'flex-start',
+        borderColor: '#ddd',
+        borderBottomWidth: 1,
         padding: 20,
-        paddingRight: 10,
-        borderBottomWidth: 2,
-        borderBottomColor: '#ededed'
+        backgroundColor: "#fff",
+        justifyContent: 'center',
+        flexDirection: 'column'
     },
     appointmentText: {
         paddingLeft: 20,

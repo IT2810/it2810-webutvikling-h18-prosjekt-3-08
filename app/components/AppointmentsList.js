@@ -2,7 +2,10 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, Button, FlatList, TextInput, TouchableOpacity, Alert} from 'react-native';
 import AppointmentItem from './AppointmentItem';
 import AppointmentSetTime from'./AppointmentSetTime';
+import {StackNavigator} from 'react-navigation';
+import Appointments from './Appointments';
 import AddAppointment from "./AddAppointment";
+import {AppointmentStack} from './Navigators'
 
 
 //TODO: Gjøre AppointmentItem expanding ved klikk på en knapp.
@@ -10,7 +13,7 @@ import AddAppointment from "./AddAppointment";
 
 
 
-export default class Appointments extends React.Component {
+export default class AppointmentsList extends React.Component {
 
 
     constructor(){
@@ -85,35 +88,43 @@ export default class Appointments extends React.Component {
         return  item.start + ' - ' + item.end;
     }
 
+    setTime(time) {
+        console.log(time)
+    }
+
+
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <View style = {styles.container}>
-                <View style={{flex: 1, marginTop: 22, borderBottomWidth: 0}}>
-                    <FlatList
-                        data={this.state.appointments}
-                        keyExtractor={item => item.date}
-                        renderItem={({item, index}) => {
-                            let i = index;
-                            return (
-                                <AppointmentItem
-                                    item={item}
-                                    i = {i}
-                                />
-                            )
-                        }}
-                    >
-                    </FlatList>
+                <View style = {styles.container}>
+                    <View style={{flex: 1, marginTop: 22, borderBottomWidth: 0}}>
+                        <FlatList
+                            data={this.state.appointments}
+                            keyExtractor={item => item.date}
+                            renderItem={({item, index}) => {
+                                let i = index;
+                                return (
+                                    <AppointmentItem
+                                        item={item}
+                                        i = {i}
+                                    />
+                                )
+                            }}
+                        >
+                        </FlatList>
+                    </View>
+                    <View style = {styles.appendButtonContainer}>
+                    </View>
+                    <Button
+                        title="Add appointment"
+                        onPress = {() => navigate('AddAppointment')}/>
                 </View>
-                <View style = {styles.appendButtonContainer}>
-                </View>
-                <Button
-                    title="Add appointment"
-                    onPress = {() => navigate('AddAppointment')}/>
-            </View>
         );
     }
 }
+
+//Sett in time-component istedenfor button over her.
+//Bruk boolean til å finne ut om det er start eller slutt-tid som settes
 
 const DismissKeyboard = ({children}) => (
     <TouchableWithoutFeedback
