@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, FlatList,
     TouchableOpacity, TouchableWithoutFeedback,
      Keyboard, KeyboardAvoidingView, Button, AsyncStorage } from 'react-native';
 import moment from 'moment'; // For å håndtere/formatere valgt dato
+import { Ionicons } from '@expo/vector-icons';
 
 import TodoItem from './TodoItem';
 import Calendar from './Calendar';
@@ -62,16 +63,20 @@ export default class Todos extends React.Component {
 
 
   storeData = async () => {
-     try {
-       await AsyncStorage.setItem(this.state.activeDate+'t', JSON.stringify(this.state.todos));
-     } catch (error) {
-        alert("Error")
-     }
+    // storeData er callback-funksjon i funksjoner som kan påvirke perfectDay
+    // Kaller derfor updatePerfectDay her for å sikre at den oppdateres etter staten er endret
+    this.updatePerfectDay()
+    
+    try {
+      await AsyncStorage.setItem(this.state.activeDate+'t', JSON.stringify(this.state.todos));
+    } catch (error) {
+      alert("Error")
+    }
   }
 
    retrieveData = async() => {
       // retrieveData er callback-funksjon i changeDate()-metoden
-      // Kaller derfor setTextDate her for å sikre at den kjøres etter daten i state er endret
+      // Kaller derfor setTextDate her for å sikre at den oppdateres etter staten er endret
       this.setTextDate()
 
       try {
@@ -91,7 +96,6 @@ export default class Todos extends React.Component {
       } catch (error) {
          alert("Error")
       }
-
    }
 
 
@@ -115,7 +119,6 @@ export default class Todos extends React.Component {
 
          this.updatePerfectDay()
       }
-
    }
 
 
@@ -132,8 +135,6 @@ export default class Todos extends React.Component {
       this.setState({
          todos: todosCopy
       }, this.storeData)
-
-      this.updatePerfectDay()
    }
 
    changeStatus(index) {
@@ -156,7 +157,6 @@ export default class Todos extends React.Component {
       }, this.retrieveData)
 
       this.updatePerfectDay()
-
    }
 
    setTextDate(){
@@ -234,26 +234,33 @@ export default class Todos extends React.Component {
             return;
           }
         }
+        if (!this.state.perfectDay){
+          alert("Congratulations! You have completed all your todos this day, and have achieved a Perfect Day!")
+        }
         this.setState({
         perfectDay: true
       })
+      
      }
-    
    }
 
 
    render() {
-      console.log(this.state.perfectDay);
-      console.log(this.state.todos)
+     
+      let starColor = this.state.perfectDay ? 'orange' : 'grey'
+
       return (
             <View style={styles.container}>
                <View style={{flex: 1, marginTop: 22}}>
                   <View style={styles.header}>
+                    <Calendar style= {styles.calendar} onSelectDate={this.changeDate}/>
                      <Text style={styles.date}>
                         {this.state.textDate}
                      </Text>
-                     <Calendar style= {styles.calendar} onSelectDate={this.changeDate}/>
-                     <Text>{this.state.perfectDay}</Text>
+                     
+                     <View style={styles.star}>
+                        <Ionicons name="md-star" color= {starColor} size={24} />
+                     </View>
                   </View>
 
                   <FlatList
@@ -309,18 +316,23 @@ const styles = StyleSheet.create({
    header: {
       flexDirection: 'row',
       borderBottomWidth: 1,
-      alignItems: 'center',
-      justifyContent: 'center'
+
+
    },
    date: {
       fontSize: 15,
       alignSelf: 'center',
       marginBottom: 3,
-      paddingLeft: 30
+      paddingLeft: 5,
    },
    calendar: {
-      alignSelf: 'flex-end',
+      alignSelf: 'flex-start',
+      paddingLeft: 0,
       marginBottom: 3,
+   },
+   star: {
+    paddingLeft: 170,
+    marginBottom: 3
    },
    todoItem: {
       flex: 1,

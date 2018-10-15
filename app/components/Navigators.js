@@ -70,17 +70,22 @@ export const Stack = createStackNavigator({
                </View>
             </TouchableOpacity>
          ),
-         headerRight: (
-            <TouchableOpacity onPress={() => alert("test")} >
-               <View style={{paddingHorizontal: 10}}>
-                  <Ionicons name="md-calendar" size={24} />
-               </View>
-            </TouchableOpacity>
-
-         )
+        
       })
    }
 })
+
+/*
+headerRight: (
+    <TouchableOpacity onPress={() => alert("test")} >
+       <View style={{paddingHorizontal: 10}}>
+          <Ionicons name="md-calendar" size={24} />
+       </View>
+    </TouchableOpacity>
+
+ )
+ */
+
 
 export const ContactsStack = createStackNavigator({
    TabNavigator: {
