@@ -15,14 +15,16 @@ import Calendar from './Calendar';
 
 export default class Todos extends React.Component {
 
-   constructor(){
+
+   constructor(){ 
       super()
       this.deleteTodo = this.deleteTodo.bind(this)
       this.changeStatus = this.changeStatus.bind(this)
       this.addTodo = this.addTodo.bind(this)
       this.setTextDate = this.setTextDate.bind(this)
+      this.updatePerfectDay = this.updatePerfectDay.bind(this)
 
-      date = this.getCurrentDate()
+      let date = this.getCurrentDate()
 
 
       this.state = {
@@ -30,8 +32,10 @@ export default class Todos extends React.Component {
          activeDate: date,
          textValue: "",
          textDate: "",
+         perfectDay: false
       }
    }
+
 
    componentDidMount(){
       this.retrieveData()
@@ -39,9 +43,10 @@ export default class Todos extends React.Component {
    }
 
 
+
    getCurrentDate() {
-      date = new Date()
-      formatedDate = moment(date).format('YYYY-MM-DD')
+      let date = new Date()
+      let formatedDate = moment(date).format('YYYY-MM-DD')
       return formatedDate
    }
 
@@ -54,6 +59,7 @@ export default class Todos extends React.Component {
          textValue: value
       })
    }
+
 
   storeData = async () => {
      try {
@@ -107,6 +113,7 @@ export default class Todos extends React.Component {
 
          }, this.storeData)
 
+         this.updatePerfectDay()
       }
 
    }
@@ -125,6 +132,8 @@ export default class Todos extends React.Component {
       this.setState({
          todos: todosCopy
       }, this.storeData)
+
+      this.updatePerfectDay()
    }
 
    changeStatus(index) {
@@ -136,6 +145,8 @@ export default class Todos extends React.Component {
       this.setState({
          todos: todosCopy
       }, this.storeData)
+
+      this.updatePerfectDay()
    }
 
 
@@ -143,6 +154,8 @@ export default class Todos extends React.Component {
       this.setState({
          activeDate: date
       }, this.retrieveData)
+
+      this.updatePerfectDay()
 
    }
 
@@ -205,11 +218,33 @@ export default class Todos extends React.Component {
       })
    }
 
+   updatePerfectDay() {
+     var todos = this.state.todos
+     if (todos.length === 0) {
+       this.setState({
+         perfectDay: false
+       })
+     }
+     else {
+        for (var i = 0; i < todos.length; i++) {
+          if (todos[i].status === "Pending") {
+            this.setState({
+              perfectDay: false
+            })
+            return;
+          }
+        }
+        this.setState({
+        perfectDay: true
+      })
+     }
+    
+   }
 
 
    render() {
-
-      //console.log(this.state.todos);
+      console.log(this.state.perfectDay);
+      console.log(this.state.todos)
       return (
             <View style={styles.container}>
                <View style={{flex: 1, marginTop: 22}}>
@@ -218,6 +253,7 @@ export default class Todos extends React.Component {
                         {this.state.textDate}
                      </Text>
                      <Calendar style= {styles.calendar} onSelectDate={this.changeDate}/>
+                     <Text>{this.state.perfectDay}</Text>
                   </View>
 
                   <FlatList
@@ -234,8 +270,9 @@ export default class Todos extends React.Component {
                               handleTodoDelete = {this.deleteTodo}/>
                            )}}
                   />
-
+                  
                   <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
+                    
                      <TextInput
                         style={styles.textInput}
                         value={this.state.textValue}
@@ -244,6 +281,7 @@ export default class Todos extends React.Component {
                         returnKeyType="go"
                         onSubmitEditing={this.addTodo}
                      />
+                     
                   </KeyboardAvoidingView>
                </View>
 
@@ -270,7 +308,7 @@ const styles = StyleSheet.create({
    },
    header: {
       flexDirection: 'row',
-      borderBottomWidth: 3,
+      borderBottomWidth: 1,
       alignItems: 'center',
       justifyContent: 'center'
    },
@@ -294,27 +332,7 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
       flexDirection: 'column'
    },
-   textStyle: {
-      alignSelf: 'flex-start',
-      fontSize: 16
-   },
-   finishedTodo_textStyle: {
-      alignSelf: 'flex-start',
-      fontSize: 16,
-      textDecorationLine: 'line-through'
-   },
 
-   status: {
-      position: 'absolute',
-      alignItems: 'flex-start',
-      padding: 10
-   },
-   done: {
-      color: 'green'
-   },
-   pending: {
-      color: 'red'
-   },
    todoDelete: {
       position: 'absolute',
       justifyContent: 'center',
