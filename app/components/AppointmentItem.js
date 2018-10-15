@@ -15,7 +15,6 @@ export default class AppointmentItem extends React.Component {
             title       : props.name,
             expanded    : true,
             animation   : new Animated.Value()
-
         };
 
 
@@ -45,6 +44,10 @@ export default class AppointmentItem extends React.Component {
         })
     }
 
+    getTime(item){
+        return  item.startTime + ' - ' + item.endTime;
+    }
+
 
     render() {
         let icon = this.icons['down'];
@@ -56,17 +59,17 @@ export default class AppointmentItem extends React.Component {
                 <View style={styles.container} onLayout ={this.setMinHeight.bind(this)}>
                     <TouchableOpacity onPress={this.toggle.bind(this)}>
                         <View style={styles.time}>
-                            <Text>{this.getTime(item)}</Text>
+                            <Text>{this.getTime(this.props.item)}</Text>
                         </View>
                         <View style={styles.appointmentItem} >
-                            <Text style={styles.textStyle}>{item.name}</Text>
+                            <Text style={styles.textStyle}>{this.props.item.title}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.container} onLayout ={this.setMaxHeight.bind(this)}>
                     <TouchableOpacity onPress={this.toggle.bind(this)}>
                         <View style={styles.appointmentItem} >
-                            <Text style={styles.textStyle}>{item.description}</Text>
+                            <Text style={styles.textStyle}>{this.props.item.desc}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

@@ -13,63 +13,140 @@ import {
 import AppointmentSetTime from "./AppointmentSetTime";
 
 
-export default class AddAppointments extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            textValue: '',
-            startTime : true
-        }
-    }
+export default class AddAppointment extends React.Component {
+    constructor(){
+        super();
+        this.setStartTime = this.setStartTime.bind(this);
+        this.setEndTime = this.setEndTime.bind(this);
+        this.setTitle = this.setTitle.bind(this);
+        this.setDescription = this.setDescription.bind(this);
+        this.setLocation = this.setLocation.bind(this);
 
-    setTime(time) {
-    }
+        this.state = {
+            title: '',
+            startTime: '',
+            endTime: '',
+            desc: '',
+            location: '',
+            app: ''
+        }
+    };
+
+
+    setStartTime(time) {
+        this.setState ({
+            startTime: time
+        })
+    };
+
+
+    setEndTime(time) {
+        this.setState({
+            endTime: time
+        }, console.log(this.state.endTime));
+
+
+    };
+
+    setTitle(title){
+        this.setState ({
+            title: title
+        });
+
+    };
+
+    setDescription(desc){
+        this.setState ({
+            desc: desc
+        })
+    };
+
+    setLocation(location){
+        this.setState ({
+            location: location
+        })
+    };
+
+    onConfirm(){
+        console.log("inni onconfirm")
+        let t = this.state.title
+        let st = this.state.startTime
+        let et = this.state.endTime
+        let d = this.state.desc
+        let l = this.state.location
+        let newApp = {
+            key: new Date().toString(),
+            title: t,
+            startTime: st,
+            endTime: et,
+            desc: d,
+            location: l
+        }
+        this.setState({
+            app: newApp
+        })
+    };
 
     render (){
+        console.log(this.state)
         return (
             <View>
                 <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                     <TextInput
                         style={styles.textInput}
-                        value={this.state.textValue}
+                        value={this.state.title}
                         placeholder="Enter title"
-                        onChangeText={(value) => this.onChangeText(value)}
+                        onChangeText={(value) => this.setTitle(value)}
                         returnKeyType="go"
-                        onSubmitEditing={this.addTodo}
                     />
                 </KeyboardAvoidingView>
                 <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                     <TextInput
                         style={styles.textInput}
-                        value={this.state.textValue}
+                        value={this.state.desc}
                         placeholder="Enter description"
-                        onChangeText={(value) => this.onChangeText(value)}
+                        onChangeText={(value) => this.setDescription(value)}
                         returnKeyType="go"
-                        onSubmitEditing={this.addTodo}
                     />
                 </KeyboardAvoidingView>
                 <View>
-                    <Text>Pick start-time:</Text>
-                    <AppointmentSetTime onSelectTime = {this.setTime}/>
+                    <Text></Text>
+                    <AppointmentSetTime isStart = {true} onSelectTime = {this.setStartTime}/>
                 </View>
                 <View>
-                    <Text>Pick end-time:</Text>
-                    <AppointmentSetTime onSelectTime = {this.setTime}/>
+                    <Text></Text>
+                    <AppointmentSetTime isStart = {false} onSelectTime = {this.setEndTime}/>
                 </View>
                 <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                     <TextInput
                         style={styles.textInput}
-                        value={this.state.textValue}
+                        value={this.state.location}
                         placeholder="Enter location"
-                        onChangeText={(value) => this.onChangeText(value)}
+                        onChangeText={(value) => this.setLocation(value)}
                         returnKeyType="go"
-                        onSubmitEditing={this.addTodo}
                     />
                 </KeyboardAvoidingView>
+                <Button title='Confirm' onPress = {this.onConfirm.bind(this)}/>
+                <Button
+                    title="Add appointment"
+                    onPress={this.addAndNavigate.bind(this)}
+                />
             </View>
         )
     }
+
+    addAndNavigate(){
+        console.log(this.state.app)
+        this.props.navigation.state.params.addItem(this.state.app)
+        this.props.navigation.navigate('Appointments')
+
+    }
 }
+
+
+
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -103,7 +180,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textDecorationLine: 'line-through'
     },
-
     status: {
         position: 'absolute',
         alignItems: 'flex-start',
@@ -139,4 +215,4 @@ const styles = StyleSheet.create({
         flex: 1,
     }
 
-})
+});

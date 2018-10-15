@@ -34,10 +34,19 @@ import AddAppointment from "./AddAppointment";
 
 
 export const AppointmentStackNavigator = createStackNavigator({
-    Appointments: {screen: Appointments},
-    AddAppointment: {screen : AddAppointment}
-})
-
+    Appointments: {screen: Appointments,
+    },
+    AddAppointment: {screen : AddAppointment},
+    },
+    {
+    headerMode: 'none',
+    navigationOptions: {
+        headerStyle: {
+            marginTop: Expo.Constants.statusBarHeight
+            }
+        }
+    }
+);
 
 
 export const Tabs = createMaterialTopTabNavigator({

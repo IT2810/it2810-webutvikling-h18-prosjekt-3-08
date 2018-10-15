@@ -1,12 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, Button, FlatList, TextInput, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, Button, FlatList} from 'react-native';
 import AppointmentItem from './AppointmentItem';
-import AppointmentSetTime from'./AppointmentSetTime';
 import AddAppointment from "./AddAppointment";
+import moment from 'moment'
 
 
 //TODO: Gjøre AppointmentItem expanding ved klikk på en knapp.
-//TODO: Lage funksjonalitet for å legge til en apppointment.
+//TODO: Lage funksjonalitet for å legge til en appointment.
 
 
 
@@ -17,17 +17,27 @@ export default class Appointments extends React.Component {
         super();
         this.deleteAppointment = this.deleteAppointment.bind(this);
         this.updateAppointment = this.updateAppointment.bind(this);
+
+        let date = this.getCurrentDate()
+
         this.state = {
             appointments: [],
-            date: '',
-            name: '',
-            startTime: '',
-            endTime: '',
-            desc: '',
-            location: '',
+            activeDate: date
         };
     }
+    /*
+    static navigationOptions = {
+        title: this.state.date,
+    };
 
+    */
+
+
+    getCurrentDate() {
+        let date = new Date()
+        let formatedDate = moment(date).format('YYYY-MM-DD')
+        return formatedDate
+    }
 
     storeData = async () => {
         try {
@@ -36,7 +46,6 @@ export default class Appointments extends React.Component {
             // Error saving data
         }
     }
-
 
 
     retrieveData = async() => {
@@ -59,7 +68,25 @@ export default class Appointments extends React.Component {
     };
 
 
-    addAppointment() {
+    addAppointment(title, desc, start, end, loc) {
+        console.log(title);
+        console.log(desc);
+        console.log(start);
+        console.log(end);
+        console.log(loc)
+
+    }
+
+
+    componentWillMount(){
+        console.log('hei');
+        this.addAppointment(
+            this.props.navigation.state.title,
+            this.props.navigation.state.desc,
+            this.props.navigation.state.startTime,
+            this.props.navigation.state.endTime,
+            this.props.navigation.state.location
+        )
     }
 
     deleteAppointment(index){
@@ -81,39 +108,48 @@ export default class Appointments extends React.Component {
     }
 
 
+
     getTime(item){
         return  item.start + ' - ' + item.end;
     }
 
+
+    // Pass inn handleToDelete, sjekk Ax sin kode
     render() {
+        console.log(this.state.appointments);
+        console.log('Inni render');
         const {navigate} = this.props.navigation;
         return (
             <View style = {styles.container}>
                 <View style={{flex: 1, marginTop: 22, borderBottomWidth: 0}}>
                     <FlatList
                         data={this.state.appointments}
-                        keyExtractor={item => item.date}
+                        extraData = {this.state}
                         renderItem={({item, index}) => {
                             let i = index;
+                            let it = item;
                             return (
                                 <AppointmentItem
-                                    item={item}
                                     i = {i}
+                                    item={it}
                                 />
                             )
                         }}
-                    >
-                    </FlatList>
+                    />
                 </View>
                 <View style = {styles.appendButtonContainer}>
                 </View>
                 <Button
                     title="Add appointment"
-                    onPress = {() => navigate('AddAppointment')}/>
+                    onPress = {() => navigate('AddAppointment',
+                        {addItem: item => this.setState(prevState => ({ appointments: prevState.appointments.concat([item]) }))
+                    })}/>
             </View>
         );
     }
 }
+
+
 
 const DismissKeyboard = ({children}) => (
     <TouchableWithoutFeedback
