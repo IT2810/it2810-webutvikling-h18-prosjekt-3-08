@@ -69,6 +69,7 @@ export default class AddContacat extends React.Component {
                 <Button 
                     title="Add Contact"
                     onPress={this.addAndNavigate.bind(this)}
+                    style={{margin: 40}}
                 />
           </View>
       )

@@ -40,8 +40,8 @@ export default class Todos extends React.Component {
 
 
    componentDidMount(){
-      this.retrieveTodos()
       this.retrievePerfectDays()
+      this.retrieveTodos()
       this.setTextDate()
       
    }
@@ -263,15 +263,20 @@ export default class Todos extends React.Component {
 
    updatePerfectDay() {
 
-     var todos = this.state.todos
-     if (todos.length === 0) {
-       this.setState({
-         perfectDay: false
-       })
-     }
+    let perfectDaysCopy = this.state.perfectDays
+    let index = perfectDaysCopy.indexOf(this.state.activeDate)
+    let todos = this.state.todos
+    if (todos.length === 0) {
+      if (index !== -1){
+        perfectDaysCopy.splice(index, 1)
+      }
+      this.setState({
+        perfectDay: false,
+        perfectDays: perfectDaysCopy
+      }, this.storePerfectDays)
+    }
      else {
-        perfectDaysCopy = this.state.perfectDays
-        index = perfectDaysCopy.indexOf(this.state.activeDate)
+        
         for (var i = 0; i < todos.length; i++) {
           if (todos[i].status === "Pending") {
             if (index !== -1){
@@ -323,6 +328,7 @@ export default class Todos extends React.Component {
                   </View>
 
                   <FlatList
+                  
                      data={this.state.todos}
                      extraData={this.state}
 
