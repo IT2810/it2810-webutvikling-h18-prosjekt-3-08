@@ -1,6 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
+import { StyleSheet, View, FlatList, Button } from 'react-native';
+import { List, ListItem, SearchBar } from 'react-native-elements';
+
+
+import ContactItem from './ContactItem';;
 
 
 
@@ -8,6 +11,8 @@ export default class Contacts extends React.Component {
 
     constructor() {
         super()
+        this.deleteContact = this.deleteContact.bind(this)
+
         this.state = {
             contacts: [
                 {
@@ -15,77 +20,18 @@ export default class Contacts extends React.Component {
                     lastName: 'Harstad',
                     email: 'axel.harstad@gmail.com',
                     phoneNo: '46886146',
-                    picture: './fist_logo.jpg'
                 },
                 {
                     firstName: 'Simen',
                     lastName: 'Rekdal',
                     email: 'basketboy123@hotmail.com',
                     phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
                 },
                 {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
+                    firstName: 'Henrik',
+                    lastName: 'Roggerud',
+                    email: 'fotballerbest@hotmail.no',
                     phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
-                },
-                {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
-                    phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
-                },
-                {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
-                    phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
-                },
-                {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
-                    phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
-                },
-                {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
-                    phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
-                },
-                {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
-                    phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
-                },
-                {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
-                    phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
-                },
-                {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
-                    phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
-                },
-                {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
-                    phoneNo: '12349876',
-                    picture: './fist_logo.jpg'
                 },
 
             ]
@@ -103,26 +49,60 @@ export default class Contacts extends React.Component {
             />
         )
     }
+    renderHeader = () => {
+        return (
+            <View>
+                <SearchBar placeholder="Type here..." lightTheme round />
+                <Button 
+                    title="Add a Contact" 
+                    onPress={() => this.props.navigation.navigate('AddContact',
+                    {addItem: item => this.setState(prevState => ({ contacts: prevState.contacts.concat([item]) }))
+                    })}
+                />
+            </View>
+        )
+    }
+
+
+    deleteContact(index){
+        console.log(index);
+        
+        let contactsCopy = []
+            if (this.state.contacts.length > 1){
+                contactsCopy = this.state.contacts
+                contactsCopy.splice(index, 1)
+            }
+            else {
+                contactsCopy = []
+            }
+
+            this.setState({
+                contacts: contactsCopy
+            })
+        }
 
     render() {
-        console.log(this.state.contacts);
+        
         
         return (
+
             <View style={{backgroundColor: '#fff'}}>
                 <List containerStyle={{borderTopWidth: 0, borderBottomWidth: 0 }}>
                     <FlatList
                         data={this.state.contacts}
                         keyExtractor={(item, index) => `${index}`}
-                        renderItem={ ({ item }) => (
-                            <ListItem
-                                roundAvatar
-                                title={`${item.firstName} ${item.lastName}`}
-                                subtitle={item.email}
-                                avatar={{uri: item.picture.thumbnail}}
-                                containerStyle={{borderBottomWidth: 0}}
-                            />
-                        )}
+                        renderItem={ ({item, index}) => {
+                            let i = index
+                            return (
+                                <ContactItem 
+                                    item = {item}
+                                    index = {i}
+                                    handleContactDelete = {this.deleteContact}
+                                />
+                            )   
+                        }}
                     ItemSeparatorComponent={this.renderSeparator}
+                    ListHeaderComponent={this.renderHeader}
                     />
                 </List>
             </View>

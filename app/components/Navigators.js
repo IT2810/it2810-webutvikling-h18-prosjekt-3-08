@@ -22,6 +22,8 @@ import Appointments from './Appointments';
 
 // Contacts
 import Contacts from './Contacts'
+import AddContact from './AddContact'
+
 import PerfectDays from './PerfectDays'
 
 
@@ -111,7 +113,7 @@ headerRight: (
 
 
 export const ContactsStack = createStackNavigator({
-   TabNavigator: {
+   Contacts: {
       screen: Contacts,
       navigationOptions: ({navigation}) => ({
          title: 'CONTACTS',
@@ -123,6 +125,9 @@ export const ContactsStack = createStackNavigator({
             </TouchableOpacity>
          ),
       })
+   },
+   AddContact: {
+       screen: AddContact
    }
     }
 )
