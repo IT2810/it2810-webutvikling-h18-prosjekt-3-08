@@ -85,14 +85,19 @@ export default class Contacts extends React.Component {
     }
     renderHeader = () => {
         return (
-            <View>
+            <View style={{backgroundColor: '#fff'}}>
                 <SearchBar 
-                    placeholder="Type here..." 
+                    placeholder="Search.." 
                     lightTheme round 
                     onChangeText={this.handleSearch}
+                    value={this.state.query}
+                    clearIcon={{ color: 'black' }}
+                    onClearText={ () => this.setState({query: ''})}
+                    containerStyle={{backgroundColor: '#fff', borderBottomWidth: 0}}
                 />
                 <Button 
                     title="Add a Contact" 
+                    style= {{borderBottomWidth: 3}}
                     onPress={() => this.props.navigation.navigate('AddContact',
                     {addItem: item => this.setState(prevState => ({ contacts: prevState.contacts.concat([item]), filteredContacts: prevState.contacts.concat([item]) }), this.storeContacts)
                     })}
@@ -139,8 +144,7 @@ export default class Contacts extends React.Component {
     render() {
         return (
 
-            <View style={{backgroundColor: '#fff'}}>
-                <List containerStyle={{borderTopWidth: 0, borderBottomWidth: 0 }}>
+                <List containerStyle={{borderTopWidth: 0, borderBottomWidth: 0, backgroundColor: '#fff', flex: 1, marginTop: 0}}>
                     <FlatList
                         data={this.state.filteredContacts}
                         keyExtractor={(item, index) => `${index}`}
@@ -158,7 +162,7 @@ export default class Contacts extends React.Component {
                     ListHeaderComponent={this.renderHeader}
                     />
                 </List>
-            </View>
+
             
         );
     }
@@ -167,10 +171,15 @@ export default class Contacts extends React.Component {
 
 
 const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center'
-   },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        marginTop: 0,
+
+    },
+    searchBar: {
+        backgroundColor: '#fff',
+        marginTop: 0
+
+    },
 })

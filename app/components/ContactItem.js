@@ -25,7 +25,7 @@ export default class ContactItem extends React.Component {
                     roundAvatar
                     title={`${this.props.item.firstName} ${this.props.item.lastName}`}
                     subtitle={`${this.props.item.email} | ${this.props.item.phoneNo}`}
-                    avatar={{uri: './fist_logo.jpg'}}
+                    avatar={require('./fist_logo.jpg')}
                     containerStyle={{borderBottomWidth: 0}}
                 />
             </Swipeout>

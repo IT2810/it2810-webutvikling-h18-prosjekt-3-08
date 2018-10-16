@@ -65,18 +65,7 @@ export default class Todos extends React.Component {
    }
 
 
-  storeTodos = async () => {
-    // storeTodos er callback-funksjon i funksjoner som kan påvirke perfectDay
-    // Kaller derfor updatePerfectDay her for å sikre at den oppdateres etter staten er endret
-    this.updatePerfectDay()
-    
-    try {
-      await AsyncStorage.setItem(this.state.activeDate+'t', JSON.stringify(this.state.todos));
-      
-    } catch (error) {
-      alert("Error")
-    }
-  }
+ 
 
   storePerfectDays = async() => {
     console.log("inni storePerfectDays");
@@ -111,6 +100,19 @@ export default class Todos extends React.Component {
     } catch (error) {
       alert("Error")
     }   
+  }
+
+  storeTodos = async () => {
+    // storeTodos er callback-funksjon i funksjoner som kan påvirke perfectDay
+    // Kaller derfor updatePerfectDay her for å sikre at den oppdateres etter staten er endret
+    this.updatePerfectDay()
+    
+    try {
+      await AsyncStorage.setItem(this.state.activeDate+'t', JSON.stringify(this.state.todos));
+      
+    } catch (error) {
+      alert("Error")
+    }
   }
 
    retrieveTodos = async() => {
