@@ -33,9 +33,15 @@ export default class Contacts extends React.Component {
                     email: 'fotballerbest@hotmail.no',
                     phoneNo: '12349876',
                 },
-
-            ]
+            ],
+            filteredContacts: [],
+            query: ''
         }
+    }
+    componentDidMount(){
+        this.setState({
+            filteredContacts: this.state.contacts
+        })
     }
 
     renderSeparator = () => {
@@ -52,7 +58,11 @@ export default class Contacts extends React.Component {
     renderHeader = () => {
         return (
             <View>
-                <SearchBar placeholder="Type here..." lightTheme round />
+                <SearchBar 
+                    placeholder="Type here..." 
+                    lightTheme round 
+                    onChangeText={this.handleSearch}
+                />
                 <Button 
                     title="Add a Contact" 
                     onPress={() => this.props.navigation.navigate('AddContact',
@@ -62,10 +72,7 @@ export default class Contacts extends React.Component {
             </View>
         )
     }
-
-
     deleteContact(index){
-        console.log(index);
         
         let contactsCopy = []
             if (this.state.contacts.length > 1){
@@ -81,15 +88,33 @@ export default class Contacts extends React.Component {
             })
         }
 
+    handleSearch = (text) => {
+        const formatQuery = text.toLowerCase()
+        const data = this.state.contacts.filter( contact => {
+            return this.contains({contact}, formatQuery)
+        })
+        
+        this.setState({
+            query: formatQuery,
+            filteredContacts: data
+        })
+    }
+
+    contains = ({contact}, query) => {
+        let info = contact.firstName.toLowerCase() + ' ' +
+                contact.lastName.toLowerCase() + ' '
+                contact.email.toLowerCase()
+        return info.includes(query)
+    }
+        
     render() {
-        
-        
+               
         return (
 
             <View style={{backgroundColor: '#fff'}}>
                 <List containerStyle={{borderTopWidth: 0, borderBottomWidth: 0 }}>
                     <FlatList
-                        data={this.state.contacts}
+                        data={this.state.filteredContacts}
                         keyExtractor={(item, index) => `${index}`}
                         renderItem={ ({item, index}) => {
                             let i = index
