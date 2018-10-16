@@ -124,7 +124,8 @@ export const ContactsStack = createStackNavigator({
          ),
       })
    }
-})
+    }
+)
 
 const CustomDrawerComponent = (props) => (
    <SafeAreaView style={{ flex: 1}}>
