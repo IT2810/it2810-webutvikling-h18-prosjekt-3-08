@@ -65,8 +65,8 @@ export default class Todos extends React.Component {
    }
 
 
-  storeData = async () => {
-    // storeData er callback-funksjon i funksjoner som kan påvirke perfectDay
+  storeTodos = async () => {
+    // storeTodos er callback-funksjon i funksjoner som kan påvirke perfectDay
     // Kaller derfor updatePerfectDay her for å sikre at den oppdateres etter staten er endret
     this.updatePerfectDay()
     
@@ -157,7 +157,7 @@ export default class Todos extends React.Component {
             todos: todosCopy,
             textValue: "",
 
-         }, this.storeData)
+         }, this.storeTodos)
 
       }
    }
@@ -175,7 +175,7 @@ export default class Todos extends React.Component {
 
       this.setState({
          todos: todosCopy
-      }, this.storeData)
+      }, this.storeTodos)
    }
 
    changeStatus(index) {
@@ -186,7 +186,7 @@ export default class Todos extends React.Component {
 
       this.setState({
          todos: todosCopy
-      }, this.storeData)
+      }, this.storeTodos)
 
    }
 

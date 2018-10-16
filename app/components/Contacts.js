@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, FlatList, Button } from 'react-native';
+import { StyleSheet, View, FlatList, Button, AsyncStorage } from 'react-native';
 import { List, ListItem, SearchBar } from 'react-native-elements';
 
 
@@ -39,9 +39,37 @@ export default class Contacts extends React.Component {
         }
     }
     componentDidMount(){
-        this.setState({
-            filteredContacts: this.state.contacts
-        })
+        this.retrieveContacts()
+    }
+
+    storeContacts = async () => {
+        try {
+          await AsyncStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+          
+        } catch (error) {
+          alert("Error")
+        }
+      }
+
+    retrieveContacts = async() => {
+    try {
+        let contactsData = await AsyncStorage.getItem('contacts');
+        if (contactsData !== null) {
+            let contacts = JSON.parse(contactsData)
+            this.setState({
+                contacts: contacts,
+                filteredContacts: contacts
+            })
+        }
+        else{
+            this.setState({
+                contacts: [],
+                filteredContacts: []
+            })
+        }
+    } catch (error) {
+        console.log(error);
+    }   
     }
 
     renderSeparator = () => {
@@ -66,14 +94,14 @@ export default class Contacts extends React.Component {
                 <Button 
                     title="Add a Contact" 
                     onPress={() => this.props.navigation.navigate('AddContact',
-                    {addItem: item => this.setState(prevState => ({ contacts: prevState.contacts.concat([item]) }))
+                    {addItem: item => this.setState(prevState => ({ contacts: prevState.contacts.concat([item]), filteredContacts: prevState.contacts.concat([item]) }), this.storeContacts)
                     })}
                 />
             </View>
         )
     }
+
     deleteContact(index){
-        
         let contactsCopy = []
             if (this.state.contacts.length > 1){
                 contactsCopy = this.state.contacts
@@ -84,8 +112,9 @@ export default class Contacts extends React.Component {
             }
 
             this.setState({
-                contacts: contactsCopy
-            })
+                contacts: contactsCopy,
+                filteredContacts: contactsCopy
+            }, this.storeContacts)
         }
 
     handleSearch = (text) => {
@@ -103,12 +132,11 @@ export default class Contacts extends React.Component {
     contains = ({contact}, query) => {
         let info = contact.firstName.toLowerCase() + ' ' +
                 contact.lastName.toLowerCase() + ' '
-                contact.email.toLowerCase()
-        return info.includes(query)
+                contact.email.toLowerCase() 
+        return info.includes(query) || query === ''
     }
         
     render() {
-               
         return (
 
             <View style={{backgroundColor: '#fff'}}>
