@@ -1,14 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Switch } from 'react-native';
 import Swipeout from 'react-native-swipeout';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 
 
 export default class TodoItem extends React.Component {
-
-
+      
    render() {
-
       const swipeSettings = {
          autoClose: true,
          right: [
@@ -18,32 +17,31 @@ export default class TodoItem extends React.Component {
                type: 'delete'
             }
          ],
-
       }
 
-
-
-
-      let statusStyle = this.props.item.status === 'Done' ? styles.done : styles.pending
-      let todoTextStyle = this.props.item.status === 'Done' ? styles.finishedTodo_textStyle : styles.textStyle
-
+      let done = this.props.item.status === 'Done' ? true : false
+      let statusName = done ? 'md-checkmark-circle' : 'md-radio-button-off' 
+      let statusColor = done ? 'green' : 'grey'
+      let todoTextStyle = done ? styles.finishedTodo_textStyle : styles.textStyle 
+      
       return (
          <Swipeout {...swipeSettings}>
                <View style={styles.todoItem}>
                   <TouchableOpacity
-                     onPress= { () => this.props.handleStatusChange(this.props.index)}
-                     >
-                     <Text style={statusStyle}>{this.props.item.status}</Text>
+                     style = {{paddingRight: 10}} 
+                     onPress = { () => this.props.handleStatusChange(this.props.index)}
+                  >
+                     <Ionicons name= {statusName} color= {statusColor} size={24} />
                   </TouchableOpacity>
 
                   <Text style={todoTextStyle}>{this.props.item.task}</Text>
-
                </View>
          </Swipeout>
       );
    }
 }
 
+//<Text style={statusStyle}>{this.props.item.status}</Text>
 
 const styles = StyleSheet.create({
    container: {
@@ -66,16 +64,5 @@ const styles = StyleSheet.create({
       fontSize: 16,
       textDecorationLine: 'line-through'
    },
-   status: {
-      padding: 10
-   },
-   done: {
-      paddingRight: 10,
-      color: 'green'
-   },
-   pending: {
-      paddingRight: 10,
-      color: 'red'
-   }
 
 })

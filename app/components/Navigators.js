@@ -22,6 +22,26 @@ import Appointments from './Appointments';
 
 // Contacts
 import Contacts from './Contacts'
+import PerfectDays from './PerfectDays'
+
+
+export const TodosStack = createStackNavigator({
+    Todos: {
+        screen: Todos,
+        
+     },
+     PerfectDays: {
+         screen: PerfectDays
+     }},
+     {
+        headerMode: 'none',
+        navigationOptions: {
+            headerStyle: {
+                marginTop: Expo.Constants.statusBarHeight
+                },
+        }
+    }
+)
 
 
 export const Tabs = createMaterialTopTabNavigator({
@@ -34,15 +54,16 @@ export const Tabs = createMaterialTopTabNavigator({
          )
       }
    },
-   Todos: {
-      screen: Todos,
-      navigationOptions: {
-         tabBarLabel: 'Todos',
-         tabBarIcon: ({tintColor}) => (
-            <Ionicons name='ios-list' color={tintColor} size={24} />
-         )
-      }
-   }},
+   TodosStack: {
+       screen: TodosStack,
+       navigationOptions: {
+        tabBarLabel: 'Todos',
+        tabBarIcon: ({tintColor}) => (
+           <Ionicons name='ios-list' color={tintColor} size={24} />
+        )
+     }
+    }
+    },
    {
       initialRouteName: 'Appointments',
       swipeEnabled: false,
@@ -58,6 +79,8 @@ export const Tabs = createMaterialTopTabNavigator({
    }
 )
 
+
+
 export const Stack = createStackNavigator({
    TabNavigator: {
       screen: Tabs,
@@ -69,7 +92,36 @@ export const Stack = createStackNavigator({
                   <Ionicons name="md-menu" size={24} />
                </View>
             </TouchableOpacity>
-         )
+         ),
+        
+      })
+   }
+})
+
+/*
+headerRight: (
+    <TouchableOpacity onPress={() => alert("test")} >
+       <View style={{paddingHorizontal: 10}}>
+          <Ionicons name="md-calendar" size={24} />
+       </View>
+    </TouchableOpacity>
+
+ )
+ */
+
+
+export const ContactsStack = createStackNavigator({
+   TabNavigator: {
+      screen: Contacts,
+      navigationOptions: ({navigation}) => ({
+         title: 'CONTACTS',
+         headerLeft: (
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+               <View style={{paddingHorizontal: 10}}>
+                  <Ionicons name="md-menu" size={24} />
+               </View>
+            </TouchableOpacity>
+         ),
       })
    }
 })
@@ -90,7 +142,7 @@ const CustomDrawerComponent = (props) => (
 
 export const Drawer = createDrawerNavigator({
    MyDay: Stack,
-   Contacts: Contacts
+   Contacts: ContactsStack
 }, {
    contentComponent: CustomDrawerComponent
 })
