@@ -26,21 +26,24 @@ export default class Todos extends React.Component {
       this.updatePerfectDay = this.updatePerfectDay.bind(this)
 
       let date = this.getCurrentDate()
-
+    
 
       this.state = {
          todos: [],
          activeDate: date,
          textValue: "",
          textDate: "",
-         perfectDay: false
+         perfectDay: true,
+         perfectDays: []
       }
    }
 
 
    componentDidMount(){
-      this.retrieveData()
+      this.retrieveTodos()
+      this.retrievePerfectDays()
       this.setTextDate()
+      
    }
 
 
@@ -69,33 +72,72 @@ export default class Todos extends React.Component {
     
     try {
       await AsyncStorage.setItem(this.state.activeDate+'t', JSON.stringify(this.state.todos));
+      
     } catch (error) {
       alert("Error")
     }
   }
 
-   retrieveData = async() => {
-      // retrieveData er callback-funksjon i changeDate()-metoden
+  storePerfectDays = async() => {
+    console.log("inni storePerfectDays");
+    console.log("Lagrer: " + this.state.perfectDays);
+    
+    try {
+      await AsyncStorage.setItem('perfectDays', JSON.stringify(this.state.perfectDays))
+
+    } catch(error) {
+      alert("Error")
+    }
+    
+  }
+
+  retrievePerfectDays = async() => {
+    console.log("inni retrievePerfectDays");
+
+    try {
+      let perfectDaysData = await AsyncStorage.getItem('perfectDays')          
+      if (perfectDaysData != null) {
+        let perfectDays = JSON.parse(perfectDaysData)
+        console.log("Hentet ut: " + perfectDays);
+        this.setState({
+          perfectDays: perfectDays
+        })
+      }
+      else {
+        this.setState({
+          perfectDays: []
+        })
+      }
+    } catch (error) {
+      alert("Error")
+    }   
+  }
+
+   retrieveTodos = async() => {
+      // retrieveTodos er callback-funksjon i changeDate()-metoden
       // Kaller derfor setTextDate her for å sikre at den oppdateres etter staten er endret
       this.setTextDate()
 
+      // Henter inn alle todos fra aktiv dato
+      // Etter staten er satt med nye todos, kalles updatePerfectDay som callback
       try {
-          let array = await AsyncStorage.getItem(this.state.activeDate+'t');
-
-          if (array !== null) {
-            let todos = JSON.parse(array)
+          let todosData = await AsyncStorage.getItem(this.state.activeDate+'t');
+          if (todosData !== null) {
+            let todos = JSON.parse(todosData)
             this.setState({
                todos: todos
-            })
+            }, this.updatePerfectDay)
           }
           else{
              this.setState({
                 todos: []
-             })
+             }, this.updatePerfectDay)
           }
+          
       } catch (error) {
          alert("Error")
-      }
+      }   
+
    }
 
 
@@ -117,7 +159,6 @@ export default class Todos extends React.Component {
 
          }, this.storeData)
 
-         this.updatePerfectDay()
       }
    }
 
@@ -147,16 +188,16 @@ export default class Todos extends React.Component {
          todos: todosCopy
       }, this.storeData)
 
-      this.updatePerfectDay()
    }
 
 
    changeDate = (date) => {
       this.setState({
-         activeDate: date
-      }, this.retrieveData)
+         activeDate: date,
+         perfectDay: true
+      }, this.retrieveTodos)
 
-      this.updatePerfectDay()
+      
    }
 
    setTextDate(){
@@ -219,6 +260,7 @@ export default class Todos extends React.Component {
    }
 
    updatePerfectDay() {
+
      var todos = this.state.todos
      if (todos.length === 0) {
        this.setState({
@@ -226,29 +268,42 @@ export default class Todos extends React.Component {
        })
      }
      else {
+        perfectDaysCopy = this.state.perfectDays
+        index = perfectDaysCopy.indexOf(this.state.activeDate)
         for (var i = 0; i < todos.length; i++) {
           if (todos[i].status === "Pending") {
+            if (index !== -1){
+              perfectDaysCopy.splice(index, 1)
+            }
             this.setState({
-              perfectDay: false
-            })
+              perfectDay: false,
+              perfectDays: perfectDaysCopy
+            }, this.storePerfectDays)
             return;
           }
         }
         if (!this.state.perfectDay){
-          alert("Congratulations! You have completed all your todos this day, and have achieved a Perfect Day!")
+          alert("Congratulations! You have completed all your todos this day, and have achieved a Perfect Day! Click the star to see all of your Perfect Days.")
         }
-        this.setState({
-        perfectDay: true
-      })
-      
+        if (index === -1){
+          perfectDaysCopy.push(this.state.activeDate)
+        }
+          this.setState({
+          perfectDay: true,
+          perfectDays: perfectDaysCopy
+          }, this.storePerfectDays)
+        
+        
      }
    }
 
 
    render() {
-     
+      const {navigate} = this.props.navigation;
       let starColor = this.state.perfectDay ? 'orange' : 'grey'
-
+      let perfectDays = this.state.perfectDays
+      console.log(perfectDays);
+      
       return (
             <View style={styles.container}>
                <View style={{flex: 1, marginTop: 22}}>
@@ -257,10 +312,12 @@ export default class Todos extends React.Component {
                      <Text style={styles.date}>
                         {this.state.textDate}
                      </Text>
+                     <TouchableOpacity onPress={() => navigate('PerfectDays', {perfectDays})}>
+                      <View style={styles.star}>
+                          <Ionicons name="md-star" color= {starColor} size={24} />
+                      </View>
+                     </TouchableOpacity>
                      
-                     <View style={styles.star}>
-                        <Ionicons name="md-star" color= {starColor} size={24} />
-                     </View>
                   </View>
 
                   <FlatList

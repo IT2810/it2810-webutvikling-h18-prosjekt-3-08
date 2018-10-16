@@ -64,16 +64,5 @@ const styles = StyleSheet.create({
       fontSize: 16,
       textDecorationLine: 'line-through'
    },
-   status: {
-      padding: 10
-   },
-   done: {
-      paddingRight: 10,
-      color: 'green'
-   },
-   pending: {
-      paddingRight: 10,
-      color: 'red'
-   }
 
 })

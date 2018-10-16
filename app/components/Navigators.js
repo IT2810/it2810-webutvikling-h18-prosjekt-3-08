@@ -22,6 +22,26 @@ import Appointments from './Appointments';
 
 // Contacts
 import Contacts from './Contacts'
+import PerfectDays from './PerfectDays'
+
+
+export const TodosStack = createStackNavigator({
+    Todos: {
+        screen: Todos,
+        
+     },
+     PerfectDays: {
+         screen: PerfectDays
+     }},
+     {
+        headerMode: 'none',
+        navigationOptions: {
+            headerStyle: {
+                marginTop: Expo.Constants.statusBarHeight
+                },
+        }
+    }
+)
 
 
 export const Tabs = createMaterialTopTabNavigator({
@@ -34,15 +54,16 @@ export const Tabs = createMaterialTopTabNavigator({
          )
       }
    },
-   Todos: {
-      screen: Todos,
-      navigationOptions: {
-         tabBarLabel: 'Todos',
-         tabBarIcon: ({tintColor}) => (
-            <Ionicons name='ios-list' color={tintColor} size={24} />
-         )
-      }
-   }},
+   TodosStack: {
+       screen: TodosStack,
+       navigationOptions: {
+        tabBarLabel: 'Todos',
+        tabBarIcon: ({tintColor}) => (
+           <Ionicons name='ios-list' color={tintColor} size={24} />
+        )
+     }
+    }
+    },
    {
       initialRouteName: 'Appointments',
       swipeEnabled: false,
@@ -57,6 +78,8 @@ export const Tabs = createMaterialTopTabNavigator({
       }
    }
 )
+
+
 
 export const Stack = createStackNavigator({
    TabNavigator: {
