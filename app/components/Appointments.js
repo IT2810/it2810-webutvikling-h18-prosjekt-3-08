@@ -1,10 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, Button, FlatList, AsyncStorage} from 'react-native';
+import {StyleSheet, Text, View, Button, FlatList, AsyncStorage, Alert} from 'react-native';
 import AppointmentItem from './AppointmentItem';
 import AddAppointment from "./AddAppointment";
 import moment from 'moment'
-import {Ionicons} from '@expo/vector-icons';
-
 import Calender from './Calender';
 
 
@@ -15,6 +13,7 @@ export default class Appointments extends React.Component {
         super();
         this.deleteAppointment = this.deleteAppointment.bind(this);
         this.updateAppointment = this.updateAppointment.bind(this);
+        this.storeData = this.storeData.bind(this);
 
         let date = this.getCurrentDate();
 
@@ -22,6 +21,10 @@ export default class Appointments extends React.Component {
             appointments: [],
             activeDate: date
         };
+    };
+
+    componentDidMount(){
+        this.retrieveData();
     }
 
 
@@ -35,7 +38,7 @@ export default class Appointments extends React.Component {
         try {
             await AsyncStorage.setItem(this.state.date+'a', JSON.stringify(this.state.appointments));
         } catch (error) {
-            // Error saving data
+           Alert.alert("Error");
         }
     };
 
@@ -55,9 +58,10 @@ export default class Appointments extends React.Component {
                 })
             }
         } catch (error) {
-            alert("Error")
+           Alert.alert("Error");
         }
     };
+
 
     changeDate = (date) => {
         this.setState({
@@ -82,15 +86,6 @@ export default class Appointments extends React.Component {
         console.log('Adding appointment to async');
     }
 
-    componentWillMount(){
-        this.addAppointment(
-            this.props.navigation.state.title,
-            this.props.navigation.state.desc,
-            this.props.navigation.state.startTime,
-            this.props.navigation.state.endTime,
-            this.props.navigation.state.location
-        )
-    }
 
     deleteAppointment(index){
         let appointmentCopy = [];
@@ -114,11 +109,10 @@ export default class Appointments extends React.Component {
 
     // Pass inn handleToDelete, sjekk Ax sin kode
     render() {
-        const {navigate} = this.props.navigation;
         return (
             <View style = {styles.container}>
                 <View style ={styles.header}>
-                    <Text style={styles.date}>
+                    <Text>
                         {this.state.activeDate}
                     </Text>
                     <Calender style= {styles.calendar} onSelectDate={this.changeDate}/>
@@ -142,23 +136,13 @@ export default class Appointments extends React.Component {
                 </View>
                 <Button
                     title="Add appointment"
-                    onPress = {() => navigate('AddAppointment',
-                        {addItem: item => this.setState(prevState => ({ appointments: prevState.appointments.concat([item]) }))
+                    onPress = {() => this.props.navigation.navigate('AddAppointment',
+                        {addItem: item => this.setState(prevState => ({ appointments: prevState.appointments.concat([item]) }), this.storeData)
                     })}/>
             </View>
         );
     }
 }
-
-
-
-const DismissKeyboard = ({children}) => (
-    <TouchableWithoutFeedback
-        onPress= {() => Keyboard.dismiss()}>
-        {children}
-    </TouchableWithoutFeedback>
-)
-
 
 
 

@@ -1,22 +1,38 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Animated, Image, LayoutAnimation, Platform, UIManager, TouchableOpacity } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Animated,
+    Image,
+    LayoutAnimation,
+    Platform,
+    UIManager,
+    TouchableOpacity,
+    TouchableHighlight
+} from 'react-native';
+import Swipeout from 'react-native-swipeout';
 
 
 
 export default class AppointmentItem extends React.Component {
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
 
-        this.up = 'app/assets/up-arrow.png',
+        this.up = 'app/assets/up-arrow.png';
         this.down = 'app/assets/down-arrow.png';
 
+        this.toggle = this.toggle.bind(this);
+        this.setMaxHeight = this.setMaxHeight.bind(this);
+        this.setMinHeight = this.setMinHeight.bind(this);
+
         this.state = {
-            title: props.title,
             expanded: false,
             maxHeight: '',
-            minHeight: ''
+            minHeight: '',
+            animation   : new Animated.Value(),
         };
     }
         /*
@@ -90,8 +106,7 @@ export default class AppointmentItem extends React.Component {
 
     setMinHeight(event){
         this.setState({
-            minHeight : event.nativeEvent.layout.height,
-            animation   : new Animated.Value(event.nativeEvent.layout.height)
+            minHeight : event.nativeEvent.layout.height
         })
     }
 
@@ -101,32 +116,53 @@ export default class AppointmentItem extends React.Component {
 
 
     render() {
+
         let icon = this.props.down;
         if(this.state.expanded){
             icon = this.props.up;
         }
+        const swipeSettings = {
+            autoClose: true,
+            right: [
+                {
+                    onPress: () => {this.props.handleAppointmentDelete(this.props.index)},
+                    text: 'Delete',
+                    type: 'delete'
+                }
+            ],
+        };
+
         return (
-            <Animated.View style={[styles.container, {height: this.state.animation}]}>
-                <TouchableOpacity style={styles.appointmentItem} onLayout ={this.setMinHeight.bind(this)} onPress = {this.toggle.bind(this)}>
-                    <View style={styles.time}>
-                        <Text>{this.getTime(this.props.item)}</Text>
+            <Swipeout {...swipeSettings}>
+                <Animated.View style={[styles.container, {height: this.state.animation}]}>
+                    <View style={styles.appointmentItem} onLayout ={this.setMinHeight}>
+                        <View style={styles.time}>
+                            <Text>{this.getTime(this.props.item)}</Text>
+                        </View>
+                        <View >
+                            <Text style={styles.title}>{this.props.item.title}</Text>
+                        </View>
+                        <TouchableHighlight onPress = {this.toggle}>
+                            <Image
+                                style={styles.buttonImage}
+                                source={icon}
+                            ></Image>
+                        </TouchableHighlight>
                     </View>
-                    <View >
-                        <Text style={styles.title}>{this.props.item.title}</Text>
+                    <View style={styles.body} onLayout ={this.setMaxHeight}>
+                        {this.props.children}
                     </View>
-                </TouchableOpacity>
-                <View style={styles.body} onLayout ={this.setMaxHeight.bind(this)}>
-                    {this.props.desc}
-                </View>
-            </Animated.View>
+                </Animated.View>
+            </Swipeout>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        margin: 10,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     appointmentItem: {
         marginLeft: '15%',

@@ -26,13 +26,6 @@ import Contacts from './Contacts';
 import AddAppointment from "./AddAppointment";
 
 
-// Finn en måte å legge AddAppointmentScreen-navigator inne i appointmenten.
-// Usikkert om det går. Eventuelt prøv på nytt å finne en løsning inne i appointment.js.
-// Skal bruke en stack-navigator inne i Appointments, som trigges av en knapp. Når denne knappen trykkes skal
-// man sendes til appAppointment. For å komme tilbake må man trykke på enten: knapp i meny, en tilbake-knapp,
-// eller legge til en valid appointment.
-
-
 export const AppointmentStackNavigator = createStackNavigator({
     Appointments: {screen: Appointments,
     },
