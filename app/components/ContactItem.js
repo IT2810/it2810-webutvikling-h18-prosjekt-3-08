@@ -27,6 +27,7 @@ export default class ContactItem extends React.Component {
                     subtitle={`${this.props.item.email} | ${this.props.item.phoneNo}`}
                     avatar={require('./fist_logo.jpg')}
                     containerStyle={{borderBottomWidth: 0}}
+                    hideChevron={true}
                 />
             </Swipeout>
         )

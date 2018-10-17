@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, FlatList,
     TouchableOpacity, TouchableWithoutFeedback,
-     Keyboard, KeyboardAvoidingView, Button, AsyncStorage } from 'react-native';
+     Keyboard, KeyboardAvoidingView, AsyncStorage } from 'react-native';
 import moment from 'moment'; // For å håndtere/formatere valgt dato
 import { Ionicons } from '@expo/vector-icons';
 

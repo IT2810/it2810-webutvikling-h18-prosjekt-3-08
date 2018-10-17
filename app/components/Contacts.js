@@ -86,6 +86,13 @@ export default class Contacts extends React.Component {
     renderHeader = () => {
         return (
             <View style={{backgroundColor: '#fff'}}>
+                <Button 
+                    title="Add new Contact" 
+                    style= {{borderBottomWidth: 3}}
+                    onPress={() => this.props.navigation.navigate('AddContact',
+                    {addItem: item => this.setState(prevState => ({ contacts: prevState.contacts.concat([item]), filteredContacts: prevState.contacts.concat([item]) }), this.storeContacts)
+                    })}
+                />
                 <SearchBar 
                     placeholder="Search.." 
                     lightTheme round 
@@ -95,13 +102,7 @@ export default class Contacts extends React.Component {
                     onClearText={ () => this.setState({query: ''})}
                     containerStyle={{backgroundColor: '#fff', borderBottomWidth: 0}}
                 />
-                <Button 
-                    title="Add a Contact" 
-                    style= {{borderBottomWidth: 3}}
-                    onPress={() => this.props.navigation.navigate('AddContact',
-                    {addItem: item => this.setState(prevState => ({ contacts: prevState.contacts.concat([item]), filteredContacts: prevState.contacts.concat([item]) }), this.storeContacts)
-                    })}
-                />
+                
             </View>
         )
     }
@@ -136,8 +137,8 @@ export default class Contacts extends React.Component {
 
     contains = ({contact}, query) => {
         let info = contact.firstName.toLowerCase() + ' ' +
-                contact.lastName.toLowerCase() + ' '
-                contact.email.toLowerCase() 
+                contact.lastName.toLowerCase() + ' ' +
+                contact.email.toLowerCase()
         return info.includes(query) || query === ''
     }
         
