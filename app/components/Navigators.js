@@ -22,8 +22,10 @@ import Appointments from './Appointments';
 
 // Contacts
 import Contacts from './Contacts'
-import PerfectDays from './PerfectDays'
+import AddContact from './AddContact'
 
+import PerfectDays from './PerfectDays'
+import Calendar from './Calendar';
 
 export const TodosStack = createStackNavigator({
     Todos: {
@@ -62,7 +64,8 @@ export const Tabs = createMaterialTopTabNavigator({
            <Ionicons name='ios-list' color={tintColor} size={24} />
         )
      }
-    }
+    },
+    
     },
    {
       initialRouteName: 'Appointments',
@@ -92,7 +95,8 @@ export const Stack = createStackNavigator({
                   <Ionicons name="md-menu" size={24} />
                </View>
             </TouchableOpacity>
-         ),
+         ), 
+         
         
       })
    }
@@ -100,21 +104,20 @@ export const Stack = createStackNavigator({
 
 /*
 headerRight: (
-    <TouchableOpacity onPress={() => alert("test")} >
-       <View style={{paddingHorizontal: 10}}>
-          <Ionicons name="md-calendar" size={24} />
-       </View>
-    </TouchableOpacity>
-
- )
- */
-
+            <TouchableOpacity onPress={() => navigation.navigate('Calendar')} >
+               <View style={{paddingHorizontal: 10}}>
+                  <Ionicons name="md-calendar" size={24} />
+               </View>
+            </TouchableOpacity>
+        
+         )
+*/
 
 export const ContactsStack = createStackNavigator({
-   TabNavigator: {
+   Contacts: {
       screen: Contacts,
       navigationOptions: ({navigation}) => ({
-         title: 'CONTACTS',
+         title: 'Contacts',
          headerLeft: (
             <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
                <View style={{paddingHorizontal: 10}}>
@@ -123,8 +126,12 @@ export const ContactsStack = createStackNavigator({
             </TouchableOpacity>
          ),
       })
+   },
+   AddContact: {
+       screen: AddContact
    }
-})
+    }
+)
 
 const CustomDrawerComponent = (props) => (
    <SafeAreaView style={{ flex: 1}}>
