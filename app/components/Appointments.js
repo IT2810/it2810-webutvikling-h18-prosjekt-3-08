@@ -1,13 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, Button, FlatList} from 'react-native';
+import {StyleSheet, Text, View, TouchableWithoutFeedback, Keyboard, Button, FlatList, AsyncStorage} from 'react-native';
 import AppointmentItem from './AppointmentItem';
 import AddAppointment from "./AddAppointment";
 import moment from 'moment'
+import {Ionicons} from '@expo/vector-icons';
 
-
-//TODO: Gjøre AppointmentItem expanding ved klikk på en knapp.
-//TODO: Lage funksjonalitet for å legge til en appointment.
-
+import Calender from './Calender';
 
 
 export default class Appointments extends React.Component {
@@ -18,24 +16,18 @@ export default class Appointments extends React.Component {
         this.deleteAppointment = this.deleteAppointment.bind(this);
         this.updateAppointment = this.updateAppointment.bind(this);
 
-        let date = this.getCurrentDate()
+        let date = this.getCurrentDate();
 
         this.state = {
             appointments: [],
             activeDate: date
         };
     }
-    /*
-    static navigationOptions = {
-        title: this.state.date,
-    };
-
-    */
 
 
     getCurrentDate() {
-        let date = new Date()
-        let formatedDate = moment(date).format('YYYY-MM-DD')
+        let date = new Date();
+        let formatedDate = moment(date).format('YYYY-MM-DD');
         return formatedDate
     }
 
@@ -45,7 +37,7 @@ export default class Appointments extends React.Component {
         } catch (error) {
             // Error saving data
         }
-    }
+    };
 
 
     retrieveData = async() => {
@@ -67,19 +59,30 @@ export default class Appointments extends React.Component {
         }
     };
 
+    changeDate = (date) => {
+        this.setState({
+            activeDate: date,
+        }, this.retrieveData)
+    };
 
-    addAppointment(title, desc, start, end, loc) {
-        console.log(title);
-        console.log(desc);
-        console.log(start);
-        console.log(end);
-        console.log(loc)
-
+    addAppointment(title, desc, start, end, loc){
+        let appCopy = this.state.appointments;
+        let newApp = {
+            title: title,
+            desc: desc,
+            startTime: start,
+            endTime: end,
+            location: loc,
+        };
+        appCopy.splice(0, 0, newApp);
+        this.setState({
+            appointments: appCopy
+        },
+        this.storeData);
+        console.log('Adding appointment to async');
     }
 
-
     componentWillMount(){
-        console.log('hei');
         this.addAppointment(
             this.props.navigation.state.title,
             this.props.navigation.state.desc,
@@ -101,7 +104,7 @@ export default class Appointments extends React.Component {
 
         this.setState({
             appointments: appointmentCopy
-        })
+        }, this.storeData);
     }
 
     updateAppointment(){
@@ -109,35 +112,33 @@ export default class Appointments extends React.Component {
 
 
 
-    getTime(item){
-        return  item.start + ' - ' + item.end;
-    }
-
-
     // Pass inn handleToDelete, sjekk Ax sin kode
     render() {
-        console.log(this.state.appointments);
-        console.log('Inni render');
         const {navigate} = this.props.navigation;
         return (
             <View style = {styles.container}>
-                <View style={{flex: 1, marginTop: 22, borderBottomWidth: 0}}>
-                    <FlatList
-                        data={this.state.appointments}
-                        extraData = {this.state}
-                        renderItem={({item, index}) => {
-                            let i = index;
-                            let it = item;
-                            return (
-                                <AppointmentItem
-                                    i = {i}
-                                    item={it}
-                                />
-                            )
-                        }}
-                    />
+                <View style ={styles.header}>
+                    <Text style={styles.date}>
+                        {this.state.activeDate}
+                    </Text>
+                    <Calender style= {styles.calendar} onSelectDate={this.changeDate}/>
                 </View>
-                <View style = {styles.appendButtonContainer}>
+                <View style={{flex: 1, marginTop: 22, borderBottomWidth: 0}}>
+                        <FlatList
+                            data={this.state.appointments}
+                            extraData = {this.state}
+                            renderItem={({item, index}) => {
+                                let i = index;
+                                let it = item;
+                                return (
+                                    <AppointmentItem
+                                        i = {i}
+                                        item={it}
+                                        handleAppointmentDelete = {this.deleteAppointment}
+                                    />
+                                )
+                            }}
+                        />
                 </View>
                 <Button
                     title="Add appointment"
@@ -170,8 +171,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         height: '100%'
+    },
+    header: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+    },
+    calendar: {
+        alignSelf: 'flex-start',
+        paddingLeft: 0,
 
-
+    },
+    date: {
+        fontSize: 15,
+        alignSelf: 'center',
+        marginBottom: 3,
+        paddingLeft: 5,
     },
     time: {
 
@@ -223,6 +237,6 @@ const styles = StyleSheet.create({
     },
     appendButtonContainer:{
         alignItems: 'center'
-    }
+    },
 
 })

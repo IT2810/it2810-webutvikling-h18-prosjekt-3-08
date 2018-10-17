@@ -7,7 +7,6 @@ export default class Calender extends React.Component {
    render() {
       return (
          <View style={styles.container}>
-            <Text>CalenderScreen</Text>
          </View>
       );
    }

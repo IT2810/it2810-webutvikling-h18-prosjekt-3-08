@@ -39,7 +39,7 @@ export const AppointmentStackNavigator = createStackNavigator({
     AddAppointment: {screen : AddAppointment},
     },
     {
-    headerMode: 'none',
+    headerMode: 'screen',
     navigationOptions: {
         headerStyle: {
             marginTop: Expo.Constants.statusBarHeight

@@ -68,12 +68,11 @@ export default class AddAppointment extends React.Component {
     };
 
     onConfirm(){
-        console.log("inni onconfirm")
-        let t = this.state.title
-        let st = this.state.startTime
-        let et = this.state.endTime
-        let d = this.state.desc
-        let l = this.state.location
+        let t = this.state.title;
+        let st = this.state.startTime;
+        let et = this.state.endTime;
+        let d = this.state.desc;
+        let l = this.state.location;
         let newApp = {
             key: new Date().toString(),
             title: t,
