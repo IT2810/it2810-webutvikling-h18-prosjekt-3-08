@@ -14,26 +14,7 @@ export default class Contacts extends React.Component {
         this.deleteContact = this.deleteContact.bind(this)
 
         this.state = {
-            contacts: [
-                {
-                    firstName: 'Axel',
-                    lastName: 'Harstad',
-                    email: 'axel.harstad@gmail.com',
-                    phoneNo: '46886146',
-                },
-                {
-                    firstName: 'Simen',
-                    lastName: 'Rekdal',
-                    email: 'basketboy123@hotmail.com',
-                    phoneNo: '12349876',
-                },
-                {
-                    firstName: 'Henrik',
-                    lastName: 'Roggerud',
-                    email: 'fotballerbest@hotmail.no',
-                    phoneNo: '12349876',
-                },
-            ],
+            contacts: [],
             filteredContacts: [],
             query: ''
         }
