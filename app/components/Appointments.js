@@ -111,34 +111,37 @@ export default class Appointments extends React.Component {
     render() {
         return (
             <View style = {styles.container}>
-                <View style ={styles.header}>
-                    <Text>
-                        {this.state.activeDate}
-                    </Text>
-                    <Calender style= {styles.calendar} onSelectDate={this.changeDate}/>
+                <View style={{flex: 1, marginTop: 22}}>
+                    <View style ={styles.header}>
+                        <Calender style= {styles.calendar} onSelectDate={this.changeDate}/>
+                        <Text>
+                            {this.state.activeDate}
+                        </Text>
+                    </View>
+                
+                    <FlatList
+                        data={this.state.appointments}
+                        extraData = {this.state}
+                        renderItem={({item, index}) => {
+                            let i = index;
+                            let it = item;
+                            return (
+                                <AppointmentItem
+                                    i = {i}
+                                    item={it}
+                                    handleAppointmentDelete = {this.deleteAppointment}
+                                />
+                            )
+                        }}
+                    />
+                
+                    <Button
+                        title="Add appointment"
+                        onPress = {() => this.props.navigation.navigate('AddAppointment',
+                            {addItem: item => this.setState(prevState => ({ appointments: prevState.appointments.concat([item]) }), this.storeData)
+                        })}
+                    />
                 </View>
-                <View style={{flex: 1, marginTop: 22, borderBottomWidth: 0}}>
-                        <FlatList
-                            data={this.state.appointments}
-                            extraData = {this.state}
-                            renderItem={({item, index}) => {
-                                let i = index;
-                                let it = item;
-                                return (
-                                    <AppointmentItem
-                                        i = {i}
-                                        item={it}
-                                        handleAppointmentDelete = {this.deleteAppointment}
-                                    />
-                                )
-                            }}
-                        />
-                </View>
-                <Button
-                    title="Add appointment"
-                    onPress = {() => this.props.navigation.navigate('AddAppointment',
-                        {addItem: item => this.setState(prevState => ({ appointments: prevState.appointments.concat([item]) }), this.storeData)
-                    })}/>
             </View>
         );
     }
@@ -151,19 +154,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        position: 'absolute',
-        justifyContent: 'center',
-        width: '100%',
-        height: '100%'
+      
     },
     header: {
         flexDirection: 'row',
         borderBottomWidth: 1,
-    },
-    calendar: {
-        alignSelf: 'flex-start',
-        paddingLeft: 0,
-
     },
     date: {
         fontSize: 15,
@@ -171,37 +166,12 @@ const styles = StyleSheet.create({
         marginBottom: 3,
         paddingLeft: 5,
     },
-    time: {
-
-    },
-    textStyle: {
+    calendar: {
         alignSelf: 'flex-start',
-        fontFamily: 'Cochin',
-        fontSize: 20
+        paddingLeft: 0,
+        marginBottom: 3
     },
-    textStyleButton: {
-        padding: 10,
-        alignSelf: 'center',
-        color: "white"
-    },
-    status: {
-        position: 'absolute',
-        alignItems: 'flex-start',
-        padding: 10
-    },
-    appointmentItem: {
-        marginLeft: '15%',
-        marginRight: '10%',
-        flex: 1,
-        width: '100%',
-        alignItems: 'flex-start',
-        borderColor: '#ddd',
-        borderBottomWidth: 1,
-        padding: 20,
-        backgroundColor: "#fff",
-        justifyContent: 'center',
-        flexDirection: 'column'
-    },
+  
     appointmentDelete: {
         flex: 10,
         position: 'absolute',
@@ -212,12 +182,6 @@ const styles = StyleSheet.create({
         top: 10,
         bottom: 10,
         right: 0,
-    },
-    footer: {
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 10,
     },
     appendButtonContainer:{
         alignItems: 'center'
