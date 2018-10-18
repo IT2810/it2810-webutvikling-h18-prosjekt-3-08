@@ -21,6 +21,9 @@ import {
 import Todos from './Todos';
 import Appointments from './Appointments';
 
+import PerfectDays from './PerfectDays'
+import Calendar from './Calendar';
+
 // Contacts
 import Contacts from './Contacts';
 import AddAppointment from "./AddAppointment";
@@ -64,17 +67,21 @@ export const Tabs = createMaterialTopTabNavigator({
 },
    {
       initialRouteName: 'AppointmentStack',
+
+      swipeEnabled: false,
       //tabBarPosition: 'bottom',
       tabBarOptions: {
          activeTintColor: 'orange',
          inactiveTintColor: 'grey',
          showIcon: true,
          style: {
-            backgroundColor: '#fff'
+            backgroundColor: '#fff',
          }
       }
    }
 );
+
+
 
 
 
@@ -90,11 +97,44 @@ export const Stack = createStackNavigator({
                   <Ionicons name="md-menu" size={24} />
                </View>
             </TouchableOpacity>
-         )
+         ), 
+         
+        
       })
    }
 });
 
+
+/*
+headerRight: (
+            <TouchableOpacity onPress={() => navigation.navigate('Calendar')} >
+               <View style={{paddingHorizontal: 10}}>
+                  <Ionicons name="md-calendar" size={24} />
+               </View>
+            </TouchableOpacity>
+        
+         )
+*/
+
+export const ContactsStack = createStackNavigator({
+   Contacts: {
+      screen: Contacts,
+      navigationOptions: ({navigation}) => ({
+         title: 'Contacts',
+         headerLeft: (
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+               <View style={{paddingHorizontal: 10}}>
+                  <Ionicons name="md-menu" size={24} />
+               </View>
+            </TouchableOpacity>
+         ),
+      })
+   },
+   AddContact: {
+       screen: AddContact
+   }
+    }
+)
 
 const CustomDrawerComponent = (props) => (
    <SafeAreaView style={{ flex: 1}}>
@@ -112,7 +152,7 @@ const CustomDrawerComponent = (props) => (
 
 export const Drawer = createDrawerNavigator({
    MyDay: Stack,
-   Contacts: Contacts
+   Contacts: ContactsStack
 }, {
    contentComponent: CustomDrawerComponent
 });
