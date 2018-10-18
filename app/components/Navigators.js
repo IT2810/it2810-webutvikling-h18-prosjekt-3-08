@@ -27,6 +27,7 @@ import Calendar from './Calendar';
 // Contacts
 import Contacts from './Contacts';
 import AddAppointment from "./AddAppointment";
+import AddContact from "./AddContact";
 
 
 export const AppointmentStackNavigator = createStackNavigator({

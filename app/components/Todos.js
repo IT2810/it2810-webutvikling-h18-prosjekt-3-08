@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, FlatList,
     TouchableOpacity, TouchableWithoutFeedback,
-     Keyboard, KeyboardAvoidingView, AsyncStorage } from 'react-native';
+     Keyboard, KeyboardAvoidingView, AsyncStorage, Alert } from 'react-native';
 import moment from 'moment'; // For å håndtere/formatere valgt dato
 import { Ionicons } from '@expo/vector-icons';
 
@@ -290,7 +290,7 @@ export default class Todos extends React.Component {
           }
         }
         if (!this.state.perfectDay){
-          alert("Congratulations! You have completed all your todos this day, and have achieved a Perfect Day! Click the star to see all of your Perfect Days.")
+          Alert.alert("Congratulations!", "You have completed all your todos this day, and have achieved a Perfect Day! Click the star to see all of your Perfect Days.")
         }
         if (index === -1){
           perfectDaysCopy.push(this.state.activeDate)

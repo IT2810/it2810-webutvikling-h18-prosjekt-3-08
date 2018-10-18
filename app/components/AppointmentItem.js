@@ -11,7 +11,6 @@ import {
     TouchableOpacity,
     TouchableHighlight
 } from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Swipeout from 'react-native-swipeout';
 
 
@@ -118,7 +117,7 @@ export default class AppointmentItem extends React.Component {
         }
         const swipeSettings = {
             autoClose: true,
-            left: [
+            right: [
                 {
                     onPress: () => {this.props.handleAppointmentDelete(this.props.index)},
                     text: 'Delete',
