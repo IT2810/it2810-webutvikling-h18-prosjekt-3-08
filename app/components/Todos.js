@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
       marginBottom: 3,
    },
    star: {
-    paddingLeft: 170,
+    paddingLeft: 167,
     marginBottom: 3
    },
    todoItem: {

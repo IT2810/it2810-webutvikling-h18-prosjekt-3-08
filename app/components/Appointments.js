@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button, FlatList, AsyncStorage} from 'react-native';
+import {StyleSheet, Text, View, Button, FlatList, Keyboard, AsyncStorage} from 'react-native';
 import AppointmentItem from './AppointmentItem';
 import AddAppointment from "./AddAppointment";
 import moment from 'moment';
@@ -26,9 +26,10 @@ export default class Appointments extends React.Component {
     };
 
     componentDidMount(){
-        this.retrieveData();
+        this.retrieveData()
         this.setTextDate()
         //this.deleteData()
+        Keyboard.dismiss()
     }
 
 

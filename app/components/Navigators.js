@@ -4,7 +4,8 @@ import { StyleSheet, Text, View,
    SafeAreaView,
    ScrollView,
    Dimensions,
-   Image
+   Image,
+   Keyboard
    } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -83,13 +84,12 @@ export const Tabs = createMaterialTopTabNavigator({
             tabBarLabel: 'Todos',
             tabBarIcon: ({tintColor}) => (
                 <Ionicons name='ios-list' color={tintColor} size={24} />
-            )
+            ),
         }
     }
 },
    {
       initialRouteName: 'AppointmentStack',
-
       swipeEnabled: false,
       //tabBarPosition: 'bottom',
       tabBarOptions: {
