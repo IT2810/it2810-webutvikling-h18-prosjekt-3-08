@@ -101,7 +101,6 @@ export default class AddAppointment extends React.Component {
         return (
             <ScrollView>
             <View style={styles.container}>
-            
                 <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                     <TextInput
                         style={titleStyle}
@@ -111,6 +110,7 @@ export default class AddAppointment extends React.Component {
                         returnKeyType="go"
                     />
                 </KeyboardAvoidingView>
+            
                 <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                     <TextInput
                         style={descStyle}
@@ -129,12 +129,15 @@ export default class AddAppointment extends React.Component {
                         returnKeyType="go"
                     />
                 </KeyboardAvoidingView>
+                
+            
                 <View style={{padding: 40, paddingLeft: 100, flexDirection: 'row', alignItems: 'center'}}>
                     <AppointmentSetTime  onSelectTime = {this.setStartTime}/>
                     <Text>-</Text>
                     <AppointmentSetTime  onSelectTime = {this.setEndTime}/>
                 </View>
-                
+                </View>
+            <View style={styles.buttonContainer}>
                 <Button
                     title="Add appointment"
                     disabled={!this.checkApp()}
@@ -152,8 +155,13 @@ export default class AddAppointment extends React.Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        flex: 1
-
+        flex: 1,
+        marginTop: 60
+    },
+    buttonContainer: {
+        backgroundColor: '#fff',
+        flex: 1,
+        marginTop: 40
     },
     header: {
         flexDirection: 'row',
