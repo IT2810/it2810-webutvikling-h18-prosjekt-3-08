@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createSwitchNavigator } from 'react-navigation';
+import { createSwitchNavigator} from 'react-navigation';
 
 import {Drawer} from './app/components/Navigators'
 

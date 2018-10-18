@@ -9,66 +9,65 @@ import { StyleSheet, Text, View,
 import { Ionicons } from '@expo/vector-icons';
 
 // Navigators
-import {createDrawerNavigator,
-   createStackNavigator,
-   createTabNavigator,
-   createMaterialTopTabNavigator,
-   DrawerItems
-   } from 'react-navigation';
+import {
+    createDrawerNavigator,
+    createStackNavigator,
+    createTabNavigator,
+    createMaterialTopTabNavigator,
+    DrawerItems, StackNavigator,
+} from 'react-navigation';
 
 // TabNavigator screens
 import Todos from './Todos';
 import Appointments from './Appointments';
 
-// Contacts
-import Contacts from './Contacts'
-import AddContact from './AddContact'
-
 import PerfectDays from './PerfectDays'
 import Calendar from './Calendar';
 
-export const TodosStack = createStackNavigator({
-    Todos: {
-        screen: Todos,
-        
-     },
-     PerfectDays: {
-         screen: PerfectDays
-     }},
-     {
-        headerMode: 'none',
-        navigationOptions: {
-            headerStyle: {
-                marginTop: Expo.Constants.statusBarHeight
-                },
+// Contacts
+import Contacts from './Contacts';
+import AddAppointment from "./AddAppointment";
+
+
+export const AppointmentStackNavigator = createStackNavigator({
+    Appointments: {screen: Appointments,
+    },
+    AddAppointment: {screen : AddAppointment},
+    },
+    {
+    headerMode: 'none', // screen?
+    navigationOptions: {
+        headerStyle: {
+            marginTop: Expo.Constants.statusBarHeight
+            }
         }
     }
-)
+);
 
 
 export const Tabs = createMaterialTopTabNavigator({
-   Appointments: {
-      screen: Appointments,
-      navigationOptions: {
-         tabBarLabel: 'Appointments',
-         tabBarIcon: ({tintColor}) => (
-            <Ionicons name='md-clipboard' color={tintColor} size={24} />
-         )
-      }
-   },
-   TodosStack: {
-       screen: TodosStack,
-       navigationOptions: {
-        tabBarLabel: 'Todos',
-        tabBarIcon: ({tintColor}) => (
-           <Ionicons name='ios-list' color={tintColor} size={24} />
-        )
-     }
+    AppointmentStack : {
+        screen: AppointmentStackNavigator,
+        navigationOptions: {
+            tabBarLabel: 'Appointments',
+            tabBarIcon: ({tintColor}) => (
+                <Ionicons name='md-clipboard' color={tintColor} size={24} />
+            )
+        }
     },
-    
-    },
+    Todos: {
+        screen: Todos,
+        navigationOptions: {
+            tabBarLabel: 'Todos',
+            tabBarIcon: ({tintColor}) => (
+                <Ionicons name='ios-list' color={tintColor} size={24} />
+            )
+        }
+    }
+},
    {
-      initialRouteName: 'Appointments',
+      initialRouteName: 'AppointmentStack',
+
       swipeEnabled: false,
       //tabBarPosition: 'bottom',
       tabBarOptions: {
@@ -80,7 +79,10 @@ export const Tabs = createMaterialTopTabNavigator({
          }
       }
    }
-)
+);
+
+
+
 
 
 
@@ -100,7 +102,8 @@ export const Stack = createStackNavigator({
         
       })
    }
-})
+});
+
 
 /*
 headerRight: (
@@ -145,14 +148,15 @@ const CustomDrawerComponent = (props) => (
          <DrawerItems {...props} />
       </ScrollView>
    </SafeAreaView>
-)
+);
 
 export const Drawer = createDrawerNavigator({
    MyDay: Stack,
    Contacts: ContactsStack
 }, {
    contentComponent: CustomDrawerComponent
-})
+});
+
 
 const styles = StyleSheet.create({
    container: {
@@ -172,4 +176,4 @@ const styles = StyleSheet.create({
       width: 120,
       borderRadius: 60,
    }
-})
+});
