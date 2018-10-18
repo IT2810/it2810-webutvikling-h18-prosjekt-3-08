@@ -11,6 +11,7 @@ import {
     TouchableOpacity,
     TouchableHighlight
 } from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Swipeout from 'react-native-swipeout';
 
 
@@ -109,7 +110,6 @@ export default class AppointmentItem extends React.Component {
         return  item.startTime + ' - ' + item.endTime;
     }
 
-
     render() {
 
         let icon = this.props.down;
@@ -118,7 +118,7 @@ export default class AppointmentItem extends React.Component {
         }
         const swipeSettings = {
             autoClose: true,
-            right: [
+            left: [
                 {
                     onPress: () => {this.props.handleAppointmentDelete(this.props.index)},
                     text: 'Delete',
@@ -134,18 +134,24 @@ export default class AppointmentItem extends React.Component {
                         <View style={styles.time}>
                             <Text>{this.getTime(this.props.item)}</Text>
                         </View>
-                        <View >
-                            <Text style={styles.title}>{this.props.item.title}</Text>
+                        <View style={styles.contentApp}>
+                            <View style={{flex: 1, flexDirection: 'column'}}>
+                                    <Text style={styles.title}>{this.props.item.title}</Text>
+                            </View>
+                            <View style={{flex:2}}>
+                                <Text style={styles.desc}>{this.props.item.description}</Text>
+                            </View>
+                            <View style={{flex: 3}}>
+
+                                <Text style={styles.location}>{this.props.item.location}</Text>
+                            </View>
                         </View>
                         <TouchableHighlight onPress = {this.toggle}>
-                            <Image
-                                style={styles.buttonImage}
-                                source={icon}
-                            ></Image>
+                            <Image style={styles.buttonImage} source={icon}/>
                         </TouchableHighlight>
                     </View>
-                    <View style={styles.body} onLayout ={this.setMaxHeight}>
-                        {this.props.children}
+                    <View style = {styles.body} onLayout = {this.setMaxHeight}>
+                        {this.props.item.children}
                     </View>
                 </Animated.View>
             </Swipeout>
@@ -160,30 +166,38 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     appointmentItem: {
-        marginLeft: '15%',
-        marginRight: '10%',
-        flex: 1,
         width: '100%',
-        alignItems: 'flex-start',
+        marginLeft: '10%',
+        marginRight: '10%',
         borderColor: '#ddd',
         borderBottomWidth: 1,
         padding: 20,
         backgroundColor: "#fff",
-        justifyContent: 'center',
-        flexDirection: 'column'
+        flexDirection: 'row',
     },
-    title: {
-        flex: 1,
+    contentApp: {
         padding: 10,
+        flex:2,
+        flexDirection: 'column',
+
+    },
+    title:{
         fontWeight: 'bold',
-        textAlign: 'center',
+    },
+    location: {
+        color: '#ddd',
     },
     time: {
+        width: 20,
         flex: 1,
         padding: 10,
+        borderRightWidth: 1,
+        justifyContent: 'center',
+        borderColor: '#ddd',
+
     },
     buttonImage: {
-        width: 30,
-        height: 25,
+        width: 10,
+        height: 15,
     },
-})
+});

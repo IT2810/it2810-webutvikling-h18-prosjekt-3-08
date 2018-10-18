@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button, FlatList, AsyncStorage, Alert} from 'react-native';
+import {StyleSheet, Text, View, Button, FlatList, AsyncStorage} from 'react-native';
 import AppointmentItem from './AppointmentItem';
 import AddAppointment from "./AddAppointment";
-import moment from 'moment'
+import moment from 'moment';
 import Calendar from './Calendar';
 
 

@@ -76,7 +76,7 @@ export default class AddAppointment extends React.Component {
                 endTime: this.state.endTime,
                 description: this.state.description,
                 location: this.state.location
-            }
+            };
             this.props.navigation.state.params.addItem(newApp);
             this.props.navigation.navigate('Appointments')
         }
