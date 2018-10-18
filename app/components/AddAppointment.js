@@ -7,7 +7,8 @@ import {
     Button,
     TextInput,
     Alert,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    ScrollView
 } from 'react-native';
 import AppointmentSetTime from "./AppointmentSetTime";
 
@@ -20,16 +21,14 @@ export default class AddAppointment extends React.Component {
         this.setTitle = this.setTitle.bind(this);
         this.setDescription = this.setDescription.bind(this);
         this.setLocation = this.setLocation.bind(this);
-        this.onConfirm = this.onConfirm.bind(this);
         this.checkApp = this.checkApp.bind(this);
 
         this.state = {
             title: '',
             startTime: '',
             endTime: '',
-            desc: '',
+            description: '',
             location: '',
-            app: ''
         }
     };
 
@@ -58,7 +57,7 @@ export default class AddAppointment extends React.Component {
 
     setDescription(desc){
         this.setState ({
-            desc: desc
+            description: desc
         })
     };
 
@@ -68,60 +67,44 @@ export default class AddAppointment extends React.Component {
         })
     };
 
-
-
-
-    onConfirm(){
-        if (this.checkApp() === true) {
-            let t = this.state.title;
-            let st = this.state.startTime;
-            let et = this.state.endTime;
-            let d = this.state.desc;
-            let l = this.state.location;
+    addAndNavigate(){
+        if (this.checkApp()) {
             let newApp = {
                 key: new Date().toString(),
-                title: t,
-                startTime: st,
-                endTime: et,
-                desc: d,
-                location: l
-            };
-            this.setState({
-                app: newApp
-            });
-            return true
+                title: this.state.title,
+                startTime: this.state.startTime,
+                endTime: this.state.endTime,
+                description: this.state.description,
+                location: this.state.location
+            }
+            this.props.navigation.state.params.addItem(newApp);
+            this.props.navigation.navigate('Appointments')
         }
-        else {
-            return false
-        }
-    };
+    }
 
     checkApp() {
-        if (this.state.title === '') {
-            return false
-        }
-        else if (this.state.startTime === '') {
-            return false
-        }
-        else if (this.state.endTime === '') {
-            return false
-        }
-        else if (this.state.startTime > this.state.endTime){
-            return false
-        }
-        else {
-            return true
-        }
+        return (
+            this.state.title !== '' &&
+            this.state.startTime !== '' &&
+            this.state.endTime !== '' &&
+            !(this.state.startTime > this.state.endTime)
+        )
     };
 
 
     render (){
         console.log(this.state);
+        
+        let titleStyle = this.state.title === '' ? styles.textInput : styles.textInput2
+        let descStyle = this.state.description === '' ? styles.textInput : styles.textInput2
+        let locStyle = this.state.location === '' ? styles.textInput : styles.textInput2
         return (
-            <View>
+            <ScrollView>
+            <View style={styles.container}>
+            
                 <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                     <TextInput
-                        style={styles.textInput}
+                        style={titleStyle}
                         value={this.state.title}
                         placeholder="Enter title"
                         onChangeText={(value) => this.setTitle(value)}
@@ -130,8 +113,8 @@ export default class AddAppointment extends React.Component {
                 </KeyboardAvoidingView>
                 <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                     <TextInput
-                        style={styles.textInput}
-                        value={this.state.desc}
+                        style={descStyle}
+                        value={this.state.description}
                         placeholder="Enter description"
                         onChangeText={(value) => this.setDescription(value)}
                         returnKeyType="go"
@@ -139,43 +122,37 @@ export default class AddAppointment extends React.Component {
                 </KeyboardAvoidingView>
                 <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                     <TextInput
-                        style={styles.textInput}
+                        style={locStyle}
                         value={this.state.location}
                         placeholder="Enter location"
                         onChangeText={(value) => this.setLocation(value)}
                         returnKeyType="go"
                     />
                 </KeyboardAvoidingView>
-                <View>
-                    <Text></Text>
-                    <AppointmentSetTime style={styles.textInput} isStart = {true} onSelectTime = {this.setStartTime}/>
-                    <Text></Text>
-                    <AppointmentSetTime style={styles.textInput} isStart = {false} onSelectTime = {this.setEndTime}/>
+                <View style={{padding: 40, paddingLeft: 100, flexDirection: 'row', alignItems: 'center'}}>
+                    <AppointmentSetTime  onSelectTime = {this.setStartTime}/>
+                    <Text>-</Text>
+                    <AppointmentSetTime  onSelectTime = {this.setEndTime}/>
                 </View>
+                
                 <Button
                     title="Add appointment"
+                    disabled={!this.checkApp()}
                     onPress={this.addAndNavigate.bind(this)}
                 />
+            
             </View>
+            </ScrollView>
         )
     }
 
-    addAndNavigate(){
-        if (this.onConfirm()) {
-            this.props.navigation.state.params.addItem(this.state.app);
-            this.props.navigation.navigate('Appointments')
-        } else {
-            Alert.alert('Error', 'You have to fill all the fields');
-        }
-    }
 }
 
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center'
+        flex: 1
 
     },
     header: {
@@ -185,16 +162,7 @@ const styles = StyleSheet.create({
     calendar: {
         alignSelf: 'flex-end'
     },
-    todoItem: {
-        flex: 1,
-        alignItems: 'center',
-        borderColor: '#ddd',
-        borderBottomWidth: 1,
-        padding: 20,
-        backgroundColor: "#fff",
-        justifyContent: 'flex-start',
-        flexDirection: 'column'
-    },
+ 
     textStyle: {
         alignSelf: 'flex-start',
         fontSize: 16
@@ -206,8 +174,25 @@ const styles = StyleSheet.create({
         color: 'black',
         padding: 5,
         backgroundColor: '#fff',
-        borderTopWidth: 2,
-        borderTopColor: '#ededed',
+        borderBottomWidth: 2,
+        borderBottomColor: '#ededed',
+    },
+    textInput2: {
+        margin: 20,
+        marginBottom: 0,
+        height: 40,
+        color: 'black',
+        padding: 5,
+        backgroundColor: '#fff',
+        borderBottomWidth: 2,
+        borderBottomColor: '#A9E2F3',
+    },
+    startTime: {
+
+        fontSize: 20
+    },
+    endTime: {
+        fontSize: 20
     },
     keyboard: {
         flex: 1,

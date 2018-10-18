@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, Button, FlatList, AsyncStorage, Alert} from 'rea
 import AppointmentItem from './AppointmentItem';
 import AddAppointment from "./AddAppointment";
 import moment from 'moment'
-import Calender from './Calender';
+import Calendar from './Calendar';
 
 
 export default class Appointments extends React.Component {
@@ -11,20 +11,24 @@ export default class Appointments extends React.Component {
 
     constructor(){
         super();
+        this.addAppointment = this.addAppointment.bind(this);
         this.deleteAppointment = this.deleteAppointment.bind(this);
-        this.updateAppointment = this.updateAppointment.bind(this);
         this.storeData = this.storeData.bind(this);
+        this.setTextDate = this.setTextDate.bind(this);
 
         let date = this.getCurrentDate();
 
         this.state = {
             appointments: [],
-            activeDate: date
+            activeDate: date,
+            textDate: ""
         };
     };
 
     componentDidMount(){
         this.retrieveData();
+        this.setTextDate()
+        //this.deleteData()
     }
 
 
@@ -36,29 +40,43 @@ export default class Appointments extends React.Component {
 
     storeData = async () => {
         try {
-            await AsyncStorage.setItem(this.state.date+'a', JSON.stringify(this.state.appointments));
+            await AsyncStorage.setItem(this.state.activeDate+'a', JSON.stringify(this.state.appointments));
         } catch (error) {
-           Alert.alert("Error");
+           alert("Error");
         }
     };
 
+    deleteData = async () => {
+        try {
+            await AsyncStorage.removeItem(this.activeDate+'a');
+        } catch (error) {
+           alert("Error");
+        }
+    };
+    
+
 
     retrieveData = async() => {
+
+        this.setTextDate()
+        
         try {
-            let array = await AsyncStorage.getItem(this.state.date+'a');
+            let array = await AsyncStorage.getItem(this.state.activeDate+'a');
             if (array !== null) {
-                let appointment = JSON.parse(array);
+                let appointments = JSON.parse(array);
+                console.log(appointments);
+                
                 this.setState({
-                    appointment: appointment
+                    appointments: appointments
                 })
             }
             else{
                 this.setState({
-                    appointment: []
+                    appointments: []
                 })
             }
         } catch (error) {
-           Alert.alert("Error");
+           alert("Error");
         }
     };
 
@@ -69,23 +87,13 @@ export default class Appointments extends React.Component {
         }, this.retrieveData)
     };
 
-    addAppointment(title, desc, start, end, loc){
-        let appCopy = this.state.appointments;
-        let newApp = {
-            title: title,
-            desc: desc,
-            startTime: start,
-            endTime: end,
-            location: loc,
-        };
-        appCopy.splice(0, 0, newApp);
+    addAppointment(app){
+        let apps = this.state.appointments
+        apps.splice(0,0, app)
         this.setState({
-            appointments: appCopy
-        },
-        this.storeData);
-        console.log('Adding appointment to async');
+            appointments: apps
+        }, this.storeData)
     }
-
 
     deleteAppointment(index){
         let appointmentCopy = [];
@@ -102,9 +110,64 @@ export default class Appointments extends React.Component {
         }, this.storeData);
     }
 
-    updateAppointment(){
-    }
-
+    setTextDate(){
+        let d = this.state.activeDate
+        let date = ""
+        let month = ""
+        switch (d.substring(5, 7)) {
+           case '01':
+              month = "January"
+              break;
+           case '02':
+              month = "February"
+              break;
+           case '03':
+              month = "March"
+              break;
+           case '04':
+              month = "April"
+              break;
+           case '05':
+              month = "May"
+              break;
+           case '06':
+              month = "June"
+              break;
+           case '07':
+              month = "July"
+              break;
+           case '08':
+              month = "August"
+              break;
+           case '09':
+              month = "September"
+              break;
+           case '10':
+              month = "October"
+              break;
+           case '11':
+              month = "November"
+              break;
+           case '12':
+              month = "Desember"
+              break;
+           default:
+              month = "Month"
+        }
+    
+        let day = ""
+        if (d.charAt(8) == '0'){
+           day = d.charAt(9)
+        }
+        else {
+           day = d.substring(8,10)
+        }
+        date += day + " of " + month + " " + d.substring(0, 4)
+    
+        this.setState({
+           textDate: date
+        })
+     }
 
 
     // Pass inn handleToDelete, sjekk Ax sin kode
@@ -113,9 +176,9 @@ export default class Appointments extends React.Component {
             <View style = {styles.container}>
                 <View style={{flex: 1, marginTop: 22}}>
                     <View style ={styles.header}>
-                        <Calender style= {styles.calendar} onSelectDate={this.changeDate}/>
-                        <Text>
-                            {this.state.activeDate}
+                        <Calendar style= {styles.calendar} onSelectDate={this.changeDate}/>
+                        <Text style={styles.date}>
+                            {this.state.textDate}
                         </Text>
                     </View>
                 
@@ -138,14 +201,20 @@ export default class Appointments extends React.Component {
                     <Button
                         title="Add appointment"
                         onPress = {() => this.props.navigation.navigate('AddAppointment',
-                            {addItem: item => this.setState(prevState => ({ appointments: prevState.appointments.concat([item]) }), this.storeData)
-                        })}
+                            {addItem: item => this.addAppointment(item)}
+                        )}
                     />
                 </View>
             </View>
         );
     }
+
+    // {addItem: item => this.setState(prevState => ({ appointments: prevState.appointments.concat([item]) }), this.storeData)
+   
+    
 }
+
+
 
 
 
@@ -172,17 +241,6 @@ const styles = StyleSheet.create({
         marginBottom: 3
     },
   
-    appointmentDelete: {
-        flex: 10,
-        position: 'absolute',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
-        backgroundColor: 'black',
-        padding: 10,
-        top: 10,
-        bottom: 10,
-        right: 0,
-    },
     appendButtonContainer:{
         alignItems: 'center'
     },

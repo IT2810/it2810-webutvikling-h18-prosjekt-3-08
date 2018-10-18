@@ -43,8 +43,6 @@ export default class AppointmentItem extends React.Component {
             expanded: false,
         }
     }
-
-
     changeLayout = () =>
     {
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -60,14 +58,11 @@ export default class AppointmentItem extends React.Component {
             });
         }
     };
-
     getViewHeight (height) {
         this.setState({
             onLayoutHeight: height
         })
     };
-
-
     render (){
         return (
             <View style = {styles.appointmentItem}>
