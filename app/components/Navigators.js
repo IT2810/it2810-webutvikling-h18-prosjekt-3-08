@@ -30,6 +30,27 @@ import AddAppointment from "./AddAppointment";
 import AddContact from "./AddContact";
 
 
+
+export const TodosStack = createStackNavigator({
+    Todos: {
+        screen: Todos,
+        
+     },
+     PerfectDays: {
+         screen: PerfectDays
+     }},
+     {
+        headerMode: 'none',
+        navigationOptions: {
+            headerStyle: {
+                marginTop: Expo.Constants.statusBarHeight
+                }
+        }
+    }
+)
+
+
+
 export const AppointmentStackNavigator = createStackNavigator({
     Appointments: {screen: Appointments,
     },
@@ -56,8 +77,8 @@ export const Tabs = createMaterialTopTabNavigator({
             )
         }
     },
-    Todos: {
-        screen: Todos,
+    TodosStack: {
+        screen: TodosStack,
         navigationOptions: {
             tabBarLabel: 'Todos',
             tabBarIcon: ({tintColor}) => (
@@ -81,10 +102,6 @@ export const Tabs = createMaterialTopTabNavigator({
       }
    }
 );
-
-
-
-
 
 
 export const Stack = createStackNavigator({
