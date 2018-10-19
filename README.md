@@ -244,7 +244,7 @@ Vi har ikke støtt på noen spesielle problemer på de ulike operativsystemene, 
 
 ### Jest
 Jest er et rammeverk for å teste JavaScript på en enkel måte. [Her](https://jestjs.io/docs/en/tutorial-react-native) kan du lese mer om hvordan det brukes for å teste React Native apps.
-For å installere brukte vi kommandoen ``` npm i jest-expo --save-dev ``` i terminal. Testene kjøres enkelt ved hjelp av kommandoen ``` npm test ```. Testene måtte lagres i en mappe med navn *__test__*, og filene måtte hete *ComponentSomTestes-test.js*.
+For å installere brukte vi kommandoen ``` npm i jest-expo --save-dev ``` i terminal. Testene kjøres enkelt ved hjelp av kommandoen ``` npm test ```. Testene måtte lagres i en mappe med navn ____test____, og filene måtte hete *ComponentSomTestes-test.js*.
 
 Som nevnt fokuserte vi for det meste på snapshot-testing. Det beste alternativet var å bruke ```react-test-renderer``` til å håndtere snapshottesting av enkle komponenter, fordi vi da får snapshot-filer som er lesbare. Eksempel på dette ligger under:
 
