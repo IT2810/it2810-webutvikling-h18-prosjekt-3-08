@@ -168,7 +168,7 @@ Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "todos" o
 
 Datetime-picker er et bibliotek som brukes for å få opp views der man kan velge tid eller dato og fungerer på forskjellige operativsystemer. Vi har brukt dette til både å velge dato til avtaler og gjøremål og også velge tidspunkt for avtaler. Under er en kodesnutt for hvordan man veldger dato. 
 
-```
+```jsx
 render() {
       return (
          <View style={styles.container}>
@@ -221,6 +221,6 @@ export const Stack = createStackNavigator({
 ### Plattformuavhengighet
 .....
 
-### Jeset
+### Jest
 .....
 
