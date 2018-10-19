@@ -79,8 +79,8 @@ retrievePerfectDays = async() => {
 
 <br>
 
-### UtoverReactNativeUI
 
+### UtoverReactNativeUI
 
 #### Swipeout
 Swipeout er en funksjon som gjør det mulig å swipe liste-elementer. På denne måten får man en dynamisk måte å slette list-elementer på. 
