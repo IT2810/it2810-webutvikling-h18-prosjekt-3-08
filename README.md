@@ -127,6 +127,7 @@ React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vå
 Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo. Under er et eksempel fra koden som gir lokasjons-pinen på en avtale.
 
 ```import { Ionicons } from '@expo/vector-icons';```
+
 ``` <Ionicons name='md-pin'/>```
 
 
