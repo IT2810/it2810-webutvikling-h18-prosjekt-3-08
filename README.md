@@ -29,10 +29,17 @@ Vår personal information manager er en app som lar deg holde orden på kontakte
   - Stjerne-symbolet på siden bytter farge fra grå til oransje.
   - Man kan klikke på stjernen for å se en liste over alle "perfekte dager"
 <br>
+Under ser dere videoer av applikasjon i bruk:
+<br>
+
+Appointments-tab |  Todos-Tab  | Contacts
+:-------------:|:----------------:|:--------------:
+![](https://media.giphy.com/media/6o3wcwYMXSeaYYxDFo/giphy.gif)  |  ![](https://media.giphy.com/media/XJMl5OMLBXVKMXhRgp/giphy.gif) | ![](https://media.giphy.com/media/X6IpxDtlSyWcuqFsmc/giphy.gif)
+
 
 ### AsyncStorage
 
-Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over istendefor å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. Vi har valgt et en-til-en forhold mellom state og AsyncStorage. På denne måten leser vi kun fra AsyncStorage når vi initialiserer  appen.
+Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over istendefor å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. Vi har valgt et en-til-en forhold mellom state og AsyncStorage. På denne måten leser vi kun fra AsyncStorage når vi initialiserer  appen eller endrer dato (da ny data må hentes for den datoen). 
 
 Under er et eksempel på hvordan vi lagrer data. Her er ```'perfectDays'``` nøkkelen og ```this.state.perfectDays```  dataen vi vil lagre. For å hente ut todos og appointments har vi brukt datoen de tilhører som nøkkel. 
 
