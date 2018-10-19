@@ -47,16 +47,6 @@ export default class Appointments extends React.Component {
         }
     };
 
-    deleteData = async () => {
-        try {
-            await AsyncStorage.removeItem(this.activeDate+'a');
-        } catch (error) {
-           alert("Error");
-        }
-    };
-    
-
-
     retrieveData = async() => {
 
         this.setTextDate()
@@ -89,12 +79,15 @@ export default class Appointments extends React.Component {
     };
 
     addAppointment(app){
-        let apps = this.state.appointments
-        apps.splice(0,0, app)
+        let apps = this.state.appointments;
+        apps.splice(0,0, app);
+        console.log('Adding appointment');
+        console.log(apps[0]);
         this.setState({
             appointments: apps
-        }, this.storeData)
+        }, this.storeData);
     }
+
 
     deleteAppointment(index){
         let appointmentCopy = [];
@@ -109,61 +102,61 @@ export default class Appointments extends React.Component {
         this.setState({
             appointments: appointmentCopy
         }, this.storeData);
-    }
+    };
 
     setTextDate(){
         let d = this.state.activeDate
-        let date = ""
-        let month = ""
+        let date = "";
+        let month = "";
         switch (d.substring(5, 7)) {
            case '01':
-              month = "January"
+              month = "January";
               break;
            case '02':
-              month = "February"
+              month = "February";
               break;
            case '03':
-              month = "March"
+              month = "March";
               break;
            case '04':
-              month = "April"
+              month = "April";
               break;
            case '05':
-              month = "May"
+              month = "May";
               break;
            case '06':
-              month = "June"
+              month = "June";
               break;
            case '07':
-              month = "July"
+              month = "July";
               break;
            case '08':
-              month = "August"
+              month = "August";
               break;
            case '09':
-              month = "September"
+              month = "September";
               break;
            case '10':
-              month = "October"
+              month = "October";
               break;
            case '11':
-              month = "November"
+              month = "November";
               break;
            case '12':
-              month = "Desember"
+              month = "Desember";
               break;
            default:
               month = "Month"
         }
     
-        let day = ""
+        let day = "";
         if (d.charAt(8) == '0'){
            day = d.charAt(9)
         }
         else {
            day = d.substring(8,10)
         }
-        date += day + " of " + month + " " + d.substring(0, 4)
+        date += day + " of " + month + " " + d.substring(0, 4);
     
         this.setState({
            textDate: date
@@ -184,7 +177,7 @@ export default class Appointments extends React.Component {
                     </View>
                 
                     <FlatList
-                        data={this.state.appointments}
+                        data={this.state.appointments.sort((a,b) => (a.startTime > b.startTime))}
                         extraData = {this.state}
                         renderItem={({item, index}) => {
                             let i = index;

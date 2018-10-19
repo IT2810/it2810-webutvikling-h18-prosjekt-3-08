@@ -3,10 +3,8 @@ import {
     StyleSheet,
     Text,
     View,
-    Keyboard,
     Button,
     TextInput,
-    Alert,
     KeyboardAvoidingView,
     ScrollView
 } from 'react-native';
@@ -85,6 +83,7 @@ export default class AddAppointment extends React.Component {
     checkApp() {
         return (
             this.state.title !== '' &&
+            this.state.location !=='' &&
             this.state.startTime !== '' &&
             this.state.endTime !== '' &&
             !(this.state.startTime > this.state.endTime)
