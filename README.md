@@ -5,8 +5,8 @@ Vi er 3 studenter på NTNU som har gjennomført et prosjekt i emnet IT2810 Webut
 
   - [Innhold og funksjonalitet](#innhold-og-funksjonalitet)
     - [Generelt](#generelt)
-    - [AsyncStorage](#asyncstorage)
     - [Expo](#expo)
+    - [AsyncStorage](#asyncstorage)
   - [UtoverReactNativeUI](#utoverreactnativeui)
     - [Swipeout](#swipeout)
     - [Elements](#elements)
@@ -16,6 +16,8 @@ Vi er 3 studenter på NTNU som har gjennomført et prosjekt i emnet IT2810 Webut
     - [Navigation](#navigation)
     
   - [Testing](#testing)
+    - [Plattformuavhengighet](#plattformuavhengighet)
+    - [Jest](#jest)
 
 
 
@@ -29,13 +31,22 @@ Vår personal information manager er en app som lar deg holde orden på kontakte
   - Stjerne-symbolet på siden bytter farge fra grå til oransje.
   - Man kan klikke på stjernen for å se en liste over alle "perfekte dager"
 <br>
-Under ser dere videoer av applikasjon i bruk:
+Under ser man et utklipp av applikasjon i bruk:
 <br>
 
 Appointments-tab |  Todos-Tab  | Contacts
 :-------------:|:----------------:|:--------------:
 ![](https://media.giphy.com/media/6o3wcwYMXSeaYYxDFo/giphy.gif)  |  ![](https://media.giphy.com/media/XJMl5OMLBXVKMXhRgp/giphy.gif) | ![](https://media.giphy.com/media/X6IpxDtlSyWcuqFsmc/giphy.gif)
 
+
+<br>
+
+#### Expo
+
+Expo er et verktøy bygget rundt React Native, slik at man kan bygge native iOS og Android prosjekter ved å bruke React og JavaScript.
+
+
+<br>
 
 #### AsyncStorage
 
@@ -78,12 +89,6 @@ retrievePerfectDays = async() => {
 ```
 
 <br>
-
-#### Expo
-
-Expo er et verktøy bygget rundt React Native, slik at man kan bygge native iOS og Andoid prosjekter ved å bruke React og JavaScript. Man kan altså skrive kode uten å tenkte på spesifikke instillinger for hvilket operativsystem appen skal kjøre på. Expo utvider også React Native plattformen ved å tilby ekstra moduler. 
-
-
 
 
 ### UtoverReactNativeUI
@@ -207,5 +212,11 @@ export const Stack = createStackNavigator({
 <br>
 
 ## Testing
+
+### Plattformuavhengighet
+.....
+
+### Jeset
+.....
 
 
