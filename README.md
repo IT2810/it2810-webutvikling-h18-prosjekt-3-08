@@ -239,7 +239,32 @@ Vi har ikke støtt på noen spesielle problemer på de ulike operativsystemene, 
 ![](https://i.imgur.com/j6UZU9R.png)
 
 ### Jest
-Jest er et rammeverk for å teste JavaScript på en enkel måte. For å installere brukte vi kommandoen ``` npm i jest-expo --save-dev ``` i terminal. I tillegg måtte vi endre package.json til følgende etter tips på piazza:
+Jest er et rammeverk for å teste JavaScript på en enkel måte. For å installere brukte vi kommandoen ``` npm i jest-expo --save-dev ``` i terminal. Testene kjøres enkelt ved hjelp av kommandoen ``` npm test ```.
+
+Som nevnt fokuserte vi for det meste på snapshot-testing. Det beste alternativet var å bruke ```react-test-renderer``` til å håndtere snapshottesting av enkle komponenter, fordi vi da får snapshot-filer som er lesbare. Eksempel på dette ligger under:
+
+```jsx
+import 'react-native';
+import React from 'react';
+import renderer from 'react-test-renderer';
+import AddAppointment from '../AddAppointment';
+
+test("Renders correctly", () => {
+    const tree = renderer.create(<AddAppointment/>).toJSON();
+    expect(tree).toMatchSnapshot();
+});
+
+```
+I tillegg testet vi funksjoner på følgende måte:
+```jsx
+test("Function setStartTime", () => {
+    const data = renderer.create(<AddAppointment/>).getInstance();
+    data.setStartTime("12:00")
+    expect(data.state.startTime).toEqual("12:00");
+});
+```
+
+Etter mye feilsøking, fant vi ut at vi måtte endre package.json til følgende etter tips på piazza:
 ```
 {
   "name": "empty-project-template",
