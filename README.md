@@ -55,7 +55,7 @@ Vi har brukt AsyncStorage for å lagre data som blir lagt til i appen vår. Data
 
 Under er et eksempel på hvordan vi lagrer data. Her er ```'perfectDays'``` nøkkelen og ```this.state.perfectDays```  dataen vi vil lagre. For å hente ut todos og appointments har vi brukt datoen de tilhører som nøkkel. 
 
-```
+```jsx
   storePerfectDays = async() => {
     try {
       await AsyncStorage.setItem('perfectDays', JSON.stringify(this.state.perfectDays))
@@ -67,7 +67,7 @@ Under er et eksempel på hvordan vi lagrer data. Her er ```'perfectDays'``` nøk
 ```
 
 For å hente ut data må vi sende inn en nøkkelen til dataen vi vil hente. Vi bruker da AsyncStorage sin ```getItem(key)``` for å hente ut dataen som ligger på den aktuelle nøkkelen. 
-```
+```jsx
 retrievePerfectDays = async() => {
     try {
       let perfectDaysData = await AsyncStorage.getItem('perfectDays')          
@@ -100,7 +100,7 @@ Swipeout er en funksjon som gjør det mulig å swipe liste-elementer. På denne 
 I koden under ser man koden som gjør det mulig å swipe en appointment. ```right: [...]``` bestemmer hva som skal skje og hva som skal vises når du swiper til høyre. 
 
 
-```
+```jsx
 render() {
         const swipeSettings = {
             autoClose: true,
@@ -126,7 +126,7 @@ render() {
 React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vårt prosjekt har vi blant annet benyttet oss av Searchbar, Lists og Button. Ettersom React Native ikke tilbyr et altfor bredt spekter av UI-komponenter kom dette veldig godt med. Komponentene vi har brukt har vært hendig for å navigere, legge til og søke opp dataen som er lagret.
 
 
-```
+```jsx
 <SearchBar 
     placeholder="Search.." 
     lightTheme round 
@@ -145,9 +145,9 @@ React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vå
 
 Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo. Under er et eksempel fra koden som gir lokasjons-pinen på en avtale.
 
-```import { Ionicons } from '@expo/vector-icons';```
+```jsx import { Ionicons } from '@expo/vector-icons';```
 
-``` <Ionicons name='md-pin'/>```
+```jsx <Ionicons name='md-pin'/>```
 
 
 <br>
@@ -156,9 +156,9 @@ Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til
 
 Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "todos" og "appointments" for å blant annet lage nøkler til dataene vi lagrer i AsyncStorage. 
 
-```import moment from 'moment';```
+```jsx import moment from 'moment';```
 
-``` let formatedDate = moment(date).format('YYYY-MM-DD');```
+```jsx let formatedDate = moment(date).format('YYYY-MM-DD');```
 
 
 
@@ -191,7 +191,7 @@ render() {
 
 Ved å bruke Navigation-biblioteket har vi greid å lage en app der det er lett å navigere frem og tilbake fra forskjellige komponenter. Vi har brukt forskjellige typer navigasjonsmetoder som f.eks Drawer, Stack og TopTab. I bunn har vi en drawer der man kan velge mellom å se kontaktliste og "MyDay"-siden. På "MyDay" har vi tabs der man kan velge mellom å se liste over avtaler eller liste over gjøremål. Igjen er avtale -og kontaktsiden en stackNavigator. 
 
-```
+```jsx
 export const Stack = createStackNavigator({
    TabNavigator: {
       screen: Tabs,
