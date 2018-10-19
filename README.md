@@ -224,7 +224,7 @@ export const Stack = createStackNavigator({
 .....
 
 ## Testing
-For dette prosjektet ble det stilt krav om systematisk bruk av tester for å sikre tilstrekkelig kodekvalitet. Da vi startet prosjektet ble det oppfordret til å bruke Jest og Enzyme. Det viste seg at det oppsto en del problemer når det kom til Enzyme og React Native, og derfor ble Jest foretrukket. Dette førte til at det for det meste ble utført snapshot-testing. Vi har også noe testing av funksjoner.
+For dette prosjektet ble det stilt krav om systematisk bruk av tester for å sikre tilstrekkelig kodekvalitet. Da vi startet prosjektet ble det oppfordret til å bruke Jest og Enzyme. Det viste seg at det oppsto en del problemer når det kom til Enzyme og React Native, og derfor ble Jest foretrukket. Dette førte til at det for det meste ble utført snapshot-testing. Vi har også noe testing av funksjoner. Det har vist seg vanskelig å få teste state, som er ganske uheldig da mange av funksjonene baserer seg på å oppdatering av state.
 
 Vi opplevde en del problemer når det kom til testingen. Ved oppstart av prosjekt valgte vi en *blank template*. Dette førte senere til noen problemer med Jest, der vi prøvde å kjøre testene, men det kom ingen resultater (og heller ikke feilmeldinger). Etter mye feilsøking fant vi ut at det hadde vært hensiktsmessig å starte prosjektet med *tabs-template* da vi kjørte *expo init* første gang.
 Dette førte til at vi ikke fikk testet like mye underveis i utviklingen som vi ønsket. Vi fant heldigvis en løsning på problemet etter mye feilsøking og endring av *package.json*. Se mer om det [her](#jest).
@@ -235,8 +235,48 @@ I fremtiden ønsker vi å fokusere på å få opp testmiljøet så tidlig som mu
 Et annet krav for dette prosjektet var plattformuavhengighet - altså at appen skal fungere både på iOS og Android. 
 En utfordring her var at ingen på gruppa hadde Android, slik at vi måtte teste ved hjelp av Android Emulatorer. Bildet under viser hvordan appen ser ut på Android. For å se funksjonalitet på iOS, se video under [generelt](#generelt) punktet.
 Vi har ikke støtt på noen spesielle problemer på de ulike operativsystemene, funksjonaliteten og utseende skal være lik på begge platformer. 
+
 ![](https://i.imgur.com/j6UZU9R.png)
 
 ### Jest
-.....
+Jest er et rammeverk for å teste JavaScript på en enkel måte. For å installere brukte vi kommandoen ``` npm i jest-expo --save-dev ``` i terminal. I tillegg måtte vi endre package.json til følgende etter tips på piazza:
+```
+{
+  "name": "empty-project-template",
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject",
+    "test": "node_modules/.bin/jest"
+  },
+  "dependencies": {
+    "expo": "^30.0.1",
+    "jest-cli": "^23.6.0",
+    "moment": "^2.22.2",
+    "native-base": "^2.8.1",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
+    "react-native-elements": "^0.19.1",
+    "react-native-modal-datetime-picker": "^6.0.0",
+    "react-native-navigation": "^1.1.490",
+    "react-native-paper": "^2.1.0",
+    "react-native-swipeout": "^2.3.6",
+    "react-navigation": "^2.17.0",
+    "react-navigation-material-bottom-tabs": "^0.4.0"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0",
+    "jest-expo": "^30.0.0",
+    "jest-react-native": "^18.0.0",
+    "react-test-renderer": "^16.5.2",
+    "jest-babel": "^1.0.1"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  }
+}
+``` 
 
