@@ -197,8 +197,6 @@ export default class Appointments extends React.Component {
             </View>
         );
     }
-
-    // {addItem: item => this.setState(prevState => ({ appointments: prevState.appointments.concat([item]) }), this.storeData)
    
     
 }

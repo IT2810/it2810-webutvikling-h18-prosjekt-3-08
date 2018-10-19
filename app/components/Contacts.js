@@ -88,6 +88,15 @@ export default class Contacts extends React.Component {
         )
     }
 
+    addContact(contact) {
+        let contactsCopy = this.state.contacts;
+        apps.splice(push)
+        this.setState({
+            contacts: contactsCopy,
+            filteredContacts: contactsCopy
+        }, this.storeContacts);
+    }
+
     deleteContact(index){
         let contactsCopy = []
             if (this.state.contacts.length > 1){
