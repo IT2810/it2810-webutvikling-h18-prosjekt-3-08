@@ -32,7 +32,7 @@ Vår personal information manager er en app som lar deg holde orden på kontakte
 
 ### AsyncStorage
 
-Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over istendefor å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. 
+Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over istendefor å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. Vi har valgt et en-til-en forhold mellom state og AsyncStorage. På denne måten leser vi kun fra AsyncStorage når vi initialiserer  appen.
 
 
 ```
