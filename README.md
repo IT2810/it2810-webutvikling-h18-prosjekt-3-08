@@ -221,7 +221,11 @@ export const Stack = createStackNavigator({
 <br>
 
 ## Git
-.....
+Git er brukt under hele utviklingsprosessen, der vi har fordelt inn oppgavene i ulike issues. Issuene har et nr, feks *#9*, som brukes aktivt når vi commiter endringer. Hver commitmelding starter med issue-nr, fulgt av commit-melding. Etter tilbakemeldinger fra prosjekt 2 har vi skjerpet bruken av git særlig på dette området, da vi fikk tilbakemeldinger om at noen commits ikke var koblet til issuer, og at commit-meldingene var lite informative. Vi har også brukt Github Project for å ha en god oversikt over hvilke issues som er i _backlog_, som er _doing_, under _testing_ eller _done_.
+
+I tillegg har vi brukt ulike branches i utviklingen. Vi bruker en develop-branch til utviklingen, og hver gang man jobber på en ny feature oppretter man en egen branch ut fra denne. Når en feature er ferdig merger man denne branchen inn i develop. 
+
+Vi har også fokusert på å kommentere på issues i større grad enn i prosjekt 2. Dette var særlig hensiktsmessig i en periode der en av gruppemedlemmene var på ferie i utlandet. Dermed ble git en god måte å følge med på prosessen på, og diskutere ulike løsninger.
 
 ## Testing
 For dette prosjektet ble det stilt krav om systematisk bruk av tester for å sikre tilstrekkelig kodekvalitet. Da vi startet prosjektet ble det oppfordret til å bruke Jest og Enzyme. Det viste seg at det oppsto en del problemer når det kom til Enzyme og React Native, og derfor ble Jest foretrukket. Dette førte til at det for det meste ble utført snapshot-testing. Vi har også noe testing av funksjoner. Det har vist seg vanskelig å få teste state, som er ganske uheldig da mange av funksjonene baserer seg på å oppdatering av state.
@@ -239,7 +243,8 @@ Vi har ikke støtt på noen spesielle problemer på de ulike operativsystemene, 
 ![](https://i.imgur.com/j6UZU9R.png)
 
 ### Jest
-Jest er et rammeverk for å teste JavaScript på en enkel måte. For å installere brukte vi kommandoen ``` npm i jest-expo --save-dev ``` i terminal. Testene kjøres enkelt ved hjelp av kommandoen ``` npm test ```.
+Jest er et rammeverk for å teste JavaScript på en enkel måte. [Her](https://jestjs.io/docs/en/tutorial-react-native) kan du lese mer om hvordan det brukes for å teste React Native apps.
+For å installere brukte vi kommandoen ``` npm i jest-expo --save-dev ``` i terminal. Testene kjøres enkelt ved hjelp av kommandoen ``` npm test ```. Testene måtte lagres i en mappe med navn *__test__*, og filene måtte hete *ComponentSomTestes-test.js*.
 
 Som nevnt fokuserte vi for det meste på snapshot-testing. Det beste alternativet var å bruke ```react-test-renderer``` til å håndtere snapshottesting av enkle komponenter, fordi vi da får snapshot-filer som er lesbare. Eksempel på dette ligger under:
 
