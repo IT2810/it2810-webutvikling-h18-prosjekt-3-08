@@ -1,9 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Switch } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Swipeout from 'react-native-swipeout';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
-
 
 export default class TodoItem extends React.Component {
       
@@ -40,8 +38,6 @@ export default class TodoItem extends React.Component {
       );
    }
 }
-
-//<Text style={statusStyle}>{this.props.item.status}</Text>
 
 const styles = StyleSheet.create({
    container: {

@@ -9,10 +9,6 @@ import TodoItem from './TodoItem';
 import Calendar from './Calendar';
 
 
-// TODO: Koble knappen fra TabNavigator til kalenderen
-// TODO: Keyboard overlapper fortsatt tekstinput-feltet
-
-
 
 export default class Todos extends React.Component {
 
@@ -54,18 +50,12 @@ export default class Todos extends React.Component {
       return formatedDate
    }
 
-   testCalendar() {
-      alert("test")
-   }
-
    onChangeText(value) {
       this.setState({
          textValue: value
       })
    }
 
-
- 
 
   storePerfectDays = async() => {
     console.log("inni storePerfectDays");

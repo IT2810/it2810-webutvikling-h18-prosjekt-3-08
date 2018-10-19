@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
-
 import { Ionicons } from '@expo/vector-icons';
 
 export default class PerfectDays extends React.Component {

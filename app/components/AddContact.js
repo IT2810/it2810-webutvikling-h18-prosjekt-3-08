@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Button, ScrollView } from 'react-native';
+import {StyleSheet, View, KeyboardAvoidingView, TextInput, Button, ScrollView } from 'react-native';
 
 
-export default class AddContacat extends React.Component {
+export default class AddContact extends React.Component {
 
     constructor() {
         super()
@@ -29,7 +29,7 @@ export default class AddContacat extends React.Component {
  
     render() {
         let firstNameStyle = this.state.firstName === '' ? styles.textInput : styles.textInput2
-        let lasstNameStyle = this.state.lastName === '' ? styles.textInput : styles.textInput2
+        let lastNameStyle = this.state.lastName === '' ? styles.textInput : styles.textInput2
         let emailStyle = this.state.email === '' ? styles.textInput : styles.textInput2
         let phoneNoStyle = this.state.phoneNo === '' ? styles.textInput : styles.textInput2
         return (
@@ -47,7 +47,7 @@ export default class AddContacat extends React.Component {
                     </KeyboardAvoidingView>
                     <KeyboardAvoidingView behavior= "padding" styles= {{flex: 1}} >
                         <TextInput
-                            style={lasstNameStyle}
+                            style={lastNameStyle}
                             value={this.state.lastName}
                             placeholder="Lastname"
                             onChangeText={(value) => this.setState({lastName: value})}

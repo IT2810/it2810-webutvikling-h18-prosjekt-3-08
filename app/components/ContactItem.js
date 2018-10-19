@@ -33,12 +33,3 @@ export default class ContactItem extends React.Component {
         )
     }
 }
-
-const styles = StyleSheet.create({
-   container: {
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center'
-   },
-
-})

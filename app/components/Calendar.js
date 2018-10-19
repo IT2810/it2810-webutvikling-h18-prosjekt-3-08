@@ -15,7 +15,7 @@ export default class Calendar extends React.Component {
    }
 
    handlePicker = (date) => {
-      formatedDate = moment(date).format('YYYY-MM-DD')
+      let formatedDate = moment(date).format('YYYY-MM-DD')
       this.setState({
          isVisible: false,
          chosenDate: date

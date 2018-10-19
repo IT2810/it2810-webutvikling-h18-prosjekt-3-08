@@ -3,9 +3,7 @@ import { StyleSheet, Text, View,
    TouchableOpacity,
    SafeAreaView,
    ScrollView,
-   Dimensions,
    Image,
-   Keyboard
    } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -13,9 +11,8 @@ import { Ionicons } from '@expo/vector-icons';
 import {
     createDrawerNavigator,
     createStackNavigator,
-    createTabNavigator,
     createMaterialTopTabNavigator,
-    DrawerItems, StackNavigator,
+    DrawerItems,
 } from 'react-navigation';
 
 // TabNavigator screens
@@ -23,7 +20,6 @@ import Todos from './Todos';
 import Appointments from './Appointments';
 
 import PerfectDays from './PerfectDays'
-import Calendar from './Calendar';
 
 // Contacts
 import Contacts from './Contacts';
@@ -91,7 +87,6 @@ export const Tabs = createMaterialTopTabNavigator({
    {
       initialRouteName: 'AppointmentStack',
       swipeEnabled: false,
-      //tabBarPosition: 'bottom',
       tabBarOptions: {
          activeTintColor: 'orange',
          inactiveTintColor: 'grey',
@@ -121,18 +116,6 @@ export const Stack = createStackNavigator({
       })
    }
 });
-
-
-/*
-headerRight: (
-            <TouchableOpacity onPress={() => navigation.navigate('Calendar')} >
-               <View style={{paddingHorizontal: 10}}>
-                  <Ionicons name="md-calendar" size={24} />
-               </View>
-            </TouchableOpacity>
-        
-         )
-*/
 
 export const ContactsStack = createStackNavigator({
    Contacts: {

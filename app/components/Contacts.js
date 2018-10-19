@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, FlatList, Button, AsyncStorage } from 'react-native';
-import { List, ListItem, SearchBar } from 'react-native-elements';
+import { StyleSheet, View, FlatList, Button, AsyncStorage, Alert } from 'react-native';
+import { List, SearchBar } from 'react-native-elements';
 
 
-import ContactItem from './ContactItem';;
+import ContactItem from './ContactItem';
 
 
 
@@ -28,7 +28,7 @@ export default class Contacts extends React.Component {
           await AsyncStorage.setItem('contacts', JSON.stringify(this.state.contacts));
           
         } catch (error) {
-          alert("Error")
+          Alert.alert("Error", "Storing data failed.")
         }
       }
 
@@ -67,8 +67,8 @@ export default class Contacts extends React.Component {
     renderHeader = () => {
         return (
             <View style={{backgroundColor: '#fff'}}>
-                <Button 
-                    title="Add new Contact" 
+                <Button
+                    title="Add new Contact"
                     style= {{borderBottomWidth: 3}}
                     onPress={() => this.props.navigation.navigate('AddContact',
                     {addItem: item => this.setState(prevState => ({ contacts: prevState.contacts.concat([item]), filteredContacts: prevState.contacts.concat([item]) }), this.storeContacts)
@@ -83,19 +83,11 @@ export default class Contacts extends React.Component {
                     onClearText={ () => this.setState({query: ''})}
                     containerStyle={{backgroundColor: '#fff', borderBottomWidth: 0}}
                 />
-                
+
             </View>
         )
     }
 
-    addContact(contact) {
-        let contactsCopy = this.state.contacts;
-        apps.splice(push)
-        this.setState({
-            contacts: contactsCopy,
-            filteredContacts: contactsCopy
-        }, this.storeContacts);
-    }
 
     deleteContact(index){
         let contactsCopy = []
@@ -153,24 +145,7 @@ export default class Contacts extends React.Component {
                     ListHeaderComponent={this.renderHeader}
                     />
                 </List>
-
-            
         );
     }
-    }
+}
 
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        marginTop: 0,
-
-    },
-    searchBar: {
-        backgroundColor: '#fff',
-        marginTop: 0
-
-    },
-})

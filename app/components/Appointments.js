@@ -28,7 +28,6 @@ export default class Appointments extends React.Component {
     componentDidMount(){
         this.retrieveData()
         this.setTextDate()
-        //this.deleteData()
         Keyboard.dismiss()
     }
 
