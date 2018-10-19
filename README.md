@@ -112,14 +112,14 @@ render() {
                 }
             ],
         };
-```        
+        
         return (
             <Swipeout {...swipeSettings}>
                     <View/>
             </Swipeout>
         );
     }
-
+```
 <br>
 
 #### Elements
@@ -145,9 +145,13 @@ React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vå
 
 Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo. Under er et eksempel fra koden som gir lokasjons-pinen på en avtale.
 
-```jsx import { Ionicons } from '@expo/vector-icons';```
+```jsx 
+import { Ionicons } from '@expo/vector-icons';
+```
 
-```jsx <Ionicons name='md-pin'/>```
+```jsx 
+<Ionicons name='md-pin'/>
+```
 
 
 <br>
@@ -156,9 +160,13 @@ Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til
 
 Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "todos" og "appointments" for å blant annet lage nøkler til dataene vi lagrer i AsyncStorage. 
 
-```jsx import moment from 'moment';```
+```jsx 
+import moment from 'moment';
+```
 
-```jsx let formatedDate = moment(date).format('YYYY-MM-DD');```
+```jsx 
+let formatedDate = moment(date).format('YYYY-MM-DD');
+```
 
 
 
