@@ -21,16 +21,25 @@ Vår personal information manager er en app som lar deg holde orden på kontakte
 
 - Man kan markere todos som gjort/ugjort
 - Om alle todos på en dag er markert som "gjort" oppnår man en "Perfect Day" og  
-  - man får en gratulasjonsbeskjed
-  - stjerne-symbolet på siden bytter farge fra grå til oransje.
-  - man kan klikke på stjernen for å se en liste over alle "perfekte dager"  
-
+  - Man får en gratulasjonsbeskjed
+  - Stjerne-symbolet på siden bytter farge fra grå til oransje.
+  - Man kan klikke på stjernen for å se en liste over alle "perfekte dager"
 <br>
 
 ### AsyncStorage
-....
+
+Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over istendefor å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. 
 
 <br>
 
 ### UtoverReactNativeUI
-....
+
+
+#### Swipeout
+#### Elements
+#### Expo vector-items
+#### Moment?
+#### modal-datetime-picker
+Navigation
+
+
