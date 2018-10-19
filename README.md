@@ -237,8 +237,7 @@ En utfordring her var at ingen på gruppa hadde Android, slik at vi måtte teste
 Vi har ikke støtt på noen spesielle problemer på de ulike operativsystemene, funksjonaliteten og utseende skal være lik på begge platformer. 
 
 
-![](https://i.imgur.com/j6UZU9R.png) 
-![](https://i.imgur.com/B2K9yqr.png)
+![](https://i.imgur.com/j6UZU9R.png) | ![](https://i.imgur.com/B2K9yqr.png)
 
 ### Jest
 .....
