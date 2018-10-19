@@ -5,7 +5,7 @@ import renderer from 'react-test-renderer';
 import AddContact from '../AddContact';
 
 
-it("Renders correctly", async () => {
+test("Renders correctly", async () => {
     const tree = renderer.create(<AddContact/>).toJSON();
     expect(tree).toMatchSnapshot();
 });

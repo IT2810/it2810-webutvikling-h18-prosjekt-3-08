@@ -5,7 +5,12 @@ import renderer from 'react-test-renderer';
 import Contacts from '../Contacts';
 
 
-it("Renders correctly", () => {
+test("Renders correctly", () => {
     const tree = renderer.create(<Contacts/>).toJSON();
     expect(tree).toMatchSnapshot();
+});
+
+test("Constructor", () => {
+    const data = renderer.create(<Contacts/>).getInstance();
+    expect(data.state.contacts).toEqual([]);
 });
