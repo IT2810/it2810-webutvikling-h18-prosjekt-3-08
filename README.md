@@ -34,6 +34,7 @@ Vår personal information manager er en app som lar deg holde orden på kontakte
 
 Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over istendefor å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. Vi har valgt et en-til-en forhold mellom state og AsyncStorage. På denne måten leser vi kun fra AsyncStorage når vi initialiserer  appen.
 
+Under er et eksempel på hvordan vi lagrer data. Her er ```'perfectDays'``` nøkkelen og ```this.state.perfectDays```  dataen vi vil lagre. For å hente ut todos og appointments har vi brukt datoen de tilhører som nøkkel. 
 
 ```
   storePerfectDays = async() => {
@@ -46,6 +47,29 @@ Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dat
   };
 ```
 
+For å hente ut data må vi sende inn en nøkkelen til dataen vi vil hente. Vi bruker da AsyncStorage sin ```getItem(key)``` for å hente ut dataen som ligger på den aktuelle nøkkelen. 
+```
+retrievePerfectDays = async() => {
+    try {
+      let perfectDaysData = await AsyncStorage.getItem('perfectDays')          
+      if (perfectDaysData != null) {
+        let perfectDays = JSON.parse(perfectDaysData)
+        console.log("Hentet ut: " + perfectDays);
+        this.setState({
+          perfectDays: perfectDays
+        })
+      }
+      else {
+        this.setState({
+          perfectDays: []
+        })
+      }
+    } catch (error) {
+      alert("Error")
+    }   
+  }
+```
+
 <br>
 
 ### UtoverReactNativeUI
@@ -53,6 +77,9 @@ Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dat
 
 #### Swipeout
 Swipeout er en funksjon som gjør det mulig å swipe liste-elementer. På denne måten får man en dynamisk måte å slette list-elementer på. 
+
+I koden under ser man koden som gjør det mulig å swipe en appointment. ```right: [...]``` bestemmer hva som skal skje og hva som skal vises når du swiper til høyre. 
+
 
 ```
 render() {
@@ -77,7 +104,8 @@ render() {
 <br>
 
 #### Elements
-React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vårt prosjekt har vi blant annet benyttet oss av Searchbar, Lists og Button. Ettersom React Native ikke tilbyr et altfor bredt spekter av UI-komponenter kom dette veldig godt med.
+React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vårt prosjekt har vi blant annet benyttet oss av Searchbar, Lists og Button. Ettersom React Native ikke tilbyr et altfor bredt spekter av UI-komponenter kom dette veldig godt med. Komponentene vi har brukt har vært hendig for å navigere, legge til og søke opp dataen som er lagret.
+
 
 ```
 <SearchBar 
@@ -96,8 +124,9 @@ React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vå
 
 #### Expo-vector-icons
 
-Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo.
+Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo. Under er et eksempel fra koden som gir lokasjons-pinen på en avtale.
 
+```import { Ionicons } from '@expo/vector-icons';```
 ``` <Ionicons name='md-pin'/>```
 
 
@@ -107,6 +136,8 @@ Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til
 
 Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "todos" og "appointments" for å blant annet lage nøkler til dataene vi lagrer i AsyncStorage. 
 
+```import moment from 'moment';```
+
 ``` let formatedDate = moment(date).format('YYYY-MM-DD');```
 
 
@@ -115,7 +146,7 @@ Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "todos" o
 
 #### Datetime-picker
 
-Datetime-picker er en funksjon for å få opp views der man kan velge tid eller dato og fungerer på forskjellige operativsystemer. 
+Datetime-picker er et bibliotek som brukes for å få opp views der man kan velge tid eller dato og fungerer på forskjellige operativsystemer. Vi har brukt dette til både å velge dato til avtaler og gjøremål og også velge tidspunkt for avtaler. Under er en kodesnutt for hvordan man veldger dato. 
 
 ```
 render() {
@@ -138,7 +169,7 @@ render() {
 
 #### Navigation
 
-Ved å bruke Navigation-biblioteket har vi greid å lage en app der det er lett å navigere frem og tilbake fra forskjellige komponenter. Vi har brukt forskjellige typer navigasjonsmetoder som f.eks Drawer, Stack og TopTab. 
+Ved å bruke Navigation-biblioteket har vi greid å lage en app der det er lett å navigere frem og tilbake fra forskjellige komponenter. Vi har brukt forskjellige typer navigasjonsmetoder som f.eks Drawer, Stack og TopTab. I bunn har vi en drawer der man kan velge mellom å se kontaktliste og "MyDay"-siden. På "MyDay" har vi tabs der man kan velge mellom å se liste over avtaler eller liste over gjøremål. Igjen er avtale -og kontaktsiden en stackNavigator. 
 
 ```
 export const Stack = createStackNavigator({
@@ -153,8 +184,6 @@ export const Stack = createStackNavigator({
                </View>
             </TouchableOpacity>
          ), 
-         
-        
       })
    }
 });
