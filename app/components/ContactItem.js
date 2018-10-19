@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View } from 'react-native';
-import {  ListItem,} from 'react-native-elements';
+import { ListItem} from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 
 export default class ContactItem extends React.Component {

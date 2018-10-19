@@ -55,8 +55,6 @@ export default class Appointments extends React.Component {
             let array = await AsyncStorage.getItem(this.state.activeDate+'a');
             if (array !== null) {
                 let appointments = JSON.parse(array);
-                console.log(appointments);
-                
                 this.setState({
                     appointments: appointments
                 })
@@ -81,8 +79,7 @@ export default class Appointments extends React.Component {
     addAppointment(app){
         let apps = this.state.appointments;
         apps.splice(0,0, app);
-        console.log('Adding appointment');
-        console.log(apps[0]);
+        apps.sort((a,b) => (a.startTime > b.startTime));
         this.setState({
             appointments: apps
         }, this.storeData);
@@ -90,6 +87,7 @@ export default class Appointments extends React.Component {
 
 
     deleteAppointment(index){
+        console.log(index)
         let appointmentCopy = [];
         if (this.state.appointments.length > 1){
             appointmentCopy = this.state.appointments;
@@ -98,11 +96,11 @@ export default class Appointments extends React.Component {
         else {
             appointmentCopy = []
         }
-
         this.setState({
             appointments: appointmentCopy
         }, this.storeData);
     };
+
 
     setTextDate(){
         let d = this.state.activeDate
@@ -164,7 +162,6 @@ export default class Appointments extends React.Component {
      }
 
 
-    // Pass inn handleToDelete, sjekk Ax sin kode
     render() {
         return (
             <View style = {styles.container}>
@@ -175,17 +172,15 @@ export default class Appointments extends React.Component {
                             {this.state.textDate}
                         </Text>
                     </View>
-                
                     <FlatList
-                        data={this.state.appointments.sort((a,b) => (a.startTime > b.startTime))}
+                        data={this.state.appointments}
                         extraData = {this.state}
                         renderItem={({item, index}) => {
                             let i = index;
-                            let it = item;
                             return (
                                 <AppointmentItem
-                                    i = {i}
-                                    item={it}
+                                    index = {i}
+                                    item={item}
                                     handleAppointmentDelete = {this.deleteAppointment}
                                 />
                             )
