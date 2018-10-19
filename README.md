@@ -228,7 +228,7 @@ For dette prosjektet ble det stilt krav om systematisk bruk av tester for å sik
 
 ### Plattformuavhengighet
 
-![](https://i.imgur.com/j6UZU9R.png)
+![](https://i.imgur.com/j6UZU9R.png) {:height="60%" width="60%"}
 
 ### Jest
 .....
