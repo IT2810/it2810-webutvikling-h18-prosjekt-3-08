@@ -36,10 +36,35 @@ Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dat
 
 
 #### Swipeout
+Swipeout er en funksjon som gjør det mulig å swipe liste-elementer. På denne måten får man en dynamisk måte å slette list-elementer på. 
+
+<br>
+
 #### Elements
-#### Expo vector-items
-#### Moment?
-#### modal-datetime-picker
-Navigation
+React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vårt prosjekt har vi blant annet benyttet oss av Searchbar, Lists og Button. Ettersom React Native ikke tilbyr et altfor bredt spekter av UI-komponenter kom dette veldig godt med.
+
+<br>
+
+#### Expo vector-icons
+
+Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo.
+
+<br>
+
+#### Moment
+
+Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "TODOS" og "APPOINTMENTS" for å blant annet lage nøkler til dataene vi lagrer i AsyncStorage. 
+<br>
+#### Datetime-picker
+
+Datetime-picker er en funksjon for å få opp views der man kan velge tid eller dato og fungerer på forskjellige operativsystemer. 
+
+#### Navigation
+
+Ved å bruke Navigation-biblioteket har vi greid å lage en app der det er lett å navigere frem og tilbake fra forskjellige komponenter. Vi har brukt forskjellige typer navigasjonsmetoder som f.eks Drawer, Stack og TopTab. 
+
+<br>
+
+## Testing
 
 
