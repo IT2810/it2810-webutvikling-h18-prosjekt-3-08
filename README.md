@@ -8,9 +8,13 @@ Vi er 3 studenter på NTNU som har gjennomført et prosjekt i emnet IT2810 Webut
     - [AsyncStorage](#asyncstorage)
     - [UtoverReactNativeUI](#utoverreactnativeui)
   - [Teknologi](#teknologi)
-    - [](#)
-    - [](#)
-    - [](#)
+    - [Swipeout](#swipeout)
+    - [Elements](#elements)
+    - [Vector-icons](#expo vector-icons)
+    - [Moment] (#moment)
+    - [Datetime-picker] (#datetime-picker)
+    - [Navigation] (#navigation)
+    
   - [Testing](#testing)
 
 
@@ -38,10 +42,43 @@ Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dat
 #### Swipeout
 Swipeout er en funksjon som gjør det mulig å swipe liste-elementer. På denne måten får man en dynamisk måte å slette list-elementer på. 
 
+```
+render() {
+        const swipeSettings = {
+            autoClose: true,
+            right: [
+                {
+                    onPress: () => {this.props.handleAppointmentDelete(this.props.index)},
+                    text: 'Delete',
+                    type: 'delete'
+                }
+            ],
+        };
+```        
+        return (
+            <Swipeout {...swipeSettings}>
+                    <View/>
+            </Swipeout>
+        );
+    }
+
 <br>
 
 #### Elements
 React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vårt prosjekt har vi blant annet benyttet oss av Searchbar, Lists og Button. Ettersom React Native ikke tilbyr et altfor bredt spekter av UI-komponenter kom dette veldig godt med.
+
+```
+<SearchBar 
+                    placeholder="Search.." 
+                    lightTheme round 
+                    onChangeText={this.handleSearch}
+                    value={this.state.query}
+                    clearIcon={{ color: 'black' }}
+                    onClearText={ () => this.setState({query: ''})}
+                    containerStyle={{backgroundColor: '#fff', borderBottomWidth: 0}}
+                />
+```
+
 
 <br>
 
@@ -49,19 +86,67 @@ React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vå
 
 Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo.
 
+``` <Ionicons name='md-pin'/>```
+
+
 <br>
 
 #### Moment
 
-Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "TODOS" og "APPOINTMENTS" for å blant annet lage nøkler til dataene vi lagrer i AsyncStorage. 
+Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "todos" og "appointments" for å blant annet lage nøkler til dataene vi lagrer i AsyncStorage. 
+
+``` let formatedDate = moment(date).format('YYYY-MM-DD');```
+
+
+
 <br>
 #### Datetime-picker
 
 Datetime-picker er en funksjon for å få opp views der man kan velge tid eller dato og fungerer på forskjellige operativsystemer. 
 
+```
+render() {
+      return (
+         <View style={styles.container}>
+            <TouchableOpacity onPress={this.showPicker} >
+               <View style={{paddingHorizontal: 10}}>
+                  <Ionicons name="md-calendar" size={24} />
+               </View>
+            </TouchableOpacity>
+            <DateTimePicker
+               date={this.state.chosenDate}
+               isVisible={this.state.isVisible}
+               onConfirm={this.handlePicker}
+               onCancel={this.hidePicker}
+            />
+         </View>);
+   }
+```
+
 #### Navigation
 
 Ved å bruke Navigation-biblioteket har vi greid å lage en app der det er lett å navigere frem og tilbake fra forskjellige komponenter. Vi har brukt forskjellige typer navigasjonsmetoder som f.eks Drawer, Stack og TopTab. 
+
+```
+export const Stack = createStackNavigator({
+   TabNavigator: {
+      screen: Tabs,
+      navigationOptions: ({navigation}) => ({
+         title: 'MyDay',
+         headerLeft: (
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+               <View style={{paddingHorizontal: 10}}>
+                  <Ionicons name="md-menu" size={24} />
+               </View>
+            </TouchableOpacity>
+         ), 
+         
+        
+      })
+   }
+});
+
+```
 
 <br>
 
