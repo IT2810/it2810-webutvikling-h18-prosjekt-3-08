@@ -46,15 +46,17 @@ Appointments-tab |  Todos-Tab  | Contacts
 #### Expo
 
 Expo er et verktøy bygget rundt React Native, slik at man kan bygge native iOS og Android prosjekter ved å bruke React og JavaScript.
-Expo Brukes for å lage React-Native applikasjonen med alle de nødvendige node_modulene. Lastes ned med kommandoen:
- ```npm install expo-cli --global```
+Expo brukes for å lage React-Native applikasjonen med alle de nødvendige node_modulene. Lastes ned med kommandoen:
+ ```
+ npm install expo-cli --global
+ ```
 For å opprette et nytt prosjekt utfører man kommandoen:
 ```
 expo init my-new-project
 cd my-new-project
 expo start
 ````
-Man vil nå få opp en QR-kode. Denne koden kan for eksempel scannes ved å bruke kamera-appen i iOS. I tillegg vil man trenge Expo sin egen app. Når koden skannes får man valget om å gå til Expo appen, og her har man mulighet til å teste appen i sin helhet - direkte til på din telefon. Dette har vært en veldig effektiv måte å teste at funksjonalitet for appen er ønskelig.
+Man vil nå få opp en QR-kode. Denne koden kan for eksempel scannes ved å bruke kamera-appen i iOS. I tillegg vil man trenge Expo sin egen app. Når koden skannes får man valget om å gå til Expo appen, og her har man mulighet til å teste appen i sin helhet - direkte til  din telefon. Dette har vært en veldig effektiv måte å teste at funksjonalitet for appen er ønskelig.
 
 [Her](https://expo.io/learn) kan man lese mer om hvordan man kan bruke Expo i sin utvikling.
 
