@@ -12,7 +12,7 @@ Vi er 3 studenter på NTNU som har gjennomført et prosjekt i emnet IT2810 Webut
     - [Elements](#elements)
     - [Vector-icons](#expo vector-icons)
     - [Moment] (#moment)
-    - [Datetime-picker] (#datetime-picker)
+    - [Datetime-picker] (#Datetime-picker)
     - [Navigation] (#navigation)
     
   - [Testing](#testing)
