@@ -224,10 +224,11 @@ export const Stack = createStackNavigator({
 .....
 
 ## Testing
-.....
+For dette prosjektet ble det stilt krav om systematisk bruk av tester for å sikre tilstrekkelig kodekvalitet. Da vi startet prosjektet ble det oppfordret til å bruke Jest og Enzyme. Det viste seg at det oppsto en del problemer når det kom til Enzyme og React Native, og derfor ble Jest foretrukket. 
 
 ### Plattformuavhengighet
-.....
+
+![](https://imgur.com/gallery/CyEJxA8)
 
 ### Jest
 .....
