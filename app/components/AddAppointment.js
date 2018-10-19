@@ -92,7 +92,6 @@ export default class AddAppointment extends React.Component {
 
 
     render (){
-        console.log(this.state);
         
         let titleStyle = this.state.title === '' ? styles.textInput : styles.textInput2
         let descStyle = this.state.description === '' ? styles.textInput : styles.textInput2
@@ -135,14 +134,13 @@ export default class AddAppointment extends React.Component {
                     <Text>-</Text>
                     <AppointmentSetTime  onSelectTime = {this.setEndTime}/>
                 </View>
-                </View>
+            </View>
             <View style={styles.buttonContainer}>
                 <Button
                     title="Add appointment"
                     disabled={!this.checkApp()}
                     onPress={this.addAndNavigate.bind(this)}
                 />
-            
             </View>
             </ScrollView>
         )
