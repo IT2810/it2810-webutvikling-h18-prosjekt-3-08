@@ -128,14 +128,14 @@ React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vå
 
 ```
 <SearchBar 
-                    placeholder="Search.." 
-                    lightTheme round 
-                    onChangeText={this.handleSearch}
-                    value={this.state.query}
-                    clearIcon={{ color: 'black' }}
-                    onClearText={ () => this.setState({query: ''})}
-                    containerStyle={{backgroundColor: '#fff', borderBottomWidth: 0}}
-                />
+    placeholder="Search.." 
+    lightTheme round 
+    onChangeText={this.handleSearch}
+    value={this.state.query}
+    clearIcon={{ color: 'black' }}
+    onClearText={ () => this.setState({query: ''})}
+    containerStyle={{backgroundColor: '#fff', borderBottomWidth: 0}}
+/>
 ```
 
 
