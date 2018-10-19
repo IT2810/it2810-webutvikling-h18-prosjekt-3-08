@@ -236,7 +236,7 @@ Et annet krav for dette prosjektet var plattformuavhengighet - altså at appen s
 En utfordring her var at ingen på gruppa hadde Android, slik at vi måtte teste ved hjelp av Android Emulatorer. Bildet under viser hvordan appen ser ut på Android. For å se funksjonalitet på iOS, se video under [generelt](#generelt) punktet.
 Vi har ikke støtt på noen spesielle problemer på de ulike operativsystemene, funksjonaliteten og utseende skal være lik på begge platformer. 
 
-<img align="left" width="240" height="420" src="https://i.imgur.com/j6UZU9R.png"> <img align="right" width="240" height="420" src="https://i.imgur.com/B2K9yqr.png">
+<img align="left" width="270" height="480" src="https://i.imgur.com/j6UZU9R.png"> <img align="right" width="270" height="480" src="https://i.imgur.com/B2K9yqr.png">
 
 
 ### Jest
