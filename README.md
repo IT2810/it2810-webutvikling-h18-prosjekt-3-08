@@ -10,7 +10,7 @@ Vi er 3 studenter på NTNU som har gjennomført et prosjekt i emnet IT2810 Webut
   - [Teknologi](#teknologi)
     - [Swipeout](#swipeout)
     - [Elements](#elements)
-    - [Vector-icons](#expo vector-icons)
+    - [Vector-icons](#expo)
     - [Moment] (#moment)
     - [Datetime-picker] (#Datetime-picker)
     - [Navigation] (#navigation)
@@ -33,6 +33,18 @@ Vår personal information manager er en app som lar deg holde orden på kontakte
 ### AsyncStorage
 
 Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over istendefor å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. 
+
+
+```
+  storePerfectDays = async() => {
+    try {
+      await AsyncStorage.setItem('perfectDays', JSON.stringify(this.state.perfectDays))
+
+    } catch(error) {
+      alert("Error")
+    }
+  };
+```
 
 <br>
 
