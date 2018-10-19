@@ -1,6 +1,7 @@
 
 # PIMM med React Native - Gruppe 8
 Vi er 3 studenter på NTNU som har gjennomført et prosjekt i emnet IT2810 Webutvikling. Prosjektet gikk ut på å designe og implementere en "Personal Information and Motivation Manager"-app for mobil, med React Native. 
+
 Les mer om React Native [her](https://facebook.github.io/react-native/).
 
 <br>
