@@ -6,6 +6,7 @@ Vi er 3 studenter på NTNU som har gjennomført et prosjekt i emnet IT2810 Webut
   - [Innhold og funksjonalitet](#innhold-og-funksjonalitet)
     - [Generelt](#generelt)
     - [AsyncStorage](#asyncstorage)
+    - [Expo](#expo)
   - [UtoverReactNativeUI](#utoverreactnativeui)
     - [Swipeout](#swipeout)
     - [Elements](#elements)
