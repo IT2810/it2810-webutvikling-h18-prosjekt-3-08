@@ -10,10 +10,10 @@ Vi er 3 studenter på NTNU som har gjennomført et prosjekt i emnet IT2810 Webut
   - [Teknologi](#teknologi)
     - [Swipeout](#swipeout)
     - [Elements](#elements)
-    - [Vector-icons](#expo)
-    - [Moment] (#moment)
-    - [Datetime-picker] (#Datetime-picker)
-    - [Navigation] (#navigation)
+    - [Vector-icons](#expo-vector-icons)
+    - [Moment](#moment)
+    - [Datetime-picker](#datetime-picker)
+    - [Navigation](#navigation)
     
   - [Testing](#testing)
 
@@ -94,7 +94,7 @@ React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vå
 
 <br>
 
-#### Expo vector-icons
+#### Expo-vector-icons
 
 Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo.
 
@@ -112,6 +112,7 @@ Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "todos" o
 
 
 <br>
+
 #### Datetime-picker
 
 Datetime-picker er en funksjon for å få opp views der man kan velge tid eller dato og fungerer på forskjellige operativsystemer. 
