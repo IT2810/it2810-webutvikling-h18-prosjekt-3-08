@@ -224,11 +224,19 @@ export const Stack = createStackNavigator({
 .....
 
 ## Testing
-For dette prosjektet ble det stilt krav om systematisk bruk av tester for å sikre tilstrekkelig kodekvalitet. Da vi startet prosjektet ble det oppfordret til å bruke Jest og Enzyme. Det viste seg at det oppsto en del problemer når det kom til Enzyme og React Native, og derfor ble Jest foretrukket. 
+For dette prosjektet ble det stilt krav om systematisk bruk av tester for å sikre tilstrekkelig kodekvalitet. Da vi startet prosjektet ble det oppfordret til å bruke Jest og Enzyme. Det viste seg at det oppsto en del problemer når det kom til Enzyme og React Native, og derfor ble Jest foretrukket. Dette førte til at det for det meste ble utført snapshot-testing. Vi har også noe testing av funksjoner.
+
+Vi opplevde en del problemer når det kom til testingen. Ved oppstart av prosjekt valgte vi en *blank template*. Dette førte senere til noen problemer med Jest, der vi prøvde å kjøre testene, men det kom ingen resultater (og heller ikke feilmeldinger). Etter mye feilsøking fant vi ut at det hadde vært hensiktsmessig å starte prosjektet med *tabs-template* da vi kjørte *expo init* første gang.
+Dette førte til at vi ikke fikk testet like mye underveis i utviklingen som vi ønsket. Vi fant heldigvis en løsning på problemet etter mye feilsøking og endring av *package.json*. Se mer om det [her](#jest).
+
+I fremtiden ønsker vi å fokusere på å få opp testmiljøet så tidlig som mulig, slik at hver person kan skrive tester for ny funksjonalitet som legges til fortløpende. Dette vil føre til at mer kode testes, i stedet for å løse problem med testing mot slutten og deretter skrive tester for funksjonalitet som har blitt implementert på for eksempel et tidlig stadie i utviklingen.
 
 ### Plattformuavhengighet
+Et annet krav for dette prosjektet var plattformuavhengighet - altså at appen skal fungere både på iOS og Android. 
+En utfordring her var at ingen på gruppa hadde Android, slik at vi måtte teste ved hjelp av Android Emulatorer. Bildet under viser hvordan appen ser ut på Android. For å se funksjonalitet på iOS, se video under [generelt](#generelt) punktet.
+Vi har ikke støtt på noen spesielle problemer på de ulike operativsystemene, funksjonaliteten og utseende skal være lik på begge platformer. 
 
-![](https://i.imgur.com/j6UZU9R.png) {:height="240" width="100"}
+![](https://i.imgur.com/j6UZU9R.png)
 
 ### Jest
 .....
