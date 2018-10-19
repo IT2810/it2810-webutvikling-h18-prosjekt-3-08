@@ -20,7 +20,7 @@ Vi er 3 studenter på NTNU som har gjennomført et prosjekt i emnet IT2810 Webut
 
 
 ## Innhold og funksjonalitet 
-### Generelt
+#### Generelt
 Vår personal information manager er en app som lar deg holde orden på kontakter, avtaler og todos. I praksis en avansert kalender. I tillegg er ordet "motivation" lagt til. Måten vi har inkludert et motivasjons-aspekt i applikasjonen er som følger:
 
 - Man kan markere todos som gjort/ugjort
@@ -37,7 +37,7 @@ Appointments-tab |  Todos-Tab  | Contacts
 ![](https://media.giphy.com/media/6o3wcwYMXSeaYYxDFo/giphy.gif)  |  ![](https://media.giphy.com/media/XJMl5OMLBXVKMXhRgp/giphy.gif) | ![](https://media.giphy.com/media/X6IpxDtlSyWcuqFsmc/giphy.gif)
 
 
-### AsyncStorage
+#### AsyncStorage
 
 Vi har brukt AsynchStorage for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over istendefor å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. Vi har valgt et en-til-en forhold mellom state og AsyncStorage. På denne måten leser vi kun fra AsyncStorage når vi initialiserer  appen eller endrer dato (da ny data må hentes for den datoen). 
 
@@ -78,6 +78,12 @@ retrievePerfectDays = async() => {
 ```
 
 <br>
+
+#### Expo
+
+Expo er et verktøy bygget rundt React Native, slik at man kan bygge native iOS og Andoid prosjekter ved å bruke React og JavaScript. Man kan altså skrive kode uten å tenkte på spesifikke instillinger for hvilket operativsystem appen skal kjøre på. Expo utvider også React Native plattformen ved å tilby ekstra moduler. 
+
+
 
 
 ### UtoverReactNativeUI
