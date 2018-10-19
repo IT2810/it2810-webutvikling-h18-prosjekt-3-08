@@ -39,7 +39,6 @@ Appointments-tab |  Todos-Tab  | Contacts
 :-------------:|:----------------:|:--------------:
 ![](https://media.giphy.com/media/6o3wcwYMXSeaYYxDFo/giphy.gif)  |  ![](https://media.giphy.com/media/XJMl5OMLBXVKMXhRgp/giphy.gif) | ![](https://media.giphy.com/media/X6IpxDtlSyWcuqFsmc/giphy.gif)
 
-
 <br>
 
 #### Expo
@@ -48,7 +47,8 @@ Expo er et verktøy bygget rundt React Native, slik at man kan bygge native iOS 
 Expo Brukes for å lage React-Native applikasjonen med alle de nødvendige node_modulene. Lastes ned med kommandoen:
  ```npm install expo-cli --global```
 For å opprette et nytt prosjekt utfører man kommandoen:
-```expo init my-new-project
+```
+expo init my-new-project
 cd my-new-project
 expo start
 ````
@@ -56,12 +56,11 @@ Man vil nå få opp en QR-kode. Denne koden kan for eksempel scannes ved å bruk
 
 [Her](https://expo.io/learn) kan man lese mer om hvordan man kan bruke Expo i sin utvikling.
 
-
 <br>
 
 #### AsyncStorage
 
-Vi har brukt AsyncStorage for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over i stendet for å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. Vi har valgt et en-til-en forhold mellom state og AsyncStorage. På denne måten leser vi kun fra AsyncStorage når vi initialiserer  appen eller endrer dato (da ny data må hentes for den datoen). 
+Vi har brukt [AsyncStorage](https://facebook.github.io/react-native/docs/asyncstorage) for å lagre data som blir lagt til i appen vår. Dataene blir lagret asynkront og ukryptert som nøkkel-datapar. Ettersom dataen ikke er kryptert anbefales man å ha et abstraksjonsnivå over i stendet for å bruke AsyncStorage direkte, med mindre det er simple operasjoner som skal utføres. Vi har valgt et en-til-en forhold mellom state og AsyncStorage. På denne måten leser vi kun fra AsyncStorage når vi initialiserer  appen eller endrer dato (da ny data må hentes for den datoen). 
 
 Under er et eksempel på hvordan vi lagrer data. Her er ```'perfectDays'``` nøkkelen og ```this.state.perfectDays```  dataen vi vil lagre. For å hente ut todos og appointments har vi brukt datoen de tilhører som nøkkel. 
 
@@ -101,14 +100,12 @@ retrievePerfectDays = async() => {
 
 <br>
 
-
 ### UtoverReactNativeUI
 
 #### Swipeout
-Swipeout er en funksjon som gjør det mulig å swipe liste-elementer. På denne måten får man en dynamisk måte å slette list-elementer på. 
+[Swipeout](https://www.npmjs.com/package/react-native-swipeout) er en funksjon som gjør det mulig å swipe liste-elementer. På denne måten får man en dynamisk måte å slette list-elementer på. 
 
 I koden under ser man koden som gjør det mulig å swipe en appointment. ```right: [...]``` bestemmer hva som skal skje og hva som skal vises når du swiper til høyre. 
-
 
 ```jsx
 render() {
@@ -133,8 +130,7 @@ render() {
 <br>
 
 #### Elements
-React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vårt prosjekt har vi blant annet benyttet oss av Searchbar, Lists og Button. Ettersom React Native ikke tilbyr et altfor bredt spekter av UI-komponenter kom dette veldig godt med. Komponentene vi har brukt har vært hendig for å navigere, legge til og søke opp dataen som er lagret.
-
+[React Native Elements](https://react-native-training.github.io/react-native-elements/) tilbyr standeriserte og ferdigelagde UI-komponenter. I vårt prosjekt har vi blant annet benyttet oss av Searchbar, Lists og Button. Ettersom React Native ikke tilbyr et altfor bredt spekter av UI-komponenter kom dette veldig godt med. Komponentene vi har brukt har vært hendig for å navigere, legge til og søke opp dataen som er lagret.
 
 ```jsx
 <SearchBar 
@@ -148,12 +144,11 @@ React Native Elements tilbyr standeriserte og ferdigelagde UI-komponenter. I vå
 />
 ```
 
-
 <br>
 
 #### Expo-vector-icons
 
-Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo. Under er et eksempel fra koden som gir lokasjons-pinen på en avtale.
+Ved å ha ikoner som lokasjons-pin, stjerne og kalender kan vi gi mer mening til UI-komponenter og gjøre appen lettere å bruke. Derfor har vi brukt ikoner fra Expo. Under er et eksempel fra koden som gir lokasjons-pinen på en avtale. Les mer dokumentasjon [her](https://github.com/expo/vector-icons)
 
 ```jsx 
 import { Ionicons } from '@expo/vector-icons';
@@ -163,12 +158,11 @@ import { Ionicons } from '@expo/vector-icons';
 <Ionicons name='md-pin'/>
 ```
 
-
 <br>
 
 #### Moment
 
-Vi har brukt moments for å formatere dato og tid. Vi bruker moments i "todos" og "appointments" for å blant annet lage nøkler til dataene vi lagrer i AsyncStorage. 
+Vi har brukt [Moments](https://www.npmjs.com/package/react-moment) for å formatere dato og tid. Vi bruker moments i "todos" og "appointments" for å blant annet lage nøkler til dataene vi lagrer i AsyncStorage. 
 
 ```jsx 
 import moment from 'moment';
@@ -178,13 +172,11 @@ import moment from 'moment';
 let formatedDate = moment(date).format('YYYY-MM-DD');
 ```
 
-
-
 <br>
 
 #### Datetime-picker
 
-Datetime-picker er et bibliotek som brukes for å få opp views der man kan velge tid eller dato og fungerer på forskjellige operativsystemer. Vi har brukt dette til både å velge dato til avtaler og gjøremål og også velge tidspunkt for avtaler. Under er en kodesnutt for hvordan man veldger dato. 
+[Datetime-picker](https://www.npmjs.com/package/react-native-modal-datetime-picker) er et bibliotek som brukes for å få opp views der man kan velge tid eller dato og fungerer på forskjellige operativsystemer. Vi har brukt dette til både å velge dato til avtaler og gjøremål og også velge tidspunkt for avtaler. Under er en kodesnutt for hvordan man veldger dato. 
 
 ```jsx
 render() {
@@ -207,7 +199,7 @@ render() {
 
 #### Navigation
 
-Ved å bruke Navigation-biblioteket har vi greid å lage en app der det er lett å navigere frem og tilbake fra forskjellige komponenter. Vi har brukt forskjellige typer navigasjonsmetoder som f.eks Drawer, Stack og TopTab. I bunn har vi en drawer der man kan velge mellom å se kontaktliste og "MyDay"-siden. På "MyDay" har vi tabs der man kan velge mellom å se liste over avtaler eller liste over gjøremål. Igjen er avtale -og kontaktsiden en stackNavigator. 
+Ved å bruke [Navigation-biblioteket](https://facebook.github.io/react-native/docs/navigation) har vi greid å lage en app der det er lett å navigere frem og tilbake fra forskjellige komponenter. Vi har brukt forskjellige typer navigasjonsmetoder som f.eks Drawer, Stack og TopTab. I bunn har vi en drawer der man kan velge mellom å se kontaktliste og "MyDay"-siden. På "MyDay" har vi tabs der man kan velge mellom å se liste over avtaler eller liste over gjøremål. Igjen er avtale -og kontaktsiden en stackNavigator. 
 
 ```jsx
 export const Stack = createStackNavigator({
